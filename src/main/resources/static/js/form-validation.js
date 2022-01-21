@@ -1,10 +1,7 @@
+
 (function($) {
-  'use strict';
-  $.validator.setDefaults({
-    submitHandler: function() {
-      alert("submitted!");
-    }
-  });
+  // 'use strict';
+
   $(function() {
     // validate the comment form when it is submitted
     $("#commentForm").validate({
@@ -17,23 +14,52 @@
         $(element).addClass('form-control-danger')
       }
     });
-    // validate signup form on keyup and submit
-    $("#signupForm").validate({
+    
+    // validate signin form on keyup and submit
+    $("#login-form").validate({
       rules: {
-        firstname: "required",
-        lastname: "required",
+        userid: {
+          required: true,
+         },
+        passwd: {
+          required: true
+        }
+      },
+      messages: {
+        userid: {
+          required: "아이디를 입력해주세요"
+        },
+        passwd: {
+          required: "비밀번호를 입력해주세요"
+        }
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger')
+        $(element).addClass('form-control-danger')
+      }
+    });    
+
+    $("#register-form").validate({
+      rules: {
+        userid: {
+          required: true,
+         },
         username: {
           required: true,
           minlength: 2
         },
-        password: {
+        passwd: {
           required: true,
-          minlength: 5
+          minlength: 4
         },
-        confirm_password: {
+        re_passwd: {
           required: true,
-          minlength: 5,
-          equalTo: "#password"
+          minlength: 4,
+          equalTo: "#passwd"
         },
         email: {
           required: true,
@@ -46,22 +72,26 @@
         agree: "required"
       },
       messages: {
-        firstname: "Please enter your firstname",
-        lastname: "Please enter your lastname",
+        userid: {
+          required: "아이디를 입력해주세요"
+        },
         username: {
-          required: "Please enter a username",
-          minlength: "Your username must consist of at least 2 characters"
+          required: "이름을 입력해주세요",
+          minlength: "이름은 최소 2글자로 입력해주세요"
         },
-        password: {
-          required: "Please provide a password",
-          minlength: "Your password must be at least 5 characters long"
+        passwd: {
+          required: "비밀번호를 입력해주세요",
+          minlength: "비밀번호는 최소 4자리로 입력해주세요"
         },
-        confirm_password: {
-          required: "Please provide a password",
-          minlength: "Your password must be at least 5 characters long",
-          equalTo: "Please enter the same password as above"
+        re_passwd: {
+          required: "비밀번호를 확인해주세요",
+          minlength: "비밀번호는 최소 4자리로 입력해주세요",
+          equalTo: "비밀번호가 일치하지 않습니다"
         },
-        email: "Please enter a valid email address",
+        email: {
+          required: "이메일을 입력해주세요",
+          email: "유효한 이메일이 아닙니다"
+        },
         agree: "Please accept our policy",
         topic: "Please select at least 2 topics"
       },
@@ -74,6 +104,17 @@
         $(element).addClass('form-control-danger')
       }
     });
+
+    $.validator.addMethod("idDupChk",  function(cnt, element){
+        if(cnt == 0) {
+          return true;
+        }else{
+          return this.optional(element)|| false;
+        }
+    });
+
+
+
     // propose username by combining first- and lastname
     $("#username").focus(function() {
       var firstname = $("#firstname").val();
@@ -93,5 +134,29 @@
       topics[this.checked ? "removeClass" : "addClass"]("gray");
       topicInputs.attr("disabled", !this.checked);
     });
+
+
+    $.extend($.validator.messages, {
+      required: "필수 항목입니다.",
+      remote: "이미 사용중인 아이디입니다",
+      email: "유효하지 않은 e-mail주소입니다.",
+      url: "유효하지 않은 URL입니다.",
+      date: "올바른 날짜를 입력하세요.",
+      dateISO: "올바른 날짜(ISO)를 입력하세요.",
+      number: "유효한 숫자가 아닙니다.",
+      digits: "숫자만 입력 가능합니다.",
+      creditcard: "신용카드 번호가 바르지 않습니다.",
+      equalTo: "같은 값을 다시 입력하세요.",
+      extension: "올바른 확장자가 아닙니다.",
+      maxlength: $.validator.format("{0}자를 넘을 수 없습니다. "),
+      minlength: $.validator.format("{0}자 이상 입력하세요."),
+      rangelength: $.validator.format("문자 길이가 {0} 에서 {1} 사이의 값을 입력하세요."),
+      range: $.validator.format("{0} 에서 {1} 사이의 값을 입력하세요."),
+      max: $.validator.format("{0} 이하의 값을 입력하세요."),
+      min: $.validator.format("{0} 이상의 값을 입력하세요.")
+    });
+
   });
+
+
 })(jQuery);

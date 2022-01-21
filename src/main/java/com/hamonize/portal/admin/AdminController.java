@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AdminController {
 
-    @RequestMapping("/aaa")
+    @RequestMapping("/main")
     public String dashboard() {
         return "/admin/dashboard";
 	}

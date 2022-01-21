@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/resources/**")
             .antMatchers("/css/**")
             .antMatchers("/js/**")
-            .antMatchers("/img/**");
+            .antMatchers("/img/**")
+            .antMatchers("/images/**")
+            .antMatchers("/vendors/**");
+            
     }
 
     @Override
@@ -52,20 +56,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .authorizeRequests()
             .antMatchers("/api/**", "/signup/**", "/login/**","/").permitAll()
             .anyRequest()
-            .authenticated()
-            .and()
-            .formLogin()
+            .authenticated();
+        
+        http.formLogin()
             .loginPage("/login")
+            .usernameParameter("userid")
+            .passwordParameter("passwd")
             .loginProcessingUrl("/login/login")
             .successHandler(authSuccessHandler)
-            .failureHandler(authFailureHandler)
-            .permitAll();
+            .failureHandler(authFailureHandler);
 
+        http.logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")).logoutSuccessUrl("/")
+            .invalidateHttpSession(true);
         }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService);
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
 
 }

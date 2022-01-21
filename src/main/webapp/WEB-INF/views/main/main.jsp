@@ -37,7 +37,7 @@
             class="container flex items-center justify-center h-full max-w-6xl px-8 mx-auto sm:justify-between xl:px-0">
 
             <a href="/" class="relative flex items-center inline-block h-5 h-full font-black leading-none">
-                <img class="w-auto h-6 text-indigo-600 fill-current"  src="/img/haomonikr_login.png">
+                <img class="w-auto h-6 text-indigo-600 fill-current"  src="/img/lo.png">
                 <span class="ml-3 text-xl text-gray-800">Hamonize<span class="text-pink-500"></span></span>
             </a>
 
@@ -48,7 +48,7 @@
                 <a href="#testimonials" class="font-bold duration-100 transition-color hover:text-indigo-600">Q&A</a>
                 <div class="flex flex-col block w-full font-medium border-t border-gray-200 md:hidden">
                     <a href="/login" class="w-full py-2 font-bold text-center text-pink-500">Login</a>
-                    <a href="/aaa"  class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">Get Started</a>
+                    <a href="/"  class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">Get Started</a>
                 </div>
             </nav>
 

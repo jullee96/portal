@@ -28,23 +28,22 @@ public class SecurityUserDetailsService implements UserDetailsService{
     @Override
     public SecurityUser loadUserByUsername(String userid) throws UsernameNotFoundException {
 
-        userid="admin";
         logger.info("userid  >>> {}", userid);
         Optional<User> user = ur.findByUserid(userid);
 
-        logger.info("findByUserid  >>> {}",user.get().getUsername());
-        logger.info("findByUserid  >>> {}",user.get().getEmail());
-        logger.info("findByUserid  >>> {}",user.get().getPasswd());
+        logger.info("findByUserid username  >>> {}",user.get().getUsername());
+        logger.info("findByUserid  user password {}",user.get().getPasswd());
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         
-        if (userid.equals("admin")) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.ADMIN.getValue()));
-        } else {
-            grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.USER.getValue()));
-        }
+        // if (userid.equals("admin")) {
+        //     grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.ADMIN.getValue()));
+        // } else {
+        //     grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.USER.getValue()));
+        // }
 
-        return new SecurityUser(user.get().getUserid(), user.get().getPasswd(), grantedAuthorities);
+        return new SecurityUser(user.get().getUserid(), user.get().getPasswd());
     }
     
 }
