@@ -24,22 +24,22 @@ public class SecurityUser extends User{
     private String status;
     private String username;
 
+    // 결제정보
+    private String domain;
+    private int itemno;
+    
    
-    public SecurityUser(String userid, String passwd) {
+    public SecurityUser(String userid, String passwd, String domain) {
         super(userid, passwd, makeGrantedAuthority());
         this.userid = userid;
         this.passwd = passwd;
+        this.domain = domain;
     }
 
     private static Set<GrantedAuthority> makeGrantedAuthority() {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.USER.getValue()));
 
-        // if ( vo.getRole() == 0) {
-        //         grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.ADMIN.getValue()));
-        //     }	else if (vo.getRole()!=0) {
-        //         grantedAuthorities.add(new SimpleGrantedAuthority(ROLE.USER.getValue()));
-        //     }
         return grantedAuthorities;
     }
 }

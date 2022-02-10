@@ -55,12 +55,10 @@
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input type="text" name="userid" id="userid" placeholder="아이디"  />
-                                <span id="id_ok" class="id_ok">사용 가능한 아이디입니다</span>
-                                <span id="id_already" class="id_already">이미 사용중인 아이디입니다</span>
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Email"  />
+                                <input type="email" name="email" id="email" placeholder="이메일"  />
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
@@ -74,13 +72,12 @@
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="가입하기"/>
                             </div>
                         </form>
+                    
+                        <div class="signup-image">
+                            <a href="/login" class="signup-image-link">로그인 하러가기</a>
+                        </div>
                     </div>
-                    <div class="signup-image">
-                        <figure>
-                            <%-- <img src="images/signup-image.jpg" alt="sing up image"> --%>
-                        </figure>
-                        <a href="/login" class="signup-image-link">로그인 하러가기</a>
-                    </div>
+       
                 </div>
             </div>
         </section>
@@ -92,48 +89,41 @@
 <script>
 $(document).ready(function () {
 
-    // $("#register-form").validate({
-    //   submitHandler: function(form) {
-    //       form.submit();
-    //   }  
-    // });
-    $.validator.addMethod("idDupChk",  function(cnt, element){
-        if(cnt == 0) {
-            return true;
-        }else{
-            return this.optional(element)|| false;
-        }
+    $("#register-form").validate({
+      submitHandler: function(form) {
+          form.submit();
+      }  
     });
-
-    $("#userid").keyup(function(){
-        var id = $(this).val();
-        console.log("id >> "+id);
+   
+    // $("#userid").keyup(function(){
+    //     var id = $(this).val();
+    //     console.log("id >> "+id);
     
-        $.ajax({
-            url:'/signup/idDupCheck', 
-            type:'post', 
-            data:{userid: id},
-            success:function(cnt){
-                $("#register-form").validate({
-                    rules:{
-                        userid:{
-                            idDupChk: true 
-                        }  
-                    },
-                    message: {
-                        userid:{
-                            idDupChk: "중복된 아이디입니다" 
-                        }  
-                    },
-                    submitHandler: function(form) {
-                      form.submit();
-                    }  
-                });
+    //     $.ajax({
+    //         url:'/signup/idDupCheck', 
+    //         type:'post', 
+    //         data:{userid: id},
+    //         success:function(cnt){
+    //             $("#register-form").validate({
+    //                 rules:{
+    //                     userid:{
+    //                         idDupChk: 1 
+    //                     }  
+    //                 },
+    //                 message: {
+    //                     userid:{
+    //                         idDupChk: "중복된 아이디입니다" 
+    //                     }  
+    //                 },
+    //                 submitHandler: function(form) {
+    //                   form.submit();
+    //                 }  
+    //             });
 
-           }
-        });
+    //        }
+    //     });
         
-    });
+    // });
 
 
 });

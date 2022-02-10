@@ -1,7 +1,6 @@
 package com.hamonize.portal.user;
 
-import java.security.Timestamp;
-import java.util.*;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import com.hamonize.portal.paging.PagingVo;
@@ -50,7 +48,7 @@ public class User extends PagingVo {
 	@Comment("비밀번호 암호화 솔트 값")
 	private String salt;
 
-	@Comment(value = "활성 비활성 구분 값 > 1 : 활성 , 0 : 비활성")
+	@Comment("활성 비활성 구분 값 > 1 : 활성 , 0 : 비활성")
 	private String status;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -79,5 +77,5 @@ public class User extends PagingVo {
 	@Column(name="authkey")
 	@Comment("회원가입시 인증키")
 	private String authKey;
-
+	
 }

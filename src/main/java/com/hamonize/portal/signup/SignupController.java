@@ -41,7 +41,7 @@ public class SignupController {
 
 
     /**
-     * signup save func
+     * 회원가입 정보 저장 func
      * @param User vo
      * 
      * @return
@@ -64,22 +64,24 @@ public class SignupController {
 	}
 
     /**
-     * 아이디 중복 확인 메서드
+     * 아이디 중복 확인 func
      * @param User vo
      * 
      * @return 중복여부 true or false
      */
     @PostMapping("/idDupCheck")
     @ResponseBody
-    public int idDupCheck(User vo, Model model){
-        int cnt = 0;
-  
-        logger.info("find userid : {}", vo.getUserid());
+    public boolean idDupCheck(User vo, Model model){
         List<User> chk = sr.findByUserid(vo.getUserid());
-  
-        logger.info("chk length {} ", chk.size());
+        
+        boolean ret = false;
+        if (chk.size() == 0 ){
+            ret = true;
+        }else{
+            ret = false;
+        }
 
-        return cnt;
+        return ret;
     }
 
     //account_verifications

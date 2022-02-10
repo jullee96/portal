@@ -30,6 +30,8 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
   <script src="/js/form-validation.js"></script>
 
+  <script src="/js/main.js"></script>
+
 </head>
 
 
@@ -54,13 +56,13 @@
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
               <div class="brand-logo">
-                <img src="img/Hamonize.png" alt="logo">
+                <a href="/"><img src="img/Hamonize.png" alt="logo"></a>
               </div>
               <h4>가입하기</h4>
               <h6 class="font-weight-light">하모나이즈 서비스를 이용하기 위해서는 몇가지 단계만 거치면 됩니다</h6>
-              <form class="pt-3">
+              <form class="pt-3" id="register-form" action="/signup/signup">
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-lg"  name="username" id="username" placeholder="이름">
+                  <input type="text" class="form-control form-control-lg"  id="username" placeholder="이름">
                 </div>
                 
                 <div class="form-group">
@@ -75,7 +77,7 @@
                   <input type="password" class="form-control form-control-lg"  name="passwd" id="passwd" placeholder="비밀번호">
                 </div>
                 <div class="form-group">
-                  <input type="password" class="form-control form-control-lg"  name="re_passwd" id="re_passwd" placeholder="비밀번호">
+                  <input type="password" class="form-control form-control-lg"  name="re_passwd" id="re_passwd" placeholder="비밀번호 확인">
                 </div>
 
                 <div class="mb-4">
@@ -90,7 +92,7 @@
                   <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="/main">SIGN UP</a>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
-                  이미 계정이 있으신가요? <a href="login.html" class="text-primary">Login</a>
+                  이미 계정이 있으신가요? <a href="login.html" class="text-primary">로그인 하러가기</a>
                 </div>
               </form>
             </div>
@@ -125,6 +127,7 @@
       //       form.submit();
       //   }  
       // });
+      
       $.validator.addMethod("idDupChk",  function(cnt, element){
           if(cnt == 0) {
               return true;
@@ -145,12 +148,12 @@
                   $("#register-form").validate({
                       rules:{
                           userid:{
-                              idDupChk: true 
+                              idDupChk: 1 
                           }  
                       },
                       message: {
                           userid:{
-                              idDupChk: "중복된 아이디입니다0" 
+                              idDupChk: "중복된 아이디입니다" 
                           }  
                       },
                       submitHandler: function(form) {

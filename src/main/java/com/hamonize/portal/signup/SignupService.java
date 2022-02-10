@@ -1,7 +1,5 @@
 package com.hamonize.portal.signup;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import com.hamonize.portal.user.User;
@@ -24,6 +22,8 @@ public class SignupService {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		vo.setPasswd(passwordEncoder.encode(vo.getPasswd()));
         vo.setRole("ROLE_USER");
+       
+        // vo.setRole(ROLE.USER);
         return sr.save(vo);
 	}
     

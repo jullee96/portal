@@ -43,15 +43,15 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     private String getExceptionMessage(AuthenticationException exception) {
         if (exception instanceof BadCredentialsException) {
-            return "비밀번호불일치";
+            return "비밀번호를 확인해주세요";
         } else if (exception instanceof UsernameNotFoundException) {
-            return "계정없음";
+            return "존재하지 않는 계정입니다";
         } else if (exception instanceof AccountExpiredException) {
             return "계정만료";
         } else if (exception instanceof CredentialsExpiredException) {
             return "비밀번호만료";
         } else if (exception instanceof DisabledException) {
-            return "계정비활성화";
+            return "비활성화된 계정입니다";
         } else if (exception instanceof LockedException) {
             return "계정잠김";
         } else {

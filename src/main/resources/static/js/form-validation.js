@@ -44,9 +44,29 @@
     });    
 
     $("#register-form").validate({
+      onkeyup: function(element) {
+        $(element).valid(); 
+      },
       rules: {
         userid: {
           required: true,
+          remote : {
+            type: 'post',
+            url : '/signup/idDupCheck',
+            data: {
+              userid: function() {
+                return $( "#userid" ).val();
+              }
+            }
+            // ,
+            // success : function(ret){
+            //   console.log("return : "+ ret);
+            //   if(ret == true){
+            //     console.log("중복.... ");
+            //     return ret;
+            //   }
+            // }
+          } 
          },
         username: {
           required: true,
@@ -73,7 +93,8 @@
       },
       messages: {
         userid: {
-          required: "아이디를 입력해주세요"
+          required: "아이디를 입력해주세요",
+          remote: "이미 사용중인 아이디 입니다"
         },
         username: {
           required: "이름을 입력해주세요",
@@ -105,24 +126,9 @@
       }
     });
 
-    $.validator.addMethod("idDupChk",  function(cnt, element){
-        if(cnt == 0) {
-          return true;
-        }else{
-          return this.optional(element)|| false;
-        }
-    });
 
 
 
-    // propose username by combining first- and lastname
-    $("#username").focus(function() {
-      var firstname = $("#firstname").val();
-      var lastname = $("#lastname").val();
-      if (firstname && lastname && !this.value) {
-        this.value = firstname + "." + lastname;
-      }
-    });
     //code to hide topic selection, disable for demo
     var newsletter = $("#newsletter");
     // newsletter topics are optional, hide at first

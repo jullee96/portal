@@ -14,7 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>portal</name>
 	<description>hamonize portal page</description>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
+	<!-- <packaging>jar</packaging> -->
 
 	<properties>
 		<java.version>11</java.version>
@@ -152,6 +153,26 @@
 			<version>11.0.3</version>
 		</dependency>
 		 -->
+		<!-- https://mvnrepository.com/artifact/org.webjars.bowergithub.zertosh/loose-envify -->
+		<dependency>
+			<groupId>org.webjars.bowergithub.zertosh</groupId>
+			<artifactId>loose-envify</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>2.4.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+			<version>2.4.2</version>
+		</dependency>
 
 
 	</dependencies>

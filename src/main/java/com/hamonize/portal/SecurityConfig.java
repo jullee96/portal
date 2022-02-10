@@ -1,5 +1,6 @@
 package com.hamonize.portal;
 
+import com.hamonize.portal.social.CustomOAuth2UserService;
 import com.hamonize.portal.user.SecurityUserDetailsService;
 
 import org.slf4j.Logger;
@@ -31,6 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Autowired
     SecurityUserDetailsService userDetailService;
+    
+    @Autowired
+    CustomOAuth2UserService customOAuth2UserService;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -69,9 +74,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http.logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")).logoutSuccessUrl("/")
             .invalidateHttpSession(true);
+
+        // http.oauth2Login()
+        //     .userInfoEndpoint().userService(userService)
+            
         }
 
     @Override
+    
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
