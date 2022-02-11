@@ -159,7 +159,8 @@
 			<artifactId>loose-envify</artifactId>
 			<version>1.4.0</version>
 		</dependency>
-
+	
+		<!-- Redis dependency-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

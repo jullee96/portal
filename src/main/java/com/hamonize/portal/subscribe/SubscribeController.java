@@ -32,17 +32,20 @@ public class SubscribeController {
         // 결제 정보는 있나 도메인정보가 없다면 도메인 생성페이지로
         // 결제 정보랑 도메인 정보 둘다 있다면 메인의 뉴저 메뉴 활성화 > 마이페이지로
 
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        logger.info("getUserid >> {}",user.getUserid());
-        logger.info("getDomain >> {}",user.getDomain());
+        // SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        String userid = (String) session.getAttribute("userid");
+        String domain = (String) session.getAttribute("domain");
+
+        logger.info("getUserid >> {}",userid);
+        logger.info("getDomain >> {}",domain);
 
         if( vo.getItemno() == null ){
             return "redirect:/"; 
-        } else if(user.getDomain() != null){ // 도메인이 이미 있으면 마이페이지로
+        } else if(domain != null){ // 도메인이 이미 있으면 마이페이지로
             return "redirect:/main"; 
         }
 
-        session.setAttribute("itemno", vo.getItemno());
+        // session.setAttribute("itemno", vo.getItemno());
 
         return "/subscribe/payment";
 	}
@@ -57,10 +60,11 @@ public class SubscribeController {
      */
     @PostMapping("/savePayment")
     public String paymentSave(HttpSession session, Subscribe vo) {
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-
+        // SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        String userid = (String) session.getAttribute("userid");
+        
         try {
-            vo.setUserid(user.getUserid());
+            vo.setUserid(userid);
             ss.save(vo);
             return "redirect:/subscribe/domain";       
         } catch (Exception e) {
@@ -71,17 +75,18 @@ public class SubscribeController {
 
     @GetMapping("/domain")
     public String domainView(HttpSession session, Subscribe vo) {       
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        String userid = (String) session.getAttribute("userid");
+        String domain = (String) session.getAttribute("domain");     
         String itemno = (String) session.getAttribute("itemno");
         
-        vo.setUserid(user.getUserid());
+        vo.setUserid(userid);
        
         // 결제 정보 && 생성된 도메인이 있는지 확인 
         int isExistSub = ss.findSubscribeInfo(vo.getUserid().toString());
         
         if(isExistSub == 0){ //결제 정보 없음
             return "redirect:/subscribe/payment?itemno="+itemno; 
-       }else if(user.getDomain() != null){ // 결제&도메인 둘다 있는 경우 마이페이지로 이동
+       }else if(domain != null){ // 결제&도메인 둘다 있는 경우 마이페이지로 이동
            return "redirect:/main";
 
        }else{ // 결제는 했으나 도메인이 없는 경우
@@ -100,11 +105,14 @@ public class SubscribeController {
      */
     @PostMapping("/saveDomain")
     public String domianSave(HttpSession session, Subscribe vo) {
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        vo.setUserid(user.getUserid());
+        
+        String userid = (String) session.getAttribute("userid");
+        String domain = (String) session.getAttribute("domain");     
+
+        vo.setUserid(userid);
        
         logger.info("<<< 도메인 정보 >>> ");
-        logger.info("도메인 이름 : {}", vo.getDomain());
+        logger.info("도메인 이름 : {}", domain);
         logger.info("유저 아이디 : {}", vo.getUserid());
        
         ur.updateDomain(vo.getDomain(), vo.getUserid());

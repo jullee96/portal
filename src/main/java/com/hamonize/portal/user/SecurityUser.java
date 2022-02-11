@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.User;
 
 @Getter
 @Setter
-public class SecurityUser extends User{
+public class SecurityUser extends User {
 
     private String userid;
     private String passwd;

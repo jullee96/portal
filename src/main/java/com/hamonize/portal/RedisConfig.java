@@ -12,13 +12,12 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800) /* 세션 만료 시간 : 30분 */
+// @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800) /* 세션 만료 시간 : 30분 */
 @RequiredArgsConstructor
 public class RedisConfig extends AbstractHttpSessionApplicationInitializer{
     @Value("${spring.redis.host}")

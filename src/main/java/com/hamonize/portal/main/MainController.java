@@ -22,7 +22,8 @@ public class MainController {
 
     @RequestMapping("/main")
     public String main(HttpSession session) {
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        // SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        String user = (String) session.getAttribute("userid");
         
 
         return "/main/main";
