@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import com.hamonize.portal.paging.PagingVo;
@@ -43,6 +44,8 @@ public class User extends PagingVo {
 	@Comment("유저 이름")
 	private String username;
 
+    @Size(max=50)
+	@Comment("유저 이름")
 	private String email;
 
 	@Comment("비밀번호 암호화 솔트 값")
@@ -62,20 +65,13 @@ public class User extends PagingVo {
     @Column(name="login_check",columnDefinition = "integer default 0")
 	private int logincheck;
 
-	@Column(name="org_seq")
-	private int[] orgseq;
-	
-	@Column(name="org_nm")
-	private String orgnm;
-
 	@Comment("프로필 이미지")
+    @Size(max=300)
 	private String picture;
 	
+	@Transient
 	@Comment("유저권한 포탈 유저 : USER / 어드민 유저 : ADMIN ")
 	private String role;
 
-	@Column(name="authkey")
-	@Comment("회원가입시 인증키")
-	private String authKey;
-	
+		
 }

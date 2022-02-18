@@ -287,11 +287,11 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         
         <ul class="nav">
-          <c:if test = "${ user.userid != null }">
+          <c:if test = "${ userSession.userid != null }">
             <li class="nav-item">
               <a class="nav-link" target="_blank"href="http://ts.hamonikr.org">
                 <i class="icon-grid menu-icon"></i>
-                <span class="menu-title">Hamonize Console ${user.userid}</span>
+                <span class="menu-title">Hamonize Console ${userSession.userid}</span>
               </a>
             </li>
           </c:if>

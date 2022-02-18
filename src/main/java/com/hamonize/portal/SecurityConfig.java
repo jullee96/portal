@@ -2,6 +2,7 @@ package com.hamonize.portal;
 
 import com.hamonize.portal.social.CustomOAuth2UserService;
 import com.hamonize.portal.user.SecurityUserDetailsService;
+import com.hamonize.portal.util.SHA256Util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,11 +38,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     CustomOAuth2UserService customOAuth2UserService;
 
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
+    // @Bean
+    // public PasswordEncoder passwordEncoder() {
+    //     SHA256Util sha256 = new SHA256Util();
+    //     // sha256.getEncrypt(message, salt);
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    //     return new BCryptPasswordEncoder();
+    // }
+
+    // @Bean
+    // public PasswordEncoder passwordEncoder() {
+    //     SHA256Util sha256 = new SHA256Util();
+        
+    //     return sha256;
+    // }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -51,7 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/js/**")
             .antMatchers("/img/**")
             .antMatchers("/images/**")
-            .antMatchers("/vendors/**");
+            .antMatchers("/vendors/**")
+            .antMatchers("/argon/**");
+
             
     }
 
@@ -76,16 +90,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")).logoutSuccessUrl("/")
             .invalidateHttpSession(true);
 
-        // http.sessionManagement()
-        //     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        // http.oauth2Login()
-        //     .userInfoEndpoint().userService(userService)
-            
         }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(authProvider);
+        // auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+        // auth.userDetailsService(userDetailService);
+        
     }
+
+
 
 }

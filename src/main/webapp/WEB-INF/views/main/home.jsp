@@ -54,15 +54,15 @@
             </nav>
 
             <div class="absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
-                <c:if test="${userid != null }">
+                <c:if test="${userSession.userid != null }">
                     <a href="/user/detail"  class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
-                        ${userid}님
+                        ${userSession.userid}님
                     </a>
                     <a href="/login/logout" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl">
                         Logout
                     </a>
                 </c:if>
-                <c:if test="${userid == null }">
+                <c:if test="${userSession.userid == null }">
                     <a href="/login" class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
                         Login
                     </a>
@@ -131,7 +131,22 @@
                 class="z-30 flex flex-col items-center w-full max-w-xl pt-48 text-center lg:items-start lg:w-1/2 lg:pt-20 xl:pt-40 lg:text-left">
                 <h1 class="relative mb-4 text-3xl font-black leading-tight text-gray-900 sm:text-6xl xl:mb-8">PC자원 관리는 <br>하모나이즈로 <br>시작하세요!</h1>
                 <p class="pr-0 mb-8 text-base text-gray-600 sm:text-lg xl:text-xl lg:pr-20">원격지의 PC 자원들을 보다 효율적으로 관리/모니터링 할 수 있는 클라우드 서비스를 사용해보세요 :)</p>
-                <a href="/main" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">시작하기</a>
+                <c:choose>
+                    <c:when test='${userSession.domain == "" or userSession.domain == null  }' >
+                        <a href="http://localhost:8080/#pricing" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain} 시작하기</a>
+                    </c:when>
+
+                    <c:otherwise>
+                        <a href="http://localhost:8081/mntrng/pcControlList" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain}1시작하기</a>
+                    </c:otherwise>
+                </c:choose>
+
+                <%-- <c:if test="${userSession.domain != null || userSession.domain !='' }" >
+                    <a href="http://localhost:8081/mntrng/pcControlList" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain}시작하기</a>
+                </c:if>
+                <c:if test="${userSession.domain == null}" >
+                    <a href="http://localhost:8080/#pricing" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain} 시작하기</a>
+                </c:if> --%>
                 
                 <!-- Integrates with section -->
 
@@ -562,8 +577,7 @@
     <!-- End Pricing Section -->
 
     <!-- Start Testimonials -->
-    <div id="qna"
-        class="flex items-center justify-center w-full px-8 py-10 border-t border-gray-200 md:py-16 lg:py-24 xl:py-40 xl:px-0">
+    <div id="qna" class="flex items-center justify-center w-full px-8 py-10 border-t border-gray-200 md:py-16 lg:py-24 xl:py-40 xl:px-0">
         <div class="max-w-6xl mx-auto">
             <div class="flex-col items-center ">
                 <div class="flex flex-col items-center justify-center w-full h-full max-w-2xl pr-8 mx-auto text-center">
@@ -571,7 +585,7 @@
                     </p>
                     <h2
                         class="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl lg:text-5xl xl:text-6xl">
-                        Contact Us</h2>
+                        Q&A</h2>
                     <p class="my-6 text-xl font-medium text-gray-500">제품에 대한 문의사항은 서비스 데스크를 통해 연락주세요.</p>
 
                 </div>

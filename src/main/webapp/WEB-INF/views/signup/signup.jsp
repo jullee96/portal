@@ -94,37 +94,6 @@ $(document).ready(function () {
           form.submit();
       }  
     });
-   
-    // $("#userid").keyup(function(){
-    //     var id = $(this).val();
-    //     console.log("id >> "+id);
-    
-    //     $.ajax({
-    //         url:'/signup/idDupCheck', 
-    //         type:'post', 
-    //         data:{userid: id},
-    //         success:function(cnt){
-    //             $("#register-form").validate({
-    //                 rules:{
-    //                     userid:{
-    //                         idDupChk: 1 
-    //                     }  
-    //                 },
-    //                 message: {
-    //                     userid:{
-    //                         idDupChk: "중복된 아이디입니다" 
-    //                     }  
-    //                 },
-    //                 submitHandler: function(form) {
-    //                   form.submit();
-    //                 }  
-    //             });
-
-    //        }
-    //     });
-        
-    // });
-
 
 });
 </script>

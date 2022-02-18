@@ -4,86 +4,84 @@
 <html lang="ko">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Hamonize Login</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="../../vendors/feather/feather.css">
-  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
-  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
+  
+  <title>
+    Hamonize Cloud Service | Sign in
+  </title>
+
+  <!-- form validation check -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+  <script src="/js/form-validation.js"></script>
+
 </head>
 
-<body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
-          <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <a href="/"><img src="img/Hamonize.png" alt="logo"></a>
+<%@ include file="../template/top2.jsp" %>
+
+
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+
+      </div>
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-start">
+                  <h4 class="font-weight-bolder">Sign In</h4>
+                  <p class="mb-0">이메일과 비밀번호를 입력하여 로그인하세요</p>
+                </div>
+                <div class="card-body">
+                  <form id="frm" method="POST" action="/login/login">
+                    <div class="mb-3">
+                      <input type="text" class="form-control form-control-lg" placeholder="아이디" id="userid" name="userid" aria-label="userid" required >
+                    </div>
+                    <div class="mb-3">
+                      <input type="password" class="form-control form-control-lg" placeholder="패스워드" id="passwd" name="passwd"  aria-label="passwd" required >
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="rememberMe">
+                      <label class="form-check-label" for="rememberMe">아이디 기억하기</label>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">로그인</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                  <p class="mb-4 text-sm mx-auto">
+                    계정이 없으십니까?
+                    <a href="/signup" class="text-primary text-gradient font-weight-bold">회원가입</a>
+                  </p>
+                  <p class="mb-4 text-sm mx-auto">
+                    가입한 정보를 잊으셨습니까?
+                    <a href="#" class="text-primary text-gradient font-weight-bold"> 아이디 / 비밀번호 찾기</a>
+                  </p>
+                </div>
               </div>
-              <h4>Login</h4>
-              <h6 class="font-weight-light"> </h6>
-              <form class="pt-3" method="POST" id="login-form" action="/login/login">
-                <div class="form-group">
-                  <input type="text" class="form-control form-control-lg" name="userid" id="userid" placeholder="아이디">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="passwd" id="passwd" placeholder="비밀번호">
-                </div>
-                <div class="mt-3">
-                    <input type="submit" name="signin" id="signin" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"value="로그인"/>
-                </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <div class="form-check">
-                    <label class="form-check-label text-muted">
-                      <input type="checkbox" class="form-check-input">
-                     
-                    </label>
-                  </div>
-                  <a href="#" class="auth-link text-black">비밀번호를 잊으셨습니까?</a>
-                </div>
-                <%-- <div class="mb-2"> --%>
-                <div class="social-login">
-                    <span class="social-label">Or </span>
-                    <ul class="socials">
-                        <li><a href="/oauth2/authorization/kakao"> <img src="/img/kakao.png" ></a></li>
-                    </ul>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  계정이 없으십니까? <a href="/signup" class="text-primary">회원가입 하러하기</a>
-                </div>
-              </form>
+            </div>
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden">
+
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- content-wrapper ends -->
-    </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
-<!-- plugins:js -->
-<script src="../../vendors/js/vendor.bundle.base.js"></script>
-<!-- endinject -->
-<!-- Plugin js for this page -->
-<!-- End plugin js for this page -->
-<!-- inject:js -->
-<script src="../../js/off-canvas.js"></script>
-  <script src="../../js/hoverable-collapse.js"></script>
-  <script src="../../js/template.js"></script>
-  <script src="../../js/settings.js"></script>
-  <script src="../../js/todolist.js"></script>
-  <!-- endinject -->
+    </section>
+  </main>
+  <%@ include file="../template/core.jsp" %>
+
 </body>
 
 </html>

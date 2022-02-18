@@ -89,7 +89,7 @@ public class SignupController {
     public String signUpConfirm(@RequestParam Map<String, String> map, User vo, Model model) {
         try {
           
-            // update authKey
+            // update email authKey
             
 
         } catch (Exception e) {

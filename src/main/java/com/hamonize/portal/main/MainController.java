@@ -1,8 +1,6 @@
 package com.hamonize.portal.main;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import com.hamonize.portal.user.SecurityUser;
 
 import org.springframework.stereotype.Controller;
@@ -20,12 +18,15 @@ public class MainController {
         return "/main/home";
 	}
 
+    @RequestMapping("/home")
+    public String home1() {
+        return "/main/home2";
+	}
+
     @RequestMapping("/main")
     public String main(HttpSession session) {
-        // SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        String user = (String) session.getAttribute("userid");
-        
-
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        logger.info("\n\n userid >> {}\n\n", user.getUserid());
         return "/main/main";
     }
 }

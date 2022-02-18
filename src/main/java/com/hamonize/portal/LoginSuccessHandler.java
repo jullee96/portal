@@ -54,35 +54,39 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-         
+        logger.info("ddddd > {}",authentication.getPrincipal().getClass());
+
         SecurityUser user = (SecurityUser) authentication.getPrincipal();
         HttpSession httpSession = request.getSession(true);
         logger.info("onAuthenticationSuccess user domain : {}",user.getDomain());
-        // httpSession.setAttribute("userSession", user);
+        logger.info("onAuthenticationSuccess user username : {}",user.getUsername());
+        
+        httpSession.setAttribute("userSession", user);
         
         logger.info("\n\n\n setsessionAPI >>>>>> {}\n\n" ,setsessionAPI(httpSession, user.getUserid()));
         
         // String redirectUrl = (String) httpSession.getAttribute("url");
         // logger.info("redirectUrl : ",redirectUrl);
 
-        SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-        logger.info("login SPRING_SECURITY_SAVED_REQUEST 33 : {}",(String) httpSession.getAttribute("url"));
-        String uu = (String) httpSession.getAttribute("url");
+        // SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
+        // logger.info("login SPRING_SECURITY_SAVED_REQUEST 33 : {}",(String) httpSession.getAttribute("url"));
+        // String uu = (String) httpSession.getAttribute("url");
      
         logger.info("session id: {}", httpSession.getId());
+        logger.info("getUserid : {}", user.getUserid());
         
         
         
         if(user.getUserid() != null){
-            // response.sendRedirect("/"); 
-            if((String) httpSession.getAttribute("url") != null ){
-                // response.sendRedirect((String) httpSession.getAttribute("url")); 
+            response.sendRedirect("/"); 
+            // if((String) httpSession.getAttribute("url") != null ){
+            //     // response.sendRedirect((String) httpSession.getAttribute("url")); 
                 
-                response.sendRedirect("/");
+            //     response.sendRedirect("/");
 
-            }else{
-                response.sendRedirect("/main");
-            }
+            // }else{
+            //     response.sendRedirect("http://localhost:8081/main");
+            // }
         } else{
             response.sendRedirect("/login");
         }

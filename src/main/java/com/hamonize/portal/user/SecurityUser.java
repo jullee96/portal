@@ -1,5 +1,6 @@
 package com.hamonize.portal.user;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -23,17 +24,28 @@ public class SecurityUser extends User {
     private String passwd;
     private String status;
     private String username;
+    private String salt;
 
     // 결제정보
     private String domain;
     private int itemno;
-    
-   
-    public SecurityUser(String userid, String passwd, String domain) {
-        super(userid, passwd, makeGrantedAuthority());
-        this.userid = userid;
-        this.passwd = passwd;
-        this.domain = domain;
+
+    // public SecurityUser(String userid, String passwd, String username, String salt, String domain ) {
+    //     super(userid, passwd, makeGrantedAuthority()); 
+    //     this.userid = userid;
+    //     this.passwd = passwd;
+    //     this.username = username;
+    //     this.salt = salt;
+    //     this.domain = domain;
+    // }
+
+    public SecurityUser(com.hamonize.portal.user.User user) {
+        super(user.getUserid(), user.getPasswd(), makeGrantedAuthority()); 
+        this.userid = user.getUserid();
+        this.passwd = user.getPasswd();
+        this.username = user.getUsername();
+        this.salt = user.getSalt();
+        this.domain = user.getDomain();
     }
 
     private static Set<GrantedAuthority> makeGrantedAuthority() {
@@ -42,4 +54,6 @@ public class SecurityUser extends User {
 
         return grantedAuthorities;
     }
+
+
 }

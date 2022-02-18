@@ -14,9 +14,7 @@ public class UserController {
 
     @RequestMapping("/detail")
     public String signup(HttpSession session, User vo) {
-        logger.info("user profile page");
-        session.getAttribute("userSession");
-
+        
         return "/user/detail";
 	}
 

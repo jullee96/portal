@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubscribeRepostory extends JpaRepository<Subscribe, String>{
     List<Subscribe> findAllByUserid(String userid);
-   
 }
