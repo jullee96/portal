@@ -48,8 +48,7 @@ public class SupportController {
 	}
 
     @RequestMapping("/save")
-    public String save(HttpSession session, User vo) {
-        
+    public String save(HttpSession session, Support vo ) {
         logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 

@@ -30,6 +30,11 @@
     margin-top:10px;
 }
 
+img[alt=alt_img] { 
+    width: 500px; 
+}
+
+
 </style>
 
 
@@ -89,16 +94,13 @@
 
                     <div class="col-12">
                         <label class="text-md-start">제목</label>
-                            <input class="form-control" type="text" value="" name="contents">
-
+                        <input class="form-control" type="text" value="" name="contents">
                     </div>
 
                     <div class="col-sm-12">
                     <label class="mt-4">내용</label>
                     <div class="contents" id ="editor"></div>
                     <div id="contents"></div>
-                    
-                    <div class="contents" id ="editor2"></div>
                     
                 </div>
 
@@ -115,26 +117,6 @@
 <script class="code-js">
 
 const Editor = toastui.Editor;
-const editor2 = new Editor({ 
-    el: document.querySelector('#editor2'), 
-    height: '500px', 
-    initialEditType: 'wysiwyg',
-    previewStyle: 'vertical',
-    customHTMLRenderer: {
-    htmlBlock: {
-        iframe(node) {
-                return [
-                { type: 'openTag', tagName: 'iframe', outerNewLine: true, attributes: node.attrs },
-                { type: 'html', content: node.childrenHTML },
-                { type: 'closeTag', tagName: 'iframe', outerNewLine: true },
-                ];
-            },
-        }
-    }
-});
-
-
-
 const editor = new Editor({ 
     el: document.querySelector('#editor'), 
     height: '500px', 
@@ -153,11 +135,8 @@ const editor = new Editor({
     },
     hooks:{
         addImageBlobHook: (blob, callback) => {
-            console.log("aaaaaa >> "+blob);
             const img_url = uploadImage(blob);
-
-            console.log("img_url : "+img_url);
-            callback(img_url , 'alt_text');
+            callback(img_url.split("uploads")[1] , 'alt_img');
         }    
     }
     
@@ -195,13 +174,13 @@ function uploadImage(blob){
 
     $.ajax({
         type:"POST",
-        url: "/file/uploadSupportImg",
+        url: "/file/upload",
         processData: false,
         contentType: false,
         data: formData,
         async:false,
         success: function(retval){
-            if(retval != null){
+            if(retval != "F"){
                 console.log("업로드 성공" +retval);
                 console.log("111url >>>>>>>> " +url);
                
