@@ -27,10 +27,13 @@ public class SupportController {
     @Autowired
     FileRepository fr;
 
+    @Autowired
+    SupportRepository sr;
+
     @RequestMapping("/list")
     public String supportList(HttpSession session, User vo) {
         
-        logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
+        logger.info("\n\n\n <<< list >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
 
@@ -40,7 +43,7 @@ public class SupportController {
     @RequestMapping("/view")
     public String supportView(HttpSession session, User vo) {
         
-        logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
+        logger.info("\n\n\n <<< 1:1문의 상세 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
 
@@ -50,6 +53,8 @@ public class SupportController {
     @RequestMapping("/save")
     public String save(HttpSession session, Support vo ) {
         logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
+
+
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
 
