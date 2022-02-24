@@ -75,7 +75,7 @@ public class FileController {
         
         logger.info("originalFileName {}",originalFileName);
         logger.info("logicalFileName {}", logicalFileName);
-        
+
 
         vo.setFilename(logicalFileName);
         vo.setFilerealname(originalFileName);
@@ -89,6 +89,7 @@ public class FileController {
             result ="F";
         }
 
+        
         return result;
     }
 
