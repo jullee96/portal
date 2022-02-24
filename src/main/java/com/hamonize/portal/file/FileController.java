@@ -107,7 +107,7 @@ public class FileController {
             Files.createDirectories(uploadDir);
         }
          
-        // logger.info("path : {}", path);
+        logger.info("path : {}", path);
   
         UUID tmpFileName = UUID.randomUUID(); 
         String originalFileName = mFile.getOriginalFilename();        
