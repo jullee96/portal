@@ -133,7 +133,7 @@ public class FileController {
 
             URL fileUrl = new URL(sb.toString());
             logger.info("fileUrl >> {}",fileUrl.toString());
-            logger.info("fileUrl >> {}",fileUrl);
+            logger.info("fileUrl??  >> {}",fileUrl);
 
             // IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
 
