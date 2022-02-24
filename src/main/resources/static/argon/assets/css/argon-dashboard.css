@@ -6000,7 +6000,7 @@ fieldset:disabled .btn {
   font-size: 0.75em;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  /* color: #fff; */
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -20890,7 +20890,7 @@ fieldset:disabled .btn {
   }
 
   .dropdown:not(.dropdown-hover) .dropdown-menu {
-    margin-top: 10px !important;
+    margin-top: 30px !important;
   }
 
   .dropdown .dropdown-menu.show {
@@ -22242,9 +22242,9 @@ hr.horizontal.gray-light {
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {
-  padding-top: 0.675rem;
-  padding-bottom: 0.675rem;
-  margin: 0 0.5rem;
+  /* padding-top: 0.675rem; */
+  /* padding-bottom: 0.675rem; */
+  /* margin: 0 0.5rem; */
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link .nav-link-text,

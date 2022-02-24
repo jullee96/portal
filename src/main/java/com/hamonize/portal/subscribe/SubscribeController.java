@@ -5,9 +5,11 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,8 +95,8 @@ public class SubscribeController {
         String itemno = (String) session.getAttribute("itemno");
     
         User uvo = ur.findByUserid(userid).get();
-        logger.info("\n\n\n <<< doamin 생성 페이지 >> ");
 
+        logger.info("\n\n\n <<< doamin 생성 페이지 >> ");
         logger.info("\n\n\nuserid >> {}",userid);
         logger.info("domain >> {}", uvo.getDomain());
         logger.info("itemno >> {}",itemno);
@@ -145,4 +147,43 @@ public class SubscribeController {
 
 	}
 
+
+    /**
+     * 도메인 정보 추가 func
+     * 
+     * 결제 정보가 있는 경우만 도메인 생성가능
+     * @param session
+     * @param vo
+     * @return
+     */
+    @GetMapping("/bills")
+    // @ResponseBody
+    public String getbillingInfo(HttpSession session, Subscribe vo, Model model) {
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        List<Subscribe> list = sr.findAllByUserid(user.getUserid());        
+        for (Subscribe subscribe : list) {
+            logger.info("subscrib : {}", subscribe.getCardnum());
+        }        
+        
+        model.addAttribute("pList", list);
+        
+        return "/subscribe/info";
+      
+	}
+
+    /**
+     * 도메인 정보 추가 func
+     * 
+     * 결제 정보가 있는 경우만 도메인 생성가능
+     * @param session
+     * @param vo
+     * @return
+     */
+    @GetMapping("/invoices")
+    public String getList(HttpSession session, Subscribe vo) {
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+
+        return "/subscribe/invoice";
+      
+	}
 }

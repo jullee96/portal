@@ -1,5 +1,6 @@
 package com.hamonize.portal.user;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 import com.hamonize.portal.paging.PagingVo;
 
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicUpdate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +26,7 @@ import lombok.Setter;
 @Table(name="tbl_admin_user")
 public class User extends PagingVo {
 	// 센터 관리자
+	
 	@Size(max=50)
 	@Comment("도메인 명")
 	private String domain;
@@ -51,20 +54,21 @@ public class User extends PagingVo {
 	@Comment("비밀번호 암호화 솔트 값")
 	private String salt;
 
+	@Transient
 	@Comment("활성 비활성 구분 값 > 1 : 활성 , 0 : 비활성")
 	private String status;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "rgstr_date")
-	private Date rgstrDate;
+	private LocalDateTime rgstrDate;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updt_date")
-	private Date updtDate;
+	private LocalDateTime updtDate;
 	
-    @Column(name="login_check",columnDefinition = "integer default 0")
+    @Transient
+	@Column(name="login_check",columnDefinition = "integer default 0")
 	private int logincheck;
 
+	@Transient
 	@Comment("프로필 이미지")
     @Size(max=300)
 	private String picture;

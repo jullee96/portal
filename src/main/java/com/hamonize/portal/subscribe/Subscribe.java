@@ -5,7 +5,6 @@ import javax.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.Size;
@@ -65,7 +64,7 @@ public class Subscribe {
     
     @Column(name = "insert_dt")
     @Comment("결제 일시")
-    private Date insertdt;
+    private LocalDateTime insertdt;
 
     @Column(name = "update_dt")
     @Comment("결제정보 업데이트 일시")

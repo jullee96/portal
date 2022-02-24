@@ -126,6 +126,74 @@
       }
     });
 
+    $("#user-form").validate({
+      onkeyup: function(element) {
+        $(element).valid(); 
+      },
+      rules: {
+        username: {
+          required: true,
+          minlength: 2
+        },
+        before_passwd: {
+          required: true,
+          remote : {
+            type: 'post',
+            url : '/user/passwdChk',
+            data: {
+              before_passwd: function() {
+                return $( "#before_passwd" ).val();
+              }
+            }
+          } 
+        },
+        passwd: {
+          required: true,
+          minlength: 4
+        },
+        re_passwd: {
+          required: true,
+          minlength: 4,
+          equalTo: "#passwd"
+        },
+        email: {
+          required: true,
+          email: true
+        }
+      },
+      messages: {
+        username: {
+          required: "이름을 입력해주세요",
+          minlength: "이름은 최소 2글자로 입력해주세요"
+        },
+        before_passwd:{
+          required: "비밀번호 입력해주세요",
+          remote:"비밀번호가 올바르지 않습니다"
+        },
+        passwd: {
+          required: "새 비밀번호를 입력해주세요",
+          minlength: "비밀번호는 최소 4자리로 입력해주세요"
+        },
+        re_passwd: {
+          required: "비밀번호를 확인해주세요",
+          minlength: "비밀번호는 최소 4자리로 입력해주세요",
+          equalTo: "비밀번호가 일치하지 않습니다"
+        },
+        email: {
+          required: "이메일을 입력해주세요",
+          email: "유효한 이메일이 아닙니다"
+        },
+        
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger')
+        $(element).addClass('form-control-danger')
+      }
+    });
 
 
 

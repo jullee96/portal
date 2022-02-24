@@ -23,5 +23,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
         value = "UPDATE tbl_admin_user SET domain = :domain WHERE user_id = :userid " , nativeQuery = true
     )
     void updateDomain(@Param("domain") String domain, @Param("userid") String userid);
+   
+    @Modifying
+    @Query(
+        value = "UPDATE tbl_admin_user SET pass_wd = :#{#user.passwd} , salt = :#{#user.salt} , updt_date = :#{#user.updtDate} WHERE user_id = :#{#user.userid} " , nativeQuery = true
+    )
+    void updatePasswd(@Param("user") User user);
       
 }

@@ -1,9 +1,7 @@
 package com.hamonize.portal.subscribe;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +16,8 @@ public class SubscribeService {
 	private SubscribeRepostory sr;
 
     public Subscribe save(Subscribe vo){
-        java.util.Date date = new Date();
-        java.sql.Date s = new java.sql.Date(date.getTime());
-
-        vo.setInsertdt(s);
+        
+        vo.setInsertdt(LocalDateTime.now());
         return sr.save(vo);
     }
 

@@ -25,19 +25,11 @@ public class SecurityUser extends User {
     private String status;
     private String username;
     private String salt;
+    private String email;
 
     // 결제정보
     private String domain;
     private int itemno;
-
-    // public SecurityUser(String userid, String passwd, String username, String salt, String domain ) {
-    //     super(userid, passwd, makeGrantedAuthority()); 
-    //     this.userid = userid;
-    //     this.passwd = passwd;
-    //     this.username = username;
-    //     this.salt = salt;
-    //     this.domain = domain;
-    // }
 
     public SecurityUser(com.hamonize.portal.user.User user) {
         super(user.getUserid(), user.getPasswd(), makeGrantedAuthority()); 
@@ -46,6 +38,7 @@ public class SecurityUser extends User {
         this.username = user.getUsername();
         this.salt = user.getSalt();
         this.domain = user.getDomain();
+        this.email = user.getEmail();
     }
 
     private static Set<GrantedAuthority> makeGrantedAuthority() {
