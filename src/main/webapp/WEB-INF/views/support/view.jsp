@@ -201,7 +201,6 @@ function uploadImage(blob){
 document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
 console.log(editor.getHTML());
 </script>
-
 <script>
 $(document).on("keyup", ".phoneNumber", function() { 
     $(this).val( $(this).val().replace(/[^0-9]/g, "")
