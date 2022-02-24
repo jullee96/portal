@@ -1,20 +1,5 @@
 version : '3'
 services :
-    # db:
-    #     container_name: db
-    #     image: postgres:10.16
-    #     environment:
-    #         POSTGRES_USER : hamonize
-    #         POSTGRES_PASSWORD : password
-    #         POSTGRES_DB : hamonize_center
-    #         TZ : "Asia/Seoul"
-    #     ports:
-    #         - "5435:5432"
-    #     volumes:
-    #         - ./sql:/docker-entrypoint-initdb.d
-    #         - psql-data:/var/lib/postgresql/data
-    #     restart: always
-
     redis:
         container_name: redis
         image: redis
@@ -22,7 +7,5 @@ services :
         restart: always
         ports:
             - "6379:6379"           
-# volumes:
-#     psql-data:
 
 
