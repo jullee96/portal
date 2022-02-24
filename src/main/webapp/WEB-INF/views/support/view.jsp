@@ -200,7 +200,6 @@ function uploadImage(blob){
 
 document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
 console.log(editor.getHTML());
-
 </script>
 
 <script>
