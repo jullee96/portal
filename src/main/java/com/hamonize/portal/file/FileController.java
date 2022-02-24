@@ -135,7 +135,6 @@ public class FileController {
             logger.info("fileUrl >> {}",fileUrl.toString());
             logger.info("fileUrl??  >> {}",fileUrl);
 
-            
             // IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
 
         return fileUrl;    
