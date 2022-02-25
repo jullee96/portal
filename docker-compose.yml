@@ -2,10 +2,10 @@ version : '3'
 services :
     redis:
         container_name: redis
-        image: redis
+        build: .        
+#image: redis
         command: redis-server --requirepass root --port 6379
         restart: always
         ports:
             - "6379:6379"           
-
 

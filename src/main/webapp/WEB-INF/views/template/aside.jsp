@@ -103,7 +103,7 @@ function gotoUrl(url){
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/support/view">
+          <a class="nav-link " href="/support/apply">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             </div>
             <span class="nav-link-text ms-1 text-sm">기술지원 신청</span>

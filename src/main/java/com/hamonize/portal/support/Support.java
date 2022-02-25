@@ -1,5 +1,7 @@
 package com.hamonize.portal.support;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,20 +37,12 @@ public class Support {
     @Comment("문의글 시퀀스 번호")
     private int seq;
 
-    @Comment("구분")
-    private String type;
-
-    @Comment("도메인 정보")
-    private String domain;
+    @Comment("구분 > 1:결제, 2: 기술 , 3: 기타 ")
+    private Integer type;
 
     @Comment("유저 아이디")
+    @Column(name = "user_id")
     private String userid;
-
-    @Comment("담당자 이름")
-    private String name;
-
-    @Comment("연락처")
-    private String tel;
 
     @Comment("이메일")
     private String email;
@@ -57,8 +51,13 @@ public class Support {
     private String title;
 
     @Comment("내용")
+    @Column(columnDefinition="TEXT")
     private String contents;
 
-    @Comment("내용")
-    private Integer[] imgseq;
+    @Comment("진행 상태 > 0: 처리중, 1:완료")
+    private Integer status;
+
+    @Column(name = "ins_date")
+    private LocalDateTime insdate;
+
 }

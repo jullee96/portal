@@ -7,7 +7,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Hamonize Cloud Service | Support List
+    Hamonize Cloud Service | Support Apply
   </title>
 
 <!-- tuideditor -->
@@ -53,53 +53,46 @@ img[alt=alt_img] {
     <%@ include file="../template/navbar.jsp" %>
     <!-- End Navbar -->
 
-<form id="support-form" method="POST" action="/support/save">
+<form id="support-form" name="support-form" >
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <h5 class="font-weight-bolder">1:1 문의하기</h5>    
                 <div class="d-flex align-items-center">
-                  <button type="submit" class="btn btn-primary btn-sm ms-auto ">신청하기</button>
+                  <button onClick="saveSubmit()" class="btn btn-primary btn-sm ms-auto ">신청하기</button>
                 </div>
 
 
                 <div class="row">
                     <div class="col-12">
                         <label class="sub-title" >선택</label>
-                        <select class="form-control" name="choices-button" id="choices-button" placeholder="Departure" required focused>
+                        <input type="hidden" id="select_type" value="${edit.type}" >
+                        <select class="form-control" name="type" id="type" required focused>
                             <option value="" disabled selected hidden>선택해주세요</option>
                             <option value="1" >결제문의</option>
                             <option value="2">기술문의</option>
                             <option value="3">기타</option>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-6 ">
-                        <label class="sub-title">조직명</label>
-                        <input class="form-control" type="text" >
-                    </div>
+
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label class="text-md-start">담당자</label>
-                        <input class="form-control" type="text" value="${userSession.username}" >
-
+                        <input class="form-control" type="text" id="name" name="name" value="${userSession.username}" >
                     </div>
-                    <div class="col-12 col-sm-6 ">
-                        <label class="text-md-start">연락처</label>
-                        <input class="phoneNumber form-control" type="text" name="tel" maxlength=13>
 
-                    </div>
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label class="text-md-start">이메일</label>
-                        <input class="form-control" type="email" name="email" value="${userSession.email}" >
+                        <input class="form-control" type="email" id="email" name="email" value="${userSession.email}" >
 
                     </div>
 
                     <div class="col-12">
                         <label class="text-md-start">제목</label>
-                        <input class="form-control" type="text" value="" name="contents">
+                        <input class="form-control" type="text" id="title" name="title" value="${edit.title}" required>
                     </div>
 
                     <div class="col-sm-12">
                     <label class="mt-4">내용</label>
-                    <div class="contents" id ="editor"></div>
+                    <div class="contents" id ="editor"> ${edit.contents}</div>
                     <div id="contents"></div>
                     
                 </div>
@@ -142,11 +135,11 @@ const editor = new Editor({
     
 });
 
-
+ console.log(editor.getHTML());
+    
 
 function uploadImage(blob){
-    console.log("uploadImage >> "+blob);
-    var url;
+    let url;
 
     let filename = new Date().getTime() + ".png";
     let InputFiles = new File([blob], filename, {
@@ -154,24 +147,18 @@ function uploadImage(blob){
         lastModified: Date.now()
     });
 
-    console.log(InputFiles);
+    const keytype ="support";
 
-    var keytype ="support";
-
-    console.log("keytype > "+keytype);
-    console.log("filename > "+filename);
-    
     if(InputFiles == null ){
         alert("파일을 선택해주세요");
         return;
     }
   
     var formData = new FormData();
+
     formData.append("keyfile", InputFiles);
     formData.append("keytype", keytype);
     
-
-
     $.ajax({
         type:"POST",
         url: "/file/upload",
@@ -182,31 +169,72 @@ function uploadImage(blob){
         success: function(retval){
             if(retval != "F"){
                 console.log("업로드 성공" +retval);
-                console.log("111url >>>>>>>> " +url);
                
             } else{
                 console.log("업로드 실패");
             }
-            console.log("retval >> " +retval);
-        
             url = retval;
-            console.log("url ?? " +url);
-    
         }
     });
 
     return url;
 }
 
-document.querySelector('#contents').insertAdjacentHTML('afterbegin' ,editor.getHTML());
-console.log(editor.getHTML());
 </script>
 <script>
+
+$(document).ready(function () {
+  const select_type = $("#select_type").val();
+
+  $("#type").val(select_type);  
+
+});
+
 $(document).on("keyup", ".phoneNumber", function() { 
     $(this).val( $(this).val().replace(/[^0-9]/g, "")
     .replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3")
     .replace("--", "-") ); 
 });
+
+
+function saveSubmit(){
+
+
+    $("#support-form").validate({
+      submitHandler: function(form) {
+            const title = $("#title").val();
+            const contents = editor.getHTML();
+            const userid = $("#userid").val();
+            const email = $("#email").val();
+            const type = $("#type").val();
+            
+            $.ajax( {
+                url : "/support/save",
+                data : {
+                        title : title,
+                        contents : contents,
+                        userid : userid,
+                        email : email,
+                        type : type
+                    },
+            success : function(seq) {
+                if(seq > 0){
+                    alert( "success" );
+                } else{
+                    alert( "fail" );
+                }
+                location.href="/support/list";
+
+            }, error : function(e) {
+                alert( "fail" );
+            }
+        } );
+
+      }  
+    });
+
+    
+}
 
 </script>
 </html>
