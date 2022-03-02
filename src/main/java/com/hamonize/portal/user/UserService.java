@@ -19,8 +19,12 @@ public class UserService {
 
     public void update(User vo){
         String salt = SHA256Util.generateSalt();
-        vo.setPasswd(SHA256Util.getEncrypt(vo.getPasswd(), salt));
-        vo.setSalt(salt);
+        
+        if(vo.getPasswd() != null || "".equals(vo.getPasswd())){
+            vo.setPasswd(SHA256Util.getEncrypt(vo.getPasswd(), salt));
+            vo.setSalt(salt);
+        }
+        
         vo.setUpdtDate(LocalDateTime.now()); 
         
         ur.save(vo);
@@ -31,7 +35,6 @@ public class UserService {
         logger.info("username : {}",vo.getUsername());
         logger.info("email : {}",vo.getEmail());
 
-        logger.info("com_no : {}",vo.getComNo());
 
     }
 }

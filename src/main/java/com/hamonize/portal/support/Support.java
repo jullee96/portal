@@ -29,7 +29,6 @@ import lombok.Setter;
 public class Support {
     
     @Id
-    @Size(max=50)
     @GeneratedValue(
             strategy=GenerationType.SEQUENCE, 
             generator="TBL_SUPPORT_SEQ_GEN"     

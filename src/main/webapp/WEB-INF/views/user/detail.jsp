@@ -216,7 +216,7 @@
                   <div class="col-md">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">사업자 번호 </label>
-                    <input class="form-control" type="text" id="comNo" name="comNo" value="" maxlength=12>
+                    <input class="form-control" type="text" id="businessNumber" name="businessNumber" value="" maxlength=12>
                     </div>
                   </div>
 
@@ -251,7 +251,7 @@ function checkNumber(event) {
   return false;
 }
 
-$(document).on("keyup", "#comNo", function() { 
+$(document).on("keyup", "#businessNumber", function() { 
     $(this).val( $(this).val().replace(/[^0-9]/g, "")
     .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`)
     .replace("--", "-") ); 

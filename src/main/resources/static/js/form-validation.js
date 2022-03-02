@@ -194,7 +194,7 @@
           required: true,
           email: true
         },
-        comNo: {
+        businessNumber: {
           checkComNo: true
          } 
       },
@@ -220,7 +220,7 @@
           required: "이메일을 입력해주세요",
           email: "유효한 이메일이 아닙니다"
         },
-        comNo: {
+        businessNumber: {
           checkComNo : "유효하지 않은 사업지 번호입니다. 다시 확인해주세요."
         }
       },

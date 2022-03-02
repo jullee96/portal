@@ -44,7 +44,7 @@ public class UserController {
 	}
 
     @RequestMapping("/update")
-    public String save(HttpSession session, HttpServletResponse response, User vo) throws IOException {
+    public String save(HttpSession session, HttpServletResponse response, User vo, Company cvo) throws IOException {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         vo.setUserid(user.getUserid());
         
@@ -53,34 +53,36 @@ public class UserController {
         // String message = getExceptionMessage(exception);
             
         PrintWriter out = response.getWriter();
- 
-        logger.info("user >>> {}", vo.getPasswd());
 
-        us.update(vo);
+        logger.info("getBefore_passwd >>> {}", vo.getBefore_passwd());
+        logger.info("passwd >>> {}", vo.getPasswd());
+        logger.info("company info >>> {}", cvo);
 
-        // update session user
-        User newVo = ur.findByUserid(vo.getUserid()).get();
+        // us.update(vo);
 
-        SecurityUser updateUser = new SecurityUser(newVo);
-        session.removeAttribute("userSession");
-        session.setAttribute("userSession", updateUser);
+        // // update session user
+        // User newVo = ur.findByUserid(vo.getUserid()).get();
+
+        // SecurityUser updateUser = new SecurityUser(newVo);
+        // session.removeAttribute("userSession");
+        // session.setAttribute("userSession", updateUser);
 
 
-        // if(!"".equals(vo.getPasswd()) && vo.getPasswd() != null){
-        //     us.update(vo);
+        if(!"".equals(vo.getBefore_passwd()) && vo.getBefore_passwd() != null){
+            us.update(vo);
 
-        //     // update session user
-        //     User newVo = ur.findByUserid(vo.getUserid()).get();
+            // update session user
+            User newVo = ur.findByUserid(vo.getUserid()).get();
 
-        //     SecurityUser updateUser = new SecurityUser(newVo);
-        //     session.removeAttribute("userSession");
-        //     session.setAttribute("userSession", updateUser);
+            SecurityUser updateUser = new SecurityUser(newVo);
+            session.removeAttribute("userSession");
+            session.setAttribute("userSession", updateUser);
 
-        // }else{ 
-        //     // out.println("<script>alert(''); location.href='/login';</script>");
-        //     // out.flush();
-        //     logger.info("변경사항 없음");
-        // }
+        }else{ 
+            // out.println("<script>alert(''); location.href='/login';</script>");
+            // out.flush();
+            logger.info("변경사항 없음");
+        }
 
         return "redirect:/user/detail";
 	}

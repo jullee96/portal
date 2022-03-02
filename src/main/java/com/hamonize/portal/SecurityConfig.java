@@ -1,6 +1,6 @@
 package com.hamonize.portal;
 
-import com.hamonize.portal.social.CustomOAuth2UserService;
+// import com.hamonize.portal.social.CustomOAuth2UserService;
 import com.hamonize.portal.user.SecurityUserDetailsService;
 
 import org.slf4j.Logger;
@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     SecurityUserDetailsService userDetailService;
     
-    @Autowired
-    CustomOAuth2UserService customOAuth2UserService;
+    // @Autowired
+    // CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     private CustomAuthenticationProvider authProvider;
