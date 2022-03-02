@@ -126,6 +126,40 @@
       }
     });
 
+
+
+
+
+  function checkCorporateRegiNumber(number){
+    var numberMap = number.replace(/-/gi, '').split('').map(function (d){
+      return parseInt(d, 10);
+    });
+    
+    if(numberMap.length == 10){
+      var keyArr = [1, 3, 7, 1, 3, 7, 1, 3, 5];
+      var chk = 0;
+      
+      keyArr.forEach(function(d, i){
+        chk += d * numberMap[i];
+      });
+      
+      chk += parseInt((keyArr[8] * numberMap[8])/ 10, 10);
+      console.log(chk);
+      return Math.floor(numberMap[9]) === ( (10 - (chk % 10) ) % 10);
+    }
+    
+    return false;
+  }
+
+
+    $.validator.addMethod("checkComNo", function(value, element) {
+      console.log("checkCorporateRegiNumber >> "+checkCorporateRegiNumber(value));
+
+      return checkCorporateRegiNumber(value);
+    }, "* 유요하지 않은 번호입니다");
+
+
+
     $("#user-form").validate({
       onkeyup: function(element) {
         $(element).valid(); 
@@ -148,18 +182,21 @@
           } 
         },
         passwd: {
-          required: true,
+          // required: true,
           minlength: 4
         },
         re_passwd: {
-          required: true,
+          // required: true,
           minlength: 4,
           equalTo: "#passwd"
         },
         email: {
           required: true,
           email: true
-        }
+        },
+        comNo: {
+          checkComNo: true
+         } 
       },
       messages: {
         username: {
@@ -171,11 +208,11 @@
           remote:"비밀번호가 올바르지 않습니다"
         },
         passwd: {
-          required: "새 비밀번호를 입력해주세요",
+          // required: "새 비밀번호를 입력해주세요",
           minlength: "비밀번호는 최소 4자리로 입력해주세요"
         },
         re_passwd: {
-          required: "비밀번호를 확인해주세요",
+          // required: "비밀번호를 확인해주세요",
           minlength: "비밀번호는 최소 4자리로 입력해주세요",
           equalTo: "비밀번호가 일치하지 않습니다"
         },
@@ -183,7 +220,9 @@
           required: "이메일을 입력해주세요",
           email: "유효한 이메일이 아닙니다"
         },
-        
+        comNo: {
+          checkComNo : "유효하지 않은 사업지 번호입니다. 다시 확인해주세요."
+        }
       },
       errorPlacement: function(label, element) {
         label.addClass('mt-2 text-danger');

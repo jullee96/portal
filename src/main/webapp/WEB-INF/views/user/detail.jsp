@@ -202,37 +202,26 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="example-text-input" class="form-control-label"> 회사명 </label>
-                      <input class="form-control" type="text" value="">
+                      <label for="example-text-input" class="form-control-label"> 회사명</label>
+                      <input class="form-control" type="text" id="comNm" name="comNm" value="">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label"> 대표명 </label>
-                      <input class="form-control" type="text" value="">
+                      <input class="form-control" type="text" id="rprsNm" name="rprsNm" value="">
                     </div>
                   </div>
                   
-                  <div class="col-md-2">
+                  <div class="col-md">
                     <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">사업자 번호</label>
-                      <input class="form-control" type="text" value="">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">&nbsp; </label>
-                      <input class="form-control" type="text" value="">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">&nbsp; </label>
-                      <input class="form-control" type="text" value="">
+                      <label for="example-text-input" class="form-control-label">사업자 번호 </label>
+                    <input class="form-control" type="text" id="comNo" name="comNo" value="" maxlength=12>
                     </div>
                   </div>
 
                   
+ 
                 </div>
                 
               </div>
@@ -252,9 +241,27 @@
 </body>
 <script>
 
+function checkNumber(event) {
+  if(event.key === '.' 
+     || event.key === '-'
+     || event.key >= 0 && event.key <= 9) {
+    return true;
+  }
+  
+  return false;
+}
+
+$(document).on("keyup", "#comNo", function() { 
+    $(this).val( $(this).val().replace(/[^0-9]/g, "")
+    .replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`)
+    .replace("--", "-") ); 
+});
+
+
 $(document).ready(function () {
 
     $("#user-form").validate({
+      // ignore: "",
       submitHandler: function(form) {
           form.submit();
       }  

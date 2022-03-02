@@ -55,21 +55,32 @@ public class UserController {
         PrintWriter out = response.getWriter();
  
         logger.info("user >>> {}", vo.getPasswd());
-        if(!"".equals(vo.getPasswd()) && vo.getPasswd() != null){
-            us.update(vo);
 
-            // update session user
-            User newVo = ur.findByUserid(vo.getUserid()).get();
+        us.update(vo);
 
-            SecurityUser updateUser = new SecurityUser(newVo);
-            session.removeAttribute("userSession");
-            session.setAttribute("userSession", updateUser);
+        // update session user
+        User newVo = ur.findByUserid(vo.getUserid()).get();
 
-        }else{ 
-            // out.println("<script>alert(''); location.href='/login';</script>");
-            // out.flush();
-            logger.info("변경사항 없음");
-        }
+        SecurityUser updateUser = new SecurityUser(newVo);
+        session.removeAttribute("userSession");
+        session.setAttribute("userSession", updateUser);
+
+
+        // if(!"".equals(vo.getPasswd()) && vo.getPasswd() != null){
+        //     us.update(vo);
+
+        //     // update session user
+        //     User newVo = ur.findByUserid(vo.getUserid()).get();
+
+        //     SecurityUser updateUser = new SecurityUser(newVo);
+        //     session.removeAttribute("userSession");
+        //     session.setAttribute("userSession", updateUser);
+
+        // }else{ 
+        //     // out.println("<script>alert(''); location.href='/login';</script>");
+        //     // out.flush();
+        //     logger.info("변경사항 없음");
+        // }
 
         return "redirect:/user/detail";
 	}
