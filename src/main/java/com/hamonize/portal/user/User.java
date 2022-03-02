@@ -77,11 +77,4 @@ public class User extends PagingVo {
 	@Comment("유저권한 포탈 유저 : USER / 어드민 유저 : ADMIN ")
 	private String role;
 
-
-	@Builder
-	User(){
-		
-	}
-
-
 }
