@@ -4,11 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hamonize.portal.RedisConfig;
 import com.hamonize.portal.user.SecurityUser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     public int a = 0;
+
     @Autowired
     HttpSession httpSession;
-
+    
+    @Autowired
+    RedisConfig redis;
+     
     @RequestMapping("")
     public String login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
@@ -50,7 +56,7 @@ public class LoginController {
     public String logoutProc(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
     	request.getSession().invalidate();
 		request.getSession(true);
-        session.removeAttribute("KEY");
+        session.removeAttribute("userSession");
 
 		return "redirect:/";
 	}

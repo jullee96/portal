@@ -7,6 +7,9 @@ import java.net.URL;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hamonize.portal.company.Company;
+import com.hamonize.portal.company.CompanyRepository;
+import com.hamonize.portal.company.CompanyService;
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
 import com.hamonize.portal.util.SHA256Util;
@@ -35,18 +38,28 @@ public class UserController {
     @Autowired
     UserRepository ur;
 
+    @Autowired
+    CompanyService cs;
+
+    @Autowired
+    CompanyRepository cr;
+
     @RequestMapping("/detail")
     public String signup(HttpSession session, User vo, Model model) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
        logger.info("user id >>> {}",user.getUserid());
-        
+       Company newComVo = cr.findByUserid(user.getUserid());
+       model.addAttribute("companyInfo", newComVo);
+
         return "/user/detail";
 	}
 
     @RequestMapping("/update")
-    public String save(HttpSession session, HttpServletResponse response, User vo, Company cvo) throws IOException {
+    public String save(HttpSession session, HttpServletResponse response, User vo, Company cvo, Model model ) throws IOException {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         vo.setUserid(user.getUserid());
+        vo.setDomain(user.getDomain());
+        cvo.setUserid(user.getUserid());
         
         // 수정실패시 출력 메세지
         response.setContentType("text/html; charset=UTF-8");
@@ -56,23 +69,20 @@ public class UserController {
 
         logger.info("getBefore_passwd >>> {}", vo.getBefore_passwd());
         logger.info("passwd >>> {}", vo.getPasswd());
-        logger.info("company info >>> {}", cvo);
-
-        // us.update(vo);
-
-        // // update session user
-        // User newVo = ur.findByUserid(vo.getUserid()).get();
-
-        // SecurityUser updateUser = new SecurityUser(newVo);
-        // session.removeAttribute("userSession");
-        // session.setAttribute("userSession", updateUser);
+        logger.info("company info >>> {}", cvo.getBusinessNumber());
 
 
         if(!"".equals(vo.getBefore_passwd()) && vo.getBefore_passwd() != null){
             us.update(vo);
+            cs.update(cvo);
+
 
             // update session user
             User newVo = ur.findByUserid(vo.getUserid()).get();
+            // Company newComVo = cr.findByUserid(vo.getUserid());
+            // // newVo.setComName(newComVo.getComName());
+            // newVo.setRprsName(newComVo.getRprsName());
+            // newVo.setBusinessNumber(newComVo.getBusinessNumber());
 
             SecurityUser updateUser = new SecurityUser(newVo);
             session.removeAttribute("userSession");

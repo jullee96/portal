@@ -63,7 +63,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         
         httpSession.setAttribute("userSession", user);
         
-        logger.info("\n\n\n setsessionAPI >>>>>> {}\n\n" ,setsessionAPI(httpSession, user.getUserid()));
         
         // String redirectUrl = (String) httpSession.getAttribute("url");
         // logger.info("redirectUrl : ",redirectUrl);
@@ -102,14 +101,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     }
 
 
-    public String setsessionAPI(HttpSession httpSession, String userid) {
-        // httpSession.setAttribute("ID", userid);
-        logger.info("setsessionAPI : userid >>> ", userid);
-        httpSession.setAttribute("KEY", userid);
+    // public String setsessionAPI(HttpSession httpSession, String userid) {
+    //     // httpSession.setAttribute("ID", userid);
+    //     logger.info("setsessionAPI : userid >>> ", userid);
+    //     httpSession.setAttribute("KEY", userid);
         
-        String returnValue = LocalDateTime.now().toString() + " \nsession set id : " + httpSession.getId() + " \n<br>session set Value : " + userid;
+    //     String returnValue = LocalDateTime.now().toString() + " \nsession set id : " + httpSession.getId() + " \n<br>session set Value : " + userid;
         
-        return returnValue;
-    }
+    //     return returnValue;
+    // }
 
 }

@@ -2,7 +2,11 @@ package com.hamonize.portal.support;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,25 +45,48 @@ public class SupportController {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
         List<Support> list = sr.findAll();
-        model.addAttribute("list", list);
+        List<Support> slist = new ArrayList<>();
+
+        for (Support support : list) {
+
+            logger.info("신청일 : {}", support.getInsdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            support.setViewDate(support.getInsdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            slist.add(support);
+        } 
+
+    
+        model.addAttribute("list", slist);
         return "/support/list";
 	}
 
     @GetMapping("/apply")
     public String supportCreate(Support vo, HttpSession session, Model model) {
         
-        logger.info("\n\n\n <<< 1:1문의 상세 >> ");
+        logger.info("\n\n\n <<< 1:1문의 작성 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
       
-        return "/support/view";
+        return "/support/apply";
 	}
 
+    @GetMapping("/edit")
+    public String supportEdit(Support vo, HttpSession session, Model model) {
+        logger.info("seq : ",vo.getSeq());
+
+        logger.info("\n\n\n <<< 1:1문의 상세 수정 >> ");
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        logger.info("seq >> {}", vo.getSeq());
+        Support edit = sr.findBySeq(vo.getSeq());
+            
+        model.addAttribute("edit", edit);
+    
+        return "/support/apply";
+	}
 
     @GetMapping("/view")
     public String supportView(Support vo, HttpSession session, Model model) {
         logger.info("seq : ",vo.getSeq());
 
-        logger.info("\n\n\n <<< 1:1문의 상세 >> ");
+        logger.info("\n\n\n <<< 1:1문의 상세 보기>> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
             logger.info("seq >> {}", vo.getSeq());
             Support edit = sr.findBySeq(vo.getSeq());
@@ -71,24 +98,41 @@ public class SupportController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public Integer save(HttpSession session, Support vo ) {
+    public Long save(HttpSession session, Support vo ) {
         logger.info("\n\n\n <<< support 저장 >> ");
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        vo.setUserid(user.getUserid());
         Support ret = new Support();
-        vo.setInsdate(LocalDateTime.now());
-   
-        ret = sr.save(vo);
+        Long retval = (long) 0;
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        
+        vo.setUserid(user.getUserid());
+        logger.info("getSeq >> {}",vo.getSeq());
+        
+        if(vo.getSeq() != null ){
+            vo.setUpdtdate(LocalDateTime.now());
+            int aa = sr.update(vo);
+            retval = (long) aa;
+
+            logger.info("update >>>{} ", retval);
+            
+        } else{
+            logger.info("save >>> ");
+            vo.setStatus("0");
+            vo.setInsdate(LocalDateTime.now());
+            ret = sr.save(vo);
+            retval = ret.getSeq();
+        }
+        
       
-        return ret.getSeq();
+        return retval;
     }
 
     @RequestMapping("/delete")
-    public String delete(HttpSession session, User vo) {
-        
+    public String delete(HttpSession session, Support vo) throws Exception{
+        logger.info("seq : ",vo.getSeq());
+
         logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-
+        sr.delete(vo);
 
         return "redirect:/support/list";
 	}

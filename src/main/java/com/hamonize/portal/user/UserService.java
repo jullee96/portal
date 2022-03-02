@@ -20,20 +20,19 @@ public class UserService {
     public void update(User vo){
         String salt = SHA256Util.generateSalt();
         
-        if(vo.getPasswd() != null || "".equals(vo.getPasswd())){
+        if(vo.getPasswd() == null || "".equals(vo.getPasswd())){
+            User tmpUsr = ur.findByUserid(vo.getUserid()).get();
+            vo.setPasswd(tmpUsr.getPasswd());
+            vo.setSalt(tmpUsr.getSalt());
+            
+        } else{
             vo.setPasswd(SHA256Util.getEncrypt(vo.getPasswd(), salt));
             vo.setSalt(salt);
         }
+
         
         vo.setUpdtDate(LocalDateTime.now()); 
-        
         ur.save(vo);
-
-        logger.info("<< change value >>");
-        logger.info("userid : {}",vo.getUserid());
-        logger.info("password : {}",vo.getPasswd());
-        logger.info("username : {}",vo.getUsername());
-        logger.info("email : {}",vo.getEmail());
 
 
     }

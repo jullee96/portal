@@ -203,20 +203,20 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label"> 회사명</label>
-                      <input class="form-control" type="text" id="comNm" name="comNm" value="">
+                      <input class="form-control" type="text" id="companyName" name="companyName" value="${companyInfo.companyName}">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label"> 대표명 </label>
-                      <input class="form-control" type="text" id="rprsNm" name="rprsNm" value="">
+                      <input class="form-control" type="text" id="rprsName" name="rprsName" value="${companyInfo.rprsName}">
                     </div>
                   </div>
                   
                   <div class="col-md">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">사업자 번호 </label>
-                    <input class="form-control" type="text" id="businessNumber" name="businessNumber" value="" maxlength=12>
+                    <input class="form-control" type="text" id="businessNumber" name="businessNumber" value="${companyInfo.businessNumber}" maxlength=12>
                     </div>
                   </div>
 

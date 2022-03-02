@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Comment;
@@ -34,10 +35,11 @@ public class Support {
             generator="TBL_SUPPORT_SEQ_GEN"     
             )
     @Comment("문의글 시퀀스 번호")
-    private int seq;
+    private Long seq;
 
+    @Size(max = 10)
     @Comment("구분 > 1:결제, 2: 기술 , 3: 기타 ")
-    private Integer type;
+    private String type;
 
     @Comment("유저 아이디")
     @Column(name = "user_id")
@@ -53,10 +55,20 @@ public class Support {
     @Column(columnDefinition="TEXT")
     private String contents;
 
+    @Size(max = 10)
     @Comment("진행 상태 > 0: 처리중, 1:완료")
-    private Integer status;
+    private String status;
+
 
     @Column(name = "ins_date")
     private LocalDateTime insdate;
+    
+    @Column(name = "updt_date")
+    private LocalDateTime updtdate;
+
+    @Transient
+    private String viewDate;
+
+
 
 }

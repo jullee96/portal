@@ -48,42 +48,51 @@
                                 <td>
                                     <div class="d-flex px-2 py-1">
                                         <div class="d-flex flex-column justify-content-center">
-                                            <h6 class="mb-0 text-xs">${list.title}</h6>
+                                            <h6 class="mb-0 text-xs">
+                                                <a href="/support/view?seq=${list.seq}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                   ${list.title}
+                                                </a>    
+                                            
+                                            </h6>
                                         </div>
                                     </div>
                                 </td>
-                                <td id="aa" class="align-middle text-start">
-                                    <span class="badge badge-sm badge-secondary ">${list.type}
-                                        <c:if test="${list.type eq 1 } ">
+                                <td class="align-middle text-start">${list.type}
+     
+                                   <%-- <span class="badge badge-sm badge-secondary "> --%>
+
+                                        <c:if test="${list.type eq '1' } ">
                                             결제문의
                                         </c:if>
-                                        <c:if test="${list.type eq 2} ">
+                                        <c:if test="${list.type eq '2'} ">
                                             기술문의
-                                        </c:if><c:if test="${list.type eq 3} ">sadas
+                                        </c:if><c:if test="${list.type eq '3'} ">
                                             기타문의
                                         </c:if>
-                                    </span>
+                                    <%-- </span> --%>
                                 </td>
                             
-
                                 
                                 <td class="align-middle text-center">
-                                    <span class="badge badge-sm badge-secondary">처리중</span>
+                                    <span class="badge badge-sm badge-secondary">
+                                    <c:if test="${list.status eq '0'} " > 처리중</c:if>
+                                    ${list.status}
+                                    </span>
                                 </td>
                                 <td class="align-middle text-center">
+                                
                                 <div id="aa">
-                                    <input type="hidden" id="insdate" value="${list.insdate}">
-                                    <span class="text-secondary text-xs font-weight-bold">  </span>
+                                    <span id="${list.seq}" class="text-secondary text-xs font-weight-bold"> ${list.viewDate} </span>
                                 </div>
 
                                   
                                 </td>
                                 <td class="align-middle">
-                                    <a href="/support/view?seq=${list.seq}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    <a href="/support/edit?seq=${list.seq}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     수정
                                     </a>
                                         | 
-                                    <a href="#!" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                    <a href="#" onClick="fnDelete(${list.seq})" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                     삭제
                                     </a>
 
@@ -107,21 +116,14 @@
 
 <%@ include file="../template/core.jsp" %>
 
-
 <script>
 
-$(document).ready(function () {
-var insdate = $("#insdate").val();
-
-console.log("insdate > "+ $("#aa input").val() );
-let date = new Date($("#aa input").val());
-console.log("insdate > "+date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate());
-
-
-insdate = date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate();
-  $("#aa span").text(insdate);  
-
-});
+function fnDelete(seq){
+    console.log("seq >> "+seq);
+    if(confirm("삭제하시겠습니까?")){
+        location.href="/support/delete?seq="+seq;
+    }
+}
 
 </script>
 </html>
