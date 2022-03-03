@@ -69,9 +69,9 @@ img[alt=alt_img] {
                         <input type="hidden" id="select_type" value="${edit.type}" >
                         <select class="form-control" name="type" id="type" disabled focused>
                             <option value="" disabled selected hidden>선택해주세요</option>
-                            <option value="1" >결제문의</option>
-                            <option value="2">기술문의</option>
-                            <option value="3">기타</option>
+                            <option value="P" >결제문의</option>
+                            <option value="T">기술문의</option>
+                            <option value="E">기타</option>
                         </select>
                     </div>
 
@@ -121,5 +121,11 @@ const editor = new Editor({
 </script>
 <script>
 
+$(document).ready(function () {
+  const select_type = $("#select_type").val();
+
+  $("#type").val(select_type);  
+
+});
 </script>
 </html>

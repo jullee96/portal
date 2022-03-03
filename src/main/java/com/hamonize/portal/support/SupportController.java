@@ -21,6 +21,10 @@ import com.hamonize.portal.user.User;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,22 +44,31 @@ public class SupportController {
     SupportRepository sr;
 
     @RequestMapping("/list")
-    public String supportList(HttpSession session, Support vo, Model model) {
-        logger.info("\n\n\n <<< list >> ");
+    public String supportList(@RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable ,  HttpSession session, Support vo, Model model) {
+        logger.info("\n\n\n <<< list >> page : {}", page);
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
-        List<Support> list = sr.findAll();
+        
+        // paging
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
+        Page<Support> resultPage = sr.findAllByUserid(pageable, user.getUserid());
+        logger.info("resultPage getTotalPages >>>> {}", resultPage.getTotalPages());
+        logger.info("resultPage nextPageable >>>> {}", resultPage.nextPageable());
+
+        List<Support> list = resultPage.getContent();
         List<Support> slist = new ArrayList<>();
 
         for (Support support : list) {
-
-            logger.info("신청일 : {}", support.getInsdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            support.setStatus(support.getStatus().trim());
+            support.setType(support.getType().trim());
             support.setViewDate(support.getInsdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             slist.add(support);
+            
         } 
-
-    
         model.addAttribute("list", slist);
+        model.addAttribute("nowPage", page);
+        model.addAttribute("totalPage", resultPage.getTotalPages());
+
         return "/support/list";
 	}
 
@@ -116,7 +129,7 @@ public class SupportController {
             
         } else{
             logger.info("save >>> ");
-            vo.setStatus("0");
+            vo.setStatus("P");
             vo.setInsdate(LocalDateTime.now());
             ret = sr.save(vo);
             retval = ret.getSeq();

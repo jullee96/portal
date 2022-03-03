@@ -78,20 +78,20 @@ img[alt=alt_img] {
                         <input type="hidden" id="select_type" value="${edit.type}" >
                         <select class="form-control" name="type" id="type" required focused>
                             <option value="" disabled selected hidden>선택해주세요</option>
-                            <option value="1" >결제문의</option>
-                            <option value="2">기술문의</option>
-                            <option value="3">기타</option>
+                            <option value="P" >결제문의</option>
+                            <option value="T">기술문의</option>
+                            <option value="E">기타</option>
                         </select>
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label class="text-md-start">담당자</label>
-                        <input class="form-control" type="text" id="name" name="name" value="${userSession.username}" >
+                        <input class="form-control" type="text" id="name" name="name" value="${userSession.username}" disabled>
                     </div>
 
                     <div class="col-12 col-sm-6 mt-3 mt-sm-0">
                         <label class="text-md-start">이메일</label>
-                        <input class="form-control" type="email" id="email" name="email" value="${userSession.email}" >
+                        <input class="form-control" type="email" id="email" name="email" value="${userSession.email}" disabled>
 
                     </div>
 
@@ -198,12 +198,6 @@ $(document).ready(function () {
 
   $("#type").val(select_type);  
 
-});
-
-$(document).on("keyup", ".phoneNumber", function() { 
-    $(this).val( $(this).val().replace(/[^0-9]/g, "")
-    .replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3")
-    .replace("--", "-") ); 
 });
 
 
