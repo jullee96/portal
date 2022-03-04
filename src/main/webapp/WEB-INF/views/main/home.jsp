@@ -164,7 +164,7 @@
                     </c:otherwise>
                 </c:choose>
 
-                <%-- <c:if test="${userSession.domain != null || userSession.domain !='' }" >
+               <%-- <c:if test="${userSession.domain != null || userSession.domain !='' }" >
                     <a href="http://localhost:8081/mntrng/pcControlList" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain}시작하기</a>
                 </c:if>
                 <c:if test="${userSession.domain == null}" >
