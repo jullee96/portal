@@ -155,11 +155,12 @@
                 <p class="pr-0 mb-8 text-base text-gray-600 sm:text-lg xl:text-xl lg:pr-20">원격지의 PC 자원들을 보다 효율적으로 관리/모니터링 할 수 있는 클라우드 서비스를 사용해보세요 :)</p>
                 <c:choose>
                     <c:when test='${userSession.domain == "" or userSession.domain == null  }' >
-                        <a href="http://192.168.0.210:8080/#pricing" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain} 시작하기</a>
+                        <a href="/#pricing" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0"> 시작하기</a>
                     </c:when>
 
                     <c:otherwise>
-                        <a href="http://localhost:8081/mntrng/pcControlList" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">${userSession.domain}1시작하기</a>
+                        <%-- <a href="http://localhost:8081/mntrng/pcControlList" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">시작하기</a> --%>
+                        <a href="/user/detail" class="relative self-start inline-block w-auto px-8 py-4 mx-auto mt-0 text-base font-bold text-white bg-indigo-600 border-t border-gray-200 rounded-md shadow-xl sm:mt-1 fold-bold lg:mx-0">시작하기</a>
                     </c:otherwise>
                 </c:choose>
 

@@ -51,6 +51,16 @@ public class UserController {
        Company newComVo = cr.findByUserid(user.getUserid());
        model.addAttribute("companyInfo", newComVo);
 
+       FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
+        try {
+            if( !"".equals(file.getFilepath().toString()) ){
+                session.setAttribute("profileImg", file.getFilepath());
+            }
+                
+        } catch (NullPointerException e) {
+            logger.error("profileimg 없음 ");
+        }
+
         return "/user/detail";
 	}
 
@@ -67,11 +77,7 @@ public class UserController {
             
         PrintWriter out = response.getWriter();
 
-        logger.info("getBefore_passwd >>> {}", vo.getBefore_passwd());
-        logger.info("passwd >>> {}", vo.getPasswd());
-        logger.info("company info >>> {}", cvo.getBusinessNumber());
-
-
+    
         if(!"".equals(vo.getBefore_passwd()) && vo.getBefore_passwd() != null){
             us.update(vo);
             cs.update(cvo);
@@ -79,11 +85,7 @@ public class UserController {
 
             // update session user
             User newVo = ur.findByUserid(vo.getUserid()).get();
-            // Company newComVo = cr.findByUserid(vo.getUserid());
-            // // newVo.setComName(newComVo.getComName());
-            // newVo.setRprsName(newComVo.getRprsName());
-            // newVo.setBusinessNumber(newComVo.getBusinessNumber());
-
+            
             SecurityUser updateUser = new SecurityUser(newVo);
             session.removeAttribute("userSession");
             session.setAttribute("userSession", updateUser);

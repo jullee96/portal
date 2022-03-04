@@ -30,9 +30,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String userid = (String) authentication.getPrincipal();
 		String password = (String) authentication.getCredentials();
 
-        logger.info("input userid >> ", userid);
-        logger.info("input password >> ", password);
-
         SecurityUser user = (SecurityUser) userDetailsService.loadUserByUsername(userid);
             
         if (user == null ){
@@ -41,9 +38,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         } else{
             SHA256Util sha256 = new SHA256Util(user.getSalt());
         
-            logger.info("조회한 userid  >> ", user.getUserid());
-            logger.info("조회한 userpw  >> ", user.getPasswd());
-
             if( !sha256.matches(password, user.getPasswd())){
                 throw new BadCredentialsException(userid); 
             }

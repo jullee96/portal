@@ -114,8 +114,7 @@ const Editor = toastui.Editor;
 const editor = new Editor({ 
     el: document.querySelector('#viewer'), 
     height: '500px', 
-    initialValue: content
-    
+    initialValue: content   
 });
 
 </script>

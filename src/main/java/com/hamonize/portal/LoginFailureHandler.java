@@ -37,11 +37,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
             PrintWriter out = response.getWriter();
             out.println("<script>alert('"+message+"'); location.href='/login';</script>");
             out.flush();
-            
-            // Exception ee = new IOException();
-            // if (ee instanceof NullPointerException){
-            //     message = "존재하지않는 계정임";
-            // }
+
     }
 
 

@@ -49,10 +49,38 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">로그인</button>
                     </div>
-                  </form>
+                  </form> 
                 </div>
+                
+              <!-- sns login -->
+              <div class="row px-xl-5 px-sm-4 px-3">
+                <div class="mt-2 mb-4 position-relative text-center">
+                  <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
+                     or 
+                  </p>
+                </div>
+                
+                <div class="col-3 ms-auto px-1">
+                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="javascript:;">
+                    <img style="width:32px;height:32px;margin-left:-4px;" src="/img/kakao.png">
+                  </a>
+                </div>
+                <div class="col-3 px-1">
+                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="javascript:;">
+                    <img style="width:34px;height:34px;margin-left:-5px;" src="/img/naver.png">
+                  </a>
+                </div>
+                <div class="col-3 me-auto px-1">
+                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="javascript:;">
+                    <img style="width:30px;height:30px;margin-left:-4px;" src="/img/google.png">  
+                  </a>
+                </div>
+                
+              </div>
+
+
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
+                  <p class="mt-4 mb-3 text-sm mx-auto">
                     계정이 없으십니까?
                     <a href="/signup" class="text-primary text-gradient font-weight-bold">회원가입</a>
                   </p>
