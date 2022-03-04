@@ -21,16 +21,16 @@ public class SignupService {
 	private SignupRepository sr;
     
     public User save(User vo) {	
-    
         String salt = SHA256Util.generateSalt();
-		vo.setPasswd(SHA256Util.getEncrypt(vo.getPasswd(), salt));
+		
+        vo.setPasswd(SHA256Util.getEncrypt(vo.getPasswd(), salt));
         vo.setSalt(salt);
-        
-        vo.setRole("ROLE_USER");
-        
+        vo.setRole("ROLE_GUEST");
         vo.setRgstrDate(LocalDateTime.now());
-
+        
         return sr.save(vo);
 	}
+
+    
     
 }

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.hamonize.portal.file.FileRepository;
+import com.hamonize.portal.file.FileVO;
 import com.hamonize.portal.login.LoginController;
 import com.hamonize.portal.subscribe.Subscribe;
 import com.hamonize.portal.subscribe.SubscribeRepostory;
@@ -40,17 +42,17 @@ import org.slf4j.LoggerFactory;
 @Configuration
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+  
     private RequestCache reqCache = new HttpSessionRequestCache();
     private RedirectStrategy redirectStratgy = new DefaultRedirectStrategy();
-  
     private RequestCache requestCache = new HttpSessionRequestCache();
 		
     @Autowired
     SubscribeRepostory sr;
-    
-    // @Autowired
-    // HttpSession httpSession;
 
+    @Autowired
+    FileRepository fr;
+  
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -63,14 +65,17 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         
         httpSession.setAttribute("userSession", user);
         
+        FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
+        try {
+            if( !"".equals(file.getFilepath().toString()) ){
+                httpSession.setAttribute("profileImg", file.getFilepath());
+            }
+                
+        } catch (NullPointerException e) {
+            logger.error("profileimg 없음 ");
+        }
         
-        // String redirectUrl = (String) httpSession.getAttribute("url");
-        // logger.info("redirectUrl : ",redirectUrl);
-
-        // SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
-        // logger.info("login SPRING_SECURITY_SAVED_REQUEST 33 : {}",(String) httpSession.getAttribute("url"));
-        // String uu = (String) httpSession.getAttribute("url");
-     
+        
         logger.info("session id: {}", httpSession.getId());
         logger.info("getUserid : {}", user.getUserid());
         
@@ -101,14 +106,5 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     }
 
 
-    // public String setsessionAPI(HttpSession httpSession, String userid) {
-    //     // httpSession.setAttribute("ID", userid);
-    //     logger.info("setsessionAPI : userid >>> ", userid);
-    //     httpSession.setAttribute("KEY", userid);
-        
-    //     String returnValue = LocalDateTime.now().toString() + " \nsession set id : " + httpSession.getId() + " \n<br>session set Value : " + userid;
-        
-    //     return returnValue;
-    // }
-
+    
 }

@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,10 +27,13 @@ public class SecurityUserDetailsService implements UserDetailsService{
         logger.info("loadUserByUsername : userid >> {}",userid);
 
         Optional<User> user = ur.findByUserid(userid);
-                        
+        
+        logger.info("\n\n\nuser role??? {}", user.get().getRole());     
+
         if(!user.isPresent()){
             return null;
-            
+        } else if(user.get().getRole().equals("ROLE_GUEST")){
+           throw new DisabledException("이메일 미인증");
         }
         
         return new SecurityUser(user.get());

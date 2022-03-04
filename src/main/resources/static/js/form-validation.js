@@ -43,7 +43,7 @@
       }
     });    
 
-    $("#register-form").validate({
+    $("#registerForm").validate({
       onkeyup: function(element) {
         $(element).valid(); 
       },
@@ -127,9 +127,98 @@
     });
 
 
+    $("#findIDForm").validate({
+      rules: {
+        username: {
+          required: true,
+          minlength: 2
+        },
+        email: {
+          required: true,
+          email: true,
+          remote: {
+            type: 'post',
+            url : '/login/usernameEmailCheck',
+            data: {
+              username: function() {
+                return $( "#username" ).val();
+              },
+              email: function() {
+                return $( "#email" ).val();
+              }
+            }
+          }
+        }
+      },
+      messages: {
+        username: {
+          required: "이름을 입력해주세요",
+          minlength: "이름은 최소 2글자로 입력해주세요"
+        },
+        email: {
+          required: "이메일을 입력해주세요",
+          email: "유효한 이메일이 아닙니다",
+          remote: "일치하는 계정 정보가 없습니다. 다시 확인해주세요."
+        }
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger')
+        $(element).addClass('form-control-danger')
+      }
+    });
+
+    $("#findPWForm").validate({
+      rules: {
+        userid: {
+          required: true
+        },
+        email: {
+          required: true,
+          email: true,
+          remote: {
+            type: 'post',
+            url : '/login/useridEmailCheck',
+            data: {
+              userid: function() {
+                return $( "#userid" ).val();
+              },
+              email: function() {
+                return $( "#email" ).val();
+              }
+            }
+          }
+        }
+      },
+      messages: {
+        userid: {
+          required: "아이디를 입력해주세요",
+          remote: "이미 사용중인 아이디 입니다"
+        },
+        email: {
+          required: "이메일을 입력해주세요",
+          email: "유효한 이메일이 아닙니다",
+          remote: "일치하는 계정 정보가 없습니다. 다시 확인해주세요."
+        }
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger');
+        $(element).addClass('form-control-danger');
+      }
+    
+    });
 
 
 
+
+  // 사업자번호 유효성 체크
   function checkCorporateRegiNumber(number){
     var numberMap = number.replace(/-/gi, '').split('').map(function (d){
       return parseInt(d, 10);

@@ -2,102 +2,123 @@
 
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up | Hamonize Cloud Service</title>
-
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="/fonts/material-icon/css/material-design-iconic-font.min.css">
-
-    <!-- Main css -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- form validation check -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-    <script src="/js/form-validation.js"></script>
-
-    <!-- JS -->
-    <script src="/js/main.js"></script>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <title>
+    Hamonize Cloud Service | Sign up
+  </title>
 </head>
-<style>
-.id_ok{
-    color:#fff; 
-    display: none;
-}
 
-.id_already{
-    color:#6A82FB; 
-    display: none;
-}
-
-</style>
-
-<body>
-    <div class="main">
-
-        <!-- Sign up form -->
-        <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <div class="signup-form">
-                        <h2 class="form-title">Sign up</h2>
-                        <form method="POST" class="register-form" id="register-form" action="/signup/signup">
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="username" id="username" placeholder="이름"  />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="userid" id="userid" placeholder="아이디"  />
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input type="email" name="email" id="email" placeholder="이메일"  />
-                            </div>
-                            <div class="form-group">
-                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input type="password" name="passwd" id="passwd" placeholder="비밀번호" />
-                            </div>
-                            <div class="form-group">
-                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="password" name="re_passwd" id="re_passwd" placeholder="비밀번호 확인"  />
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="가입하기"/>
-                            </div>
-                        </form>
-                    
-                        <div class="signup-image">
-                            <a href="/login" class="signup-image-link">로그인 하러가기</a>
-                        </div>
-                    </div>
-       
-                </div>
-            </div>
-        </section>
+<%@ include file="../template/top2.jsp" %>
 
 
+<body class="">
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+
+      </div>
     </div>
+  </div>
 
+<main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-left">
+                  <h4 class="font-weight-bolder">회원가입</h4>
+                  <p class="mb-0"></p>
+                </div>
+                <div class="card-body pb-3">
+                  <form method="POST" class="register-form" id="registerForm" action="javascript:funcSubmit();" >
+                    
+                    <label>이름</label>
+                    <div class="mb-3 form-group">
+                      <input type="text" class="form-control" name="username" id="username" placeholder="이름" aria-label="username" value="어드민테스트">
+                    </div>
+                    
+                    <label>아이디</label>
+                    <div class="mb-3 form-group">
+                      <input type="text" class="form-control" name="userid" id="userid" placeholder="아이디" aria-label="userid" value="admin6">
+                    </div>
+                    
+                    <label>이메일</label>
+                    <div class="mb-3 form-group">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="test@test.com" value="bono6315@gmail.com">
+                    </div>
+                    
+                    <label>비밀번호</label>
+                    <div class="mb-3 form-group">
+                      <input type="password" class="form-control" id="passwd" name="passwd" placeholder="password" aria-label="password"  value="admin" placeholder="비밀번호">
+                    </div>
+                    
+                    <label>비밀번호 확인</label>
+                    <div class="mb-3 form-group">
+                      <input type="password" class="form-control" id="re_passwd" name="re_passwd" placeholder="비밀번호 확인" value="admin" />
+                    </div>
 
-<script>
-$(document).ready(function () {
+                    <div class="form-check form-check-info text-left">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked="">
+                      <label class="form-check-label" for="flexCheckDefault">
+                         하모나이즈<a href="#" class="text-dark font-weight-bolder">이용약관</a> 에 모두 동의합니다
+                      </label>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary w-100 mt-4 mb-0">회원가입</button>
+                    </div>
+                  </form>
 
-    $("#register-form").validate({
-      submitHandler: function(form) {
-          form.submit();
-      }  
-    });
+                </div>
+                <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                  <p class="mb-4 mx-auto text-sm">
+                    이미 계정이 있습니까?
+                    <a href="/login" class="text-primary font-weight-bold text-sm" >로그인</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden">
+              </div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-});
-</script>
+  
+  <%@ include file="../template/core.jsp" %>
 
 </body>
+<script>
+var checked = true;
 
+$(document).ready(function () {
+  $("#flexCheckDefault").change(function() {
+      checked = $('#flexCheckDefault').is(':checked');
+      console.log("checked : "+checked);
+   });
+});
+
+function funcSubmit(){
+  if(confirm("가입하시겠습니까?")){
+    if(checked){
+      registerForm.action="/signup/signup";
+      registerForm.submit();
+    }else{
+      alert("약관에 동의해주세요");
+    }
+  }
+}
+
+</script>
 </html>

@@ -1,9 +1,5 @@
 package com.hamonize.portal;
 
-import java.util.NoSuchElementException;
-
-import javax.naming.NameNotFoundException;
-
 import com.hamonize.portal.user.SecurityUser;
 import com.hamonize.portal.user.SecurityUserDetailsService;
 import com.hamonize.portal.util.SHA256Util;
@@ -11,12 +7,8 @@ import com.hamonize.portal.util.SHA256Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.CredentialsExpiredException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

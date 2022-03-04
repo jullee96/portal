@@ -13,10 +13,8 @@ import javax.validation.constraints.Size;
 import com.hamonize.portal.paging.PagingVo;
 
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -59,7 +57,6 @@ public class User extends PagingVo {
 	@Comment("비밀번호 암호화 솔트 값")
 	private String salt;
 
-	@Transient
 	@Comment("활성 비활성 구분 값 > 1 : 활성 , 0 : 비활성")
 	private String status;
 	
@@ -73,8 +70,10 @@ public class User extends PagingVo {
 	@Column(name="login_check",columnDefinition = "integer default 0")
 	private int logincheck;
 	
-	@Transient
 	@Comment("유저권한 포탈 유저 : USER / 어드민 유저 : ADMIN ")
 	private String role;
+
+	@Comment("이메일 인증키")
+	private String authkey;
 
 }

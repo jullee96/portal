@@ -62,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/img/**")
             .antMatchers("/images/**")
             .antMatchers("/vendors/**")
+            .antMatchers("/signup/**")
             .antMatchers("/argon/**");
 
             

@@ -50,12 +50,13 @@ public class SignupController {
     @RequestMapping("/signup")
     public String save(User vo) {
         try {
-            // save to db
-            ss.save(vo);
-            
             // genterate authKey && sent to auhorize email
+            vo.setAuthkey(mss.getKey(6));
+            
+            logger.info("vo.getAuthkey() > {}", vo.getAuthkey());
+            mss.sendAuthMail(vo.getEmail(),vo.getAuthkey());
+            ss.save(vo);
            
-
         } catch (Exception e) {
             logger.error("회원가입 오류 : {}",e.getMessage());    
         }
@@ -85,13 +86,18 @@ public class SignupController {
     }
 
     //account_verifications
-    @RequestMapping("/signupConfirm")
+    @RequestMapping("/signUpConfirm")
     public String signUpConfirm(@RequestParam Map<String, String> map, User vo, Model model) {
         try {
-          
-            // update email authKey
-            
+            logger.info("map >> {}", map.get("email"));
+            logger.info("authkey >> {}", map.get("authkey"));
 
+            // update email authKey && role
+            vo.setEmail(map.get("email").trim());
+            vo.setAuthkey(map.get("authkey").trim());    
+            vo.setRole("ROLE_USER");
+            int ret = sr.updateAuthkey(map.get("email").trim(),"A",vo.getRole());
+            logger.info("ret {}", ret);
         } catch (Exception e) {
             logger.error("회원가입 오류 : {}",e.getMessage());    
         }

@@ -100,16 +100,25 @@ public class UserController {
 
     @RequestMapping("/images")
     public void imgView(HttpSession session, HttpServletResponse response, Model model)  throws IOException {
+        logger.info("<<<<<<<<<<<< imgView images >>>>>>>>>");
         
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
-        
-        logger.info("file path : {}", file.getFilepath());
-
-        StringBuilder sb = new StringBuilder("file:"+ file.getFilepath());
-        URL fileUrl = new URL(sb.toString());
-        
-        IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
+         
+        try {
+           
+            logger.info("file path : {}", file.getFilepath());
+            
+            StringBuilder sb = new StringBuilder("file:"+ file.getFilepath());
+            URL fileUrl = new URL(sb.toString());
+            IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
+            
+            
+        } catch (NullPointerException e) {
+         
+            logger.error("NullPointerException", e);
+        }
+     
 	}
 
     @RequestMapping("/passwdChk")

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Hamonize Cloud Service</title>
   <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
+    <script src="https://kit.fontawesome.com/360c1fc4ca.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.9.2/tailwind.min.css">
     <!-- Small CSS to Hide elements at 1520px size -->
@@ -28,6 +29,27 @@
             margin-top: 0px;
             background: #a0aec0;
         }
+
+
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: #555;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 100px;
+        }
+
+        #myBtn:hover {
+            background-color: #4c51bf;
+        }
     </style>
 </head>
 
@@ -38,8 +60,8 @@
             class="container flex items-center justify-center h-full max-w-6xl px-8 mx-auto sm:justify-between xl:px-0">
 
             <a href="/" class="relative flex items-center inline-block h-5 h-full font-black leading-none">
-                <img class="w-auto h-6 text-indigo-600 fill-current"  src="/img/lo.png">
-                <span class="ml-3 text-xl text-gray-800">Hamonize<span class="text-pink-500"></span></span>
+                <%-- <img class="w-auto h-6 text-indigo-600 fill-current"  src="/img/lo.png"> --%>
+                <span class="ml-3 text-xl text-gray-800">HAMONIZE<span class="text-pink-500"></span></span>
             </a>
 
             <nav id="nav" class="absolute top-0 left-0 z-50 flex flex-col items-center justify-between hidden w-full h-64 pt-5 mt-24 text-sm text-gray-800 bg-white border-t border-gray-200 md:w-auto md:flex-row md:h-24 lg:text-base md:bg-transparent md:mt-0 md:border-none md:py-0 md:flex md:relative">
@@ -55,18 +77,18 @@
 
             <div class="absolute left-0 flex-col items-center justify-center hidden w-full pb-8 mt-48 border-b border-gray-200 md:relative md:w-auto md:bg-transparent md:border-none md:mt-0 md:flex-row md:p-0 md:items-end md:flex md:justify-between">
                 <c:if test="${userSession.userid != null }">
-                    <a href="/user/detail"  class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
-                        ${userSession.userid}님
+                    <a href="/user/detail" style="width:160px;" class="md:px-5 lg:text-white sm:mr-3 md:mt-0 font-bold  relative z-40 px-3 py-2 md:px-5 mr-1 text-sm ">
+                        ${userSession.userid} 님
                     </a>
-                    <a href="/login/logout" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl">
+                    <a href="/login/logout" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded shadow-md fold-bold lg:bg-white lg:text-indigo-700 lg:shadow-none hover:shadow-xl">
                         Logout
                     </a>
                 </c:if>
                 <c:if test="${userSession.userid == null }">
-                    <a href="/login" class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
+                    <a href="/login" style="width:160px;" class="relative z-40 px-3 py-2 mr-0 text-sm font-bold text-pink-500 md:px-5 lg:text-white sm:mr-3 md:mt-0">
                         Login
                     </a>
-                    <a href="/signup" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded shadow-md fold-bold lg:bg-white lg:text-indigo-700 sm:w-full lg:shadow-none hover:shadow-xl">
+                    <a href="/signup" class="relative z-40 inline-block w-auto h-full px-5 py-3 text-sm font-bold leading-none text-white transition-all transition duration-100 duration-300 bg-indigo-700 rounded shadow-md fold-bold lg:bg-white lg:text-indigo-700 lg:shadow-none hover:shadow-xl">
                         Sign up
                     </a>
                 </c:if>
@@ -587,104 +609,8 @@
                         class="text-4xl font-extrabold leading-10 tracking-tight text-gray-900 sm:text-5xl sm:leading-none md:text-6xl lg:text-5xl xl:text-6xl">
                         Q&A</h2>
                     <p class="my-6 text-xl font-medium text-gray-500">제품에 대한 문의사항은 서비스 데스크를 통해 연락주세요.</p>
-
                 </div>
                 <div class="flex flex-col items-center justify-center max-w-2xl py-8 mx-auto xl:flex-row xl:max-w-full">
-                    <div class="w-full xl:w-1/2 xl:pr-8">
-                        <blockquote
-                            class="flex flex-col-reverse items-center justify-between w-full col-span-1 p-6 text-center transition-all duration-200 bg-gray-100 rounded-lg md:flex-row md:text-left hover:bg-white hover:shadow ease">
-                            <div class="flex flex-col pr-8">
-                                <div class="relative pl-12">
-                                    <svg class="absolute left-0 w-10 h-10 text-indigo-500 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
-                                        <path
-                                            d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
-                                    </svg>
-                                    <p class="mt-2 text-base text-gray-600">I'm loving these templates! Very nice
-                                        features and layouts.
-                                    </p>
-                                </div>
-
-                                <h3 class="pl-12 mt-3 text-base font-medium leading-5 text-gray-800 truncate">Sandra
-                                    Walton <span class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO
-                                        SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
-                            </div>
-                            <img class="flex-shrink-0 object-cover w-24 h-24 mb-5 bg-gray-300 rounded-full md:mb-0"
-                                src="https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2694&q=80"
-                                alt="">
-                        </blockquote>
-                        <blockquote
-                            class="flex flex-col-reverse items-center justify-between w-full col-span-1 p-6 mt-16 mb-16 text-center transition-all duration-200 bg-gray-100 rounded-lg md:flex-row md:text-left hover:bg-white hover:shadow ease xl:mb-0">
-                            <div class="flex flex-col pr-10">
-                                <div class="relative pl-12">
-                                    <svg class="absolute left-0 w-10 h-10 text-indigo-500 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
-                                        <path
-                                            d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
-                                    </svg>
-                                    <p class="mt-2 text-base text-gray-600">Really digging this service. Now I can
-                                        quickly bootstrap any
-                                        project.</p>
-                                </div>
-                                <h3 class="pl-12 mt-3 text-base font-medium leading-5 text-gray-800 truncate">Kenny
-                                    Jones <span class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO
-                                        SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
-                            </div>
-                            <img class="flex-shrink-0 object-cover w-24 h-24 mb-5 bg-gray-300 rounded-full md:mb-0"
-                                src="https://images.unsplash.com/photo-1546820389-44d77e1f3b31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80"
-                                alt="">
-                        </blockquote>
-                    </div>
-                    <div class="w-full xl:w-1/2 xl:pl-8">
-                        <blockquote
-                            class="flex flex-col-reverse items-center justify-between w-full col-span-1 p-6 text-center transition-all duration-200 bg-gray-100 rounded-lg md:flex-row md:text-left hover:bg-white hover:shadow ease">
-                            <div class="flex flex-col pr-10">
-                                <div class="relative pl-12">
-                                    <svg class="absolute left-0 w-10 h-10 text-indigo-500 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
-                                        <path
-                                            d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
-                                    </svg>
-                                    <p class="mt-2 text-base text-gray-600">Extremely helpful in every single project we
-                                        have released.
-                                    </p>
-                                </div>
-
-                                <h3 class="pl-12 mt-3 text-base font-medium leading-5 text-gray-800 truncate">Mike Smith
-                                    <span class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO SomeCompany</span>
-                                </h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
-                            </div>
-                            <img class="flex-shrink-0 object-cover w-24 h-24 mb-5 bg-gray-300 rounded-full md:mb-0"
-                                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1700&q=80"
-                                alt="">
-                        </blockquote>
-                        <blockquote
-                            class="flex flex-col-reverse items-center justify-between w-full col-span-1 p-6 mt-16 text-center transition-all duration-200 bg-gray-100 rounded-lg md:flex-row md:text-left hover:bg-white hover:shadow ease">
-                            <div class="flex flex-col pr-10">
-                                <div class="relative pl-12">
-                                    <svg class="absolute left-0 w-10 h-10 text-indigo-500 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125">
-                                        <path
-                                            d="M30.7 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2C12.7 83.1 5 72.6 5 61.5c0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S30.7 31.6 30.7 42zM82.4 42c0 6.1 12.6 7 12.6 22 0 11-7.9 19.2-18.9 19.2-11.8 0-19.5-10.5-19.5-21.6 0-19.2 18-44.6 29.2-44.6 2.8 0 7.9 2 7.9 5.4S82.4 31.6 82.4 42z" />
-                                    </svg>
-                                    <p class="mt-2 text-base text-gray-600">Finally a quick and easy system I can use
-                                        for any type of
-                                        project.</p>
-                                </div>
-
-                                <h3 class="pl-12 mt-3 text-base font-medium leading-5 text-gray-800 truncate">Molly
-                                    Sanchez <span class="mt-1 text-sm leading-5 text-gray-500 truncate">- CEO
-                                        SomeCompany</span></h3>
-                                <p class="mt-1 text-sm leading-5 text-gray-500 truncate"></p>
-                            </div>
-                            <img class="flex-shrink-0 object-cover w-24 h-24 mb-5 bg-gray-300 rounded-full md:mb-0"
-                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80"
-                                alt="">
-                        </blockquote>
-                    </div>
                 </div>
 
 
@@ -699,7 +625,7 @@
             <div class="w-full pl-12 mr-4 text-left lg:w-1/4 sm:text-center sm:pl-0 lg:text-left">
                 <a href="/" class="flex justify-start block text-left sm:text-center lg:text-left sm:justify-center lg:justify-start">
                     <span class="flex items-start sm:items-center">
-                     <img src="/img/ivs_logo.png">
+                     <%-- <img src="/img/ivs_logo.png"> --%>
                     </span>
                 </a>
                 <p class="mt-6 mr-4 text-base text-gray-500">
@@ -710,46 +636,33 @@
                 <ul class="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
                     <li class="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
                         Product</li>
-                    <li><a href="#_"
+                    <li><a href="#features"
                             class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Features</a>
                     </li>
-                    <li><a href="#_"
-                            class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Integrations</a>
-                    </li>
-                    <li><a href="#_"
+  
+                    <li><a href="#pricing"
                             class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Pricing</a>
                     </li>
-                    <li><a href="#_"
+                    <li><a href="#qna"
                             class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Q&A</a></li>
                 </ul>
                 <ul class="flex flex-col w-full p-0 font-medium text-left text-gray-700 list-none">
-                    <li class="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">
-                        Company</li>
+                    <li class="inline-block px-3 py-2 mt-5 font-bold tracking-wide text-gray-800 uppercase md:mt-0">Company</li>
                     <li><a href="#_"
                             class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Privacy</a>
                     </li>
-                    <li><a href="#_" class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Terms
-                            of
-                            Service</a></li>
+                    <li><a href="#_" class="inline-block px-3 py-2 text-gray-500 no-underline hover:text-gray-600">Terms of Service</a></li>
                 </ul>
                
                 <div class="flex flex-col w-full text-gray-700">
                     <div class="inline-block px-3 py-2 mt-5 font-bold text-gray-800 uppercase md:mt-0">Contact Us</div>
                     <div class="flex justify-start pl-4 mt-2">
-                        <a class="flex items-center block mr-6 text-gray-400 no-underline hover:text-gray-600"
-                            target="_blank" rel="noopener noreferrer" href="https://devdojo.com">
-                            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M23.998 12c0-6.628-5.372-12-11.999-12C5.372 0 0 5.372 0 12c0 5.988 4.388 10.952 10.124 11.852v-8.384H7.078v-3.469h3.046V9.356c0-3.008 1.792-4.669 4.532-4.669 1.313 0 2.686.234 2.686.234v2.953H15.83c-1.49 0-1.955.925-1.955 1.874V12h3.328l-.532 3.469h-2.796v8.384c5.736-.9 10.124-5.864 10.124-11.853z" />
-                            </svg>
+                        <a style="font-size:20px;" class="flex items-center block mr-6 text-gray-400 no-underline hover:text-gray-600" target="_blank" rel="noopener noreferrer" href="http://pms.invesume.com:8080/projects/IVSSD/issues/IVSSD-34?filter=reportedbyme">
+                            <i class="fa-solid fa-circle-question"></i>
                         </a>
                 
-                        <a class="flex items-center block text-gray-400 no-underline hover:text-gray-600"
-                            target="_blank" rel="noopener noreferrer" href="https://github.com/hamonikr/hamonize">
-                            <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                            </svg>
+                        <a style="font-size:20px;" class="flex items-center block text-gray-400 no-underline hover:text-gray-600" target="_blank" rel="noopener noreferrer" href="https://github.com/hamonikr/hamonize">
+                            <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
                 </div>
@@ -757,7 +670,11 @@
         </div>
         <div class="pt-4 pt-6 mt-10 text-center text-gray-400 border-t border-gray-100">© 2022 Invesume. All rights reserved.</div>
     </footer>
-
+    
+    <button onclick="topFunction()" id="myBtn" title="Go to top">    
+        <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"></path></svg>
+    </button>
+    
     <!-- a little JS for the mobile nav button -->
     <script>
         if (document.getElementById('nav-mobile-btn')) {
@@ -770,6 +687,22 @@
                     this.classList.add('close');
                 }
             });
+        }
+
+        var mybutton = document.getElementById("myBtn");
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
         }
     </script>
 </body>

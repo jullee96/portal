@@ -31,7 +31,7 @@
             <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
                 <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Sign In</h4>
+                  <h4 class="font-weight-bolder">로그인</h4>
                   <p class="mb-0">이메일과 비밀번호를 입력하여 로그인하세요</p>
                 </div>
                 <div class="card-body">
@@ -58,7 +58,7 @@
                   </p>
                   <p class="mb-4 text-sm mx-auto">
                     가입한 정보를 잊으셨습니까?
-                    <a href="#" class="text-primary text-gradient font-weight-bold"> 아이디 / 비밀번호 찾기</a>
+                    <a href="/login/find" class="text-primary text-gradient font-weight-bold"> 아이디 / 비밀번호 찾기</a>
                   </p>
                 </div>
               </div>

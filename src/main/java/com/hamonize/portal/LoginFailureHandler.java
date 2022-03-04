@@ -55,7 +55,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (exception instanceof CredentialsExpiredException) {
             return "비밀번호만료";
         } else if (exception instanceof DisabledException) {
-            return "비활성화된 계정입니다";
+            return "이메일 인증이 완료되지 않은 계정입니다";
         } else if (exception instanceof LockedException) {
             return "계정잠김";
         } else {

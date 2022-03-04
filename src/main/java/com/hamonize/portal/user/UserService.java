@@ -1,6 +1,7 @@
 package com.hamonize.portal.user;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import com.hamonize.portal.util.SHA256Util;
 
@@ -35,5 +36,27 @@ public class UserService {
         ur.save(vo);
 
 
+    }
+
+    public String generateTmpPw() {
+        Random rnd = new Random();
+        StringBuffer buffer = new StringBuffer();
+        
+
+        for(int i=0;i<8;i++){
+            int rand = rnd.nextInt(3);
+            logger.info("ran >> {}",rand);
+
+            if(rand == 0){
+              buffer.append((char)((int)(rnd.nextInt(26))+97));
+            }else if(rand == 1){
+                buffer.append((rnd.nextInt(10)));
+            } else {
+                buffer.append((char)((int)(rnd.nextInt(26))+65));
+            }
+        }
+
+        logger.info("generateTmpPw >> {}", buffer.toString());
+        return buffer.toString();
     }
 }

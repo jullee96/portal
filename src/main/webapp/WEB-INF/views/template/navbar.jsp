@@ -41,7 +41,12 @@
               <a class="dropdown-item border-radius-md" href="/user/detail">
                 <div class="d-flex py-1">
                   <div class="my-auto">
+                  <c:if test="${profileImg != null}" >
                     <img src="/user/images" class="avatar avatar-sm me-3">
+                  </c:if>
+                  <c:if test="${profileImg == null}">
+                    <img src="/img/user.svg" class="avatar avatar-sm me-3">  
+                  </c:if>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="text-sm font-weight-normal mb-1">
