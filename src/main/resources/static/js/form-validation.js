@@ -58,14 +58,6 @@
                 return $( "#userid" ).val();
               }
             }
-            // ,
-            // success : function(ret){
-            //   console.log("return : "+ ret);
-            //   if(ret == true){
-            //     console.log("중복.... ");
-            //     return ret;
-            //   }
-            // }
           } 
          },
         username: {
@@ -83,7 +75,16 @@
         },
         email: {
           required: true,
-          email: true
+          email: true,
+          remote : {
+            type: 'post',
+            url : '/signup/emailDupCheck',
+            data: {
+              email: function() {
+                return $( "#email" ).val();
+              }
+            }
+          }
         },
         topic: {
           required: "#newsletter:checked",
@@ -111,7 +112,8 @@
         },
         email: {
           required: "이메일을 입력해주세요",
-          email: "유효한 이메일이 아닙니다"
+          email: "유효한 이메일이 아닙니다",
+          remote: "이미 사용중인 이메일입니다"
         },
         agree: "Please accept our policy",
         topic: "Please select at least 2 topics"

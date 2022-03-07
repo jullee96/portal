@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AccountExpiredException;
+import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -53,7 +54,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (exception instanceof DisabledException) {
             return "이메일 인증이 완료되지 않은 계정입니다";
         } else if (exception instanceof LockedException) {
-            return "계정잠김";
+            return "이미 사용중인 이메일입니다. 다른 소셜계정을 이용해주세요";
         } else {
             return "아이디 또는 비밀번호를 확인해주세요";
         }

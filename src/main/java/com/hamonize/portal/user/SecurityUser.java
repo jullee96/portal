@@ -31,6 +31,10 @@ public class SecurityUser extends User {
     private String domain;
     private int itemno;
 
+    // sns
+    private String name;
+    private String picture;
+
     public SecurityUser(com.hamonize.portal.user.User user) {
         super(user.getUserid(), user.getPasswd(), makeGrantedAuthority()); 
         this.userid = user.getUserid();

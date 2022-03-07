@@ -1,9 +1,6 @@
 package com.hamonize.portal;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Enumeration;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,35 +9,26 @@ import javax.servlet.http.HttpSession;
 
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
-import com.hamonize.portal.login.LoginController;
-import com.hamonize.portal.subscribe.Subscribe;
 import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.user.SecurityUser;
+import com.hamonize.portal.user.User;
+import com.hamonize.portal.user.UserRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.PortResolverImpl;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Configuration
-public class LoginSuccessHandler implements AuthenticationSuccessHandler{
+public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
   
     private RequestCache reqCache = new HttpSessionRequestCache();
@@ -48,42 +36,48 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
     private RequestCache requestCache = new HttpSessionRequestCache();
 		
     @Autowired
-    SubscribeRepostory sr;
-
-    @Autowired
     FileRepository fr;
+  
+    @Autowired
+    UserRepository ur;
   
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
         logger.info("ddddd > {}",authentication.getPrincipal().getClass());
 
-        SecurityUser user = (SecurityUser) authentication.getPrincipal();
+        DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         HttpSession httpSession = request.getSession(true);
-        logger.info("onAuthenticationSuccess user domain : {}",user.getDomain());
-        logger.info("onAuthenticationSuccess user username : {}",user.getUsername());
-        
-        httpSession.setAttribute("userSession", user);
+
+        logger.info("onAuthenticationSuccess user : {}",oAuth2User.getAttributes());
+        logger.info("\n\nonAuthenticationSuccess name : {}",oAuth2User.getAttributes().get("name") );
+        logger.info("onAuthenticationSuccess email : {}",oAuth2User.getAttributes().get("email") );
+        String email = oAuth2User.getAttributes().get("email").toString();        
+        User user = ur.findByEmailAndUserid(email, email);
+        SecurityUser securityUser = new SecurityUser(user);
+        httpSession.setAttribute("userSession", securityUser);
         
         FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
+        
         try {
-            if( !"".equals(file.getFilepath().toString()) ){
-                httpSession.setAttribute("profileImg", file.getFilepath());
+            if(!"".equals(user.getPicture())){
+                httpSession.setAttribute("profileImg", user.getPicture());
+                
+            } else{
+                if( !"".equals(file.getFilepath().toString()) ){
+                    httpSession.setAttribute("profileImg", file.getFilepath());
+                }
             }
+            
                 
         } catch (NullPointerException e) {
             logger.error("profileimg 없음 ");
         }
         
         
-        logger.info("session id: {}", httpSession.getId());
-        logger.info("getUserid : {}", user.getUserid());
         
-        
-        
-        if(user.getUserid() != null){
+        if(oAuth2User.getAttributes().get("email")  != null){
             response.sendRedirect("/"); 
-  
         } else{
             response.sendRedirect("/login");
         }

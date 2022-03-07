@@ -110,14 +110,22 @@ public class UserController {
         try {
            
             logger.info("file path : {}", file.getFilepath());
+            StringBuilder sb =new StringBuilder();
             
-            StringBuilder sb = new StringBuilder("file:"+ file.getFilepath());
+            if(file.getFilepath().contains("://")){
+                sb = new StringBuilder(file.getFilepath());
+                logger.info("......;;; : {}", sb.toString());
+            
+            } else{
+                sb = new StringBuilder("file:"+ file.getFilepath());
+            }
+
             URL fileUrl = new URL(sb.toString());
             IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
             
             
         } catch (NullPointerException e) {
-         
+            
             logger.error("NullPointerException", e);
         }
      

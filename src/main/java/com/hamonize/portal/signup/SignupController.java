@@ -85,6 +85,29 @@ public class SignupController {
         return ret;
     }
 
+
+    /**
+     * 아이디 중복 확인 func
+     * @param User vo
+     * 
+     * @return 중복여부 true or false
+     */
+    @PostMapping("/emailDupCheck")
+    @ResponseBody
+    public boolean emailDupCheck(User vo, Model model){
+        List<User> chk = sr.findByEmail(vo.getEmail());
+        
+        boolean ret = false;
+        if (chk.size() == 0 ){
+            ret = true;
+        }else{
+            ret = false;
+        }
+
+        return ret;
+    }
+
+    
     //account_verifications
     @RequestMapping("/signUpConfirm")
     public String signUpConfirm(@RequestParam Map<String, String> map, User vo, Model model) {

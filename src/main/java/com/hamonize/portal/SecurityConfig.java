@@ -1,5 +1,6 @@
 package com.hamonize.portal;
 
+import com.hamonize.portal.social.CustomOAuth2UserService;
 // import com.hamonize.portal.social.CustomOAuth2UserService;
 import com.hamonize.portal.user.SecurityUserDetailsService;
 
@@ -7,12 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -27,31 +30,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     LoginSuccessHandler authSuccessHandler;
 
     @Autowired
+    Oauth2LoginSuccessHandler oauth2LoginSuccessHandler;
+
+    @Autowired
     LoginFailureHandler authFailureHandler;
 
     @Autowired
     SecurityUserDetailsService userDetailService;
     
-    // @Autowired
-    // CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
     private CustomAuthenticationProvider authProvider;
-    // @Bean
-    // public PasswordEncoder passwordEncoder() {
-    //     SHA256Util sha256 = new SHA256Util();
-    //     // sha256.getEncrypt(message, salt);
 
-    //     return new BCryptPasswordEncoder();
-    // }
-
-    // @Bean
-    // public PasswordEncoder passwordEncoder() {
-    //     SHA256Util sha256 = new SHA256Util();
-        
-    //     return sha256;
-    // }
-
+    
     @Override
     public void configure(WebSecurity web) throws Exception {
 
@@ -73,9 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 		http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/**", "/signup/**", "/login/**","/","/setsession/**").permitAll()
-            .anyRequest()
-            .authenticated();
+            .antMatchers("/api/**", "/signup/**", "/login/**","/","/setsession/**","/oauth2/**").permitAll()
+            .anyRequest().authenticated();
         
         http.formLogin()
             .loginPage("/login")
@@ -84,21 +76,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .loginProcessingUrl("/login/login")
             .successHandler(authSuccessHandler)
             .failureHandler(authFailureHandler);
-
+        
         http.logout()
             .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")).logoutSuccessUrl("/")
-            .invalidateHttpSession(true);
+            .invalidateHttpSession(true)
+        
+            .and()
+                .oauth2Login()
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
 
+            .and()
+                .successHandler(oauth2LoginSuccessHandler)
+                .failureHandler(authFailureHandler);    
         }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider);
-        // auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
-        // auth.userDetailsService(userDetailService);
-        
     }
 
-
+    
 
 }

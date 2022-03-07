@@ -11,10 +11,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.hamonize.portal.paging.PagingVo;
+import com.hamonize.portal.social.OAuthAttributes.OAuthAttributesBuilder;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -75,5 +77,8 @@ public class User extends PagingVo {
 
 	@Comment("이메일 인증키")
 	private String authkey;
+
+	@Comment("소셜 이미지")
+	private String picture;
 
 }
