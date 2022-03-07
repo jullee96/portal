@@ -1,5 +1,6 @@
 package com.hamonize.portal.social;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,14 +64,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         logger.info(" find picture... {}", attributes.getPicture());
         
         User user = saveOrUpdate(registrationId, attributes);
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("id", attributes.getEmail());
-        tmp.put("email", attributes.getEmail());
+
+        if("kakao".equals(registrationId)){
+            Map<String, Object> tmp = new HashMap<>();
+    
+            tmp.put("id", attributes.getEmail());
+            tmp.put("email", attributes.getEmail());
+            tmp.put("name", attributes.getName());
+            tmp.put("picture", attributes.getPicture());
+            
+            attributes.setAttributes(tmp);    
+        }
+    
         
-        tmp.put("name", attributes.getName());
-        tmp.put("picture", attributes.getPicture());
-        
-        attributes.setAttributes(tmp);
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole())),
             attributes.getAttributes(),
@@ -103,6 +109,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             user.setEmail(attributes.getEmail());
             user.setPicture(attributes.getPicture());
             user.setRole("ROLE_USER");
+            user.setRgstrDate(LocalDateTime.now());
             user.setPasswd("");
 
             if(registrationId.equals("google")){
@@ -112,6 +119,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     fvo.setKeytype("img"); 
                     fvo.setUserid(attributes.getEmail());
                     fvo.setFilename("google_profileImg");
+                    fvo.setFilerealname("google_profileImg");
+
                     fr.save(fvo);
                 }
                 
@@ -122,6 +131,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     fvo.setKeytype("img"); 
                     fvo.setUserid(attributes.getEmail());
                     fvo.setFilename("naver_profileImg");
+                    fvo.setFilerealname("naver_profileImg");
                     fr.save(fvo);
                 }
             
@@ -133,6 +143,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                     fvo.setKeytype("img"); 
                     fvo.setUserid(attributes.getEmail());
                     fvo.setFilename("kakao_profileImg");
+                    fvo.setFilerealname("kakao_profileImg");
+
                     fr.save(fvo);
                 }
             

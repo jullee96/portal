@@ -66,7 +66,7 @@
                   </a>
                 </div>
                 <div class="col-3 px-1">
-                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/login/naver">
+                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/oauth2/authorization/naver">
                     <img style="width:34px;height:34px;margin-left:-5px;" src="/img/naver.png">
                   </a>
                 </div>
