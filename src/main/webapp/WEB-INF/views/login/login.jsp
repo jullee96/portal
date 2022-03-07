@@ -58,10 +58,10 @@
                   <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
                      or 
                   </p>
-                </div>
+              </div>
                 
                 <div class="col-3 ms-auto px-1">
-                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/login/kakao">
+                  <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/oauth2/authorization/kakao">
                     <img style="width:32px;height:32px;margin-left:-4px;" src="/img/kakao.png">
                   </a>
                 </div>

@@ -1,6 +1,8 @@
 package com.hamonize.portal.social;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -59,12 +61,20 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         logger.info(" find email... {}", attributes.getEmail());
         logger.info(" find name... {}", attributes.getName());
         logger.info(" find picture... {}", attributes.getPicture());
-
+        
         User user = saveOrUpdate(registrationId, attributes);
+        Map<String, Object> tmp = new HashMap<>();
+        tmp.put("id", attributes.getEmail());
+        tmp.put("email", attributes.getEmail());
+        
+        tmp.put("name", attributes.getName());
+        tmp.put("picture", attributes.getPicture());
+        
+        attributes.setAttributes(tmp);
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRole())),
-        attributes.getAttributes(),
-        attributes.getNameAttributeKey());
+            attributes.getAttributes(),
+            attributes.getNameAttributeKey());
 
     }
 
@@ -73,9 +83,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Boolean isExist = false;
         isExist = ur.existsByEmail(attributes.getEmail().toString());
         User user = new User();
-        
-        logger.info("registrationId id : {}", registrationId);
-
+  
 
         if(isExist){ //이미 등록된 이메일 update
             user = ur.findByEmail(attributes.getEmail()).get();
@@ -88,13 +96,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             }
         }else{ // new >  save sns user
             FileVO fvo = new FileVO();
+            logger.info("\n\n properties : {}",attributes.getAttributes().get("properties"));
+            
+            user.setUserid(attributes.getEmail());
+            user.setUsername(attributes.getName());
+            user.setEmail(attributes.getEmail());
+            user.setPicture(attributes.getPicture());
+            user.setRole("ROLE_USER");
+            user.setPasswd("");
+
             if(registrationId.equals("google")){
-                user.setUserid(attributes.getEmail());
-                user.setUsername(attributes.getName());
-                user.setEmail(attributes.getEmail());
-                user.setPicture(attributes.getPicture());
-                user.setRole("ROLE_USER");
-                user.setPasswd("");
 
                 if(!"".equals(attributes.getPicture())){
                     fvo.setFilepath(attributes.getPicture());
@@ -106,7 +117,24 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 
             }else if(registrationId.equals("naver")){ // update naver
     
+                if(!"".equals(attributes.getPicture())){
+                    fvo.setFilepath(attributes.getPicture());
+                    fvo.setKeytype("img"); 
+                    fvo.setUserid(attributes.getEmail());
+                    fvo.setFilename("naver_profileImg");
+                    fr.save(fvo);
+                }
+            
             }else if(registrationId.equals("kakao")){ // update google
+
+
+                if(!"".equals(attributes.getPicture())){
+                    fvo.setFilepath(attributes.getPicture());
+                    fvo.setKeytype("img"); 
+                    fvo.setUserid(attributes.getEmail());
+                    fvo.setFilename("kakao_profileImg");
+                    fr.save(fvo);
+                }
             
             } else{
                 logger.info("errorrrr");

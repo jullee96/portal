@@ -52,9 +52,11 @@ public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler{
         logger.info("onAuthenticationSuccess user : {}",oAuth2User.getAttributes());
         logger.info("\n\nonAuthenticationSuccess name : {}",oAuth2User.getAttributes().get("name") );
         logger.info("onAuthenticationSuccess email : {}",oAuth2User.getAttributes().get("email") );
+        
         String email = oAuth2User.getAttributes().get("email").toString();        
         User user = ur.findByEmailAndUserid(email, email);
         SecurityUser securityUser = new SecurityUser(user);
+        
         httpSession.setAttribute("userSession", securityUser);
         
         FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
