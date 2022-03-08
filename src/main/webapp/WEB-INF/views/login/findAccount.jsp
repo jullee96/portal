@@ -41,11 +41,11 @@
               <div class="card-body">
                 <form role="form">
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="이름" aria-label="username" id="username" name="username" value="어드민테스트">
+                    <input type="text" class="form-control" placeholder="이름" aria-label="username" id="username" name="username" >
                   </div>
 
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="test@test.com" aria-label="Email" id="email" name="email" value="bono6315@gmail.com">
+                    <input type="email" class="form-control" placeholder="test@test.com" aria-label="Email" id="email" name="email" >
                   </div>
                   <div class="text-center">
                     <button id="btnIDSubmit" type="submit" class="btn bg-gradient-primary btn-lg w-100 my-4 mb-2">확인</button>
@@ -81,11 +81,11 @@
               <div class="card-body">
                 <form role="form">
                   <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="아이디" aria-label="userid" id="userid" name="userid" value="test5">
+                    <input type="text" class="form-control" placeholder="아이디" aria-label="userid" id="userid" name="userid" >
                   </div>
 
                   <div class="mb-3">
-                    <input type="email" class="form-control" placeholder="test@test.com" aria-label="Email" id="email" name="email" value="bono6315@gmail.com">
+                    <input type="email" class="form-control" placeholder="test@test.com" aria-label="Email" id="email" name="email" >
                   </div>
                   <div class="text-center">
                     <button id="btnPWSubmit" type="submit" class="btn bg-gradient-primary btn-lg w-100 my-4 mb-2">확인</button>
