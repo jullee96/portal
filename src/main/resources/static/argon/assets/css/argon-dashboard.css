@@ -6002,7 +6002,7 @@ fieldset:disabled .btn {
   font-size: 0.75em;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  /* color: #fff; */
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -19768,27 +19768,11 @@ fieldset:disabled .btn {
 /*!
 
 =========================================================
-* Argon Dashboard 2 Pro - v2.0.0
+* Argon Dashboard - v2.0.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-* Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*!
-
-=========================================================
-* Argon Dashboard 2 Pro - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-pro
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
 * Licensed under MIT (site.license)
 
 * Coded by www.creative-tim.com
@@ -20811,7 +20795,7 @@ fieldset:disabled .btn {
   }
 
   .dropdown:not(.dropdown-hover) .dropdown-menu {
-    margin-top: 40px !important;
+    margin-top: 0px !important;
   }
 
   .dropdown .dropdown-menu:before {
@@ -20908,7 +20892,7 @@ fieldset:disabled .btn {
   }
 
   .dropdown:not(.dropdown-hover) .dropdown-menu {
-    margin-top: 40px !important;
+    margin-top: 30px !important;
   }
 
   .dropdown .dropdown-menu.show {
@@ -21915,7 +21899,7 @@ hr.horizontal.gray-light {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 95%;
   opacity: 0.8;
 }
 
@@ -22219,7 +22203,7 @@ hr.horizontal.gray-light {
 .navbar-vertical.navbar-expand-xs {
   display: block;
   position: fixed;
-  top: 0;
+  top: 10%;
   bottom: 0;
   width: 100%;
   max-width: 15.625rem !important;
@@ -22260,9 +22244,9 @@ hr.horizontal.gray-light {
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link {
-  padding-top: 0.675rem;
-  padding-bottom: 0.675rem;
-  margin: 0 0.5rem;
+  /* padding-top: 0.675rem; */
+  /* padding-bottom: 0.675rem; */
+  /* margin: 0 0.5rem; */
 }
 
 .navbar-vertical.navbar-expand-xs .navbar-nav .nav-link .nav-link-text,

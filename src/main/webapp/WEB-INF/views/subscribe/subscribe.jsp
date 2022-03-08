@@ -19,7 +19,7 @@
 <%@ include file="../template/top2.jsp" %>
 
 
-<body class="g-sidenav-show   bg-gray-100">
+<body class="g-sidenav-show  bg-gray-100">
   <div class="min-height-300 bg-primary position-absolute w-100"></div>
 
   <main class="main-content position-relative border-radius-lg ">
@@ -35,13 +35,13 @@
             <div class="row mt-5">
               <div class="col-12 col-lg-8 mx-auto my-5">
                 <div class="multisteps-form__progress">
-                  <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">
+                  <button class="multisteps-form__progress-btn js-active" id="btnProgress" type="button" >
                     <span>결제정보 입력</span>
                   </button>
-                  <button class="multisteps-form__progress-btn" type="button" title="Address">
+                  <button class="multisteps-form__progress-btn" type="button">
                     <span>도메인 입력</span>
                   </button>
-                  <button class="multisteps-form__progress-btn" type="button" title="Order Info">
+                  <button class="multisteps-form__progress-btn" type="button" >
                     <span>시작하기</span>
                   </button>
                 </div>
@@ -67,6 +67,7 @@
                           <div class="col-10 mx-auto">
                               <input type="hidden" id="itemno" name="itemno">
                               <input type="hidden" id="payAt" name="payAt" value="${payAt}">
+                              <input type="hidden" id="domainAt" name="domainAt" value="${domainAt}">
 
                               <div class="container2 preload">
                                   <div class="creditcard">
@@ -195,7 +196,7 @@
                     </form>
 
                   </div>
-                  <form id="frm2" method="POST" action="">
+                  <form id="frm2" method="POST" action="javascript:funcSubmit('domain');">
                     <!--single form panel-->
                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white" data-animation="FadeIn">
                       <div class="row text-center">
@@ -213,7 +214,7 @@
 
                         <div class="button-row d-flex mt-4">
                           <button id="btnPre" class="btn bg-gradient-light mb-0 js-btn-prev" type="button">이전</button>
-                          <button class="btn bg-gradient-dark ms-auto mb-0" type="button">다음</button>
+                          <button class="btn bg-gradient-dark ms-auto mb-0" type="submit">다음</button>
                         </div>
                       </div>
                     </div>
@@ -231,8 +232,8 @@
                     <div class="multisteps-form__content">
                       <div class="row text-center  ms-auto">
                         <div class="col-12 col-md-8 " style="margin-left:16%;">
-                          <label class="btn btn-lg btn-outline-secondary border-2 px-6 py-5" for="btncheck3">
-                            <a href="/user/detail">
+                          <a href="/user/detail">
+                            <label class="btn btn-lg btn-outline-secondary border-2 px-6 py-5" for="btncheck3">
                             <%-- <a href="http://localhost:8081/mntrng/pcControlList"> --%>
                               <svg class="text-dark" width="20px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -248,8 +249,9 @@
                                   </g>
                                 </g>
                               </svg>
-                            </a>
-                          </label>
+                           </label>
+                          </a>
+
                           <h6>Start!</h6>
                         
                         </div>
@@ -274,11 +276,12 @@
 $(document).ready(function(){
   var url = document.location.href;
   var itemno = url.substring(url.indexOf('?') + 1).split('=')[1];
-  
   var payAt = $("#payAt").val();    
+  var domainAt = $("#domainAt").val();    
   
   console.log("itemno : " + itemno); 
   console.log("payAt : " + payAt); 
+  console.log("payAt : " + domainAt); 
 
   $('input[name=itemno]').attr('value',itemno);
 
@@ -286,6 +289,11 @@ $(document).ready(function(){
     setActiveStep(1);
     setActivePanel(1);
     $('#btnPre').attr('disabled','disabled');
+    $('#btnProgress').attr('disabled','disabled');
+  }
+  if(domainAt != null){
+    setActiveStep(2);
+    setActivePanel(2);
   }
 
 });
@@ -326,7 +334,7 @@ function funcSubmit(step){
           alert( "fail" );
       }
     });
-  } else{
+  } else if(step == "domain"){
       $.ajax( { 
       url : "/subscribe/saveDomain",
       type:"POST",

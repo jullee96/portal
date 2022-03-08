@@ -11,10 +11,9 @@
   display: inline-block;
 }
 </style>
-
-<body>
+<!-- navnav -->
 <input type="hidden" id="sub" value="pageSubTitle">
-<nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2 mt-n11">
+<nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2 mt-n7">
   <div class="container-fluid py-1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 ps-2 me-sm-6 me-5">
@@ -93,7 +92,6 @@
     </div>
   </div>
 </nav> 
-</body>
 
 <script>
   $(document).ready(function () {

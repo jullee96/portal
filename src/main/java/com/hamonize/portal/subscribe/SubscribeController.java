@@ -53,18 +53,23 @@ public class SubscribeController {
         if(payAt > 0){
             logger.info("payAt >>>>>>>>> ", payAt);
             model.addAttribute("payAt", payAt);
+            model.addAttribute("domainAt", user.getDomain());
+            
             return "/subscribe/subscribe";
 
         } else if( vo.getItemno() == null || "".equals(vo.getItemno()) ){
             return "redirect:/"; 
             
-        }else if( user.getDomain() != null && !"".equals(vo.getItemno()) ){ // 도메인이 이미 있으면 마이페이지로
-            return "redirect:http://localhost:8081/mntrng/pcControlList"; 
+        }else if( user.getDomain() != null ){ // 도메인이 이미 있으면 마이페이지로
+            return "redirect:/user/detail"; 
+
+        } else{
+            session.setAttribute("itemno", vo.getItemno());
+
+            return "/subscribe/subscribe";
         }
 
-        session.setAttribute("itemno", vo.getItemno());
 
-        return "/subscribe/subscribe";
 	}
 
     /**
@@ -134,6 +139,7 @@ public class SubscribeController {
      * @return
      */
     @PostMapping("/saveDomain")
+    @ResponseBody
     public String domianSave(HttpSession session, Subscribe vo) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         
@@ -143,12 +149,18 @@ public class SubscribeController {
         logger.info("도메인 이름 : {}", vo.getDomain());
         logger.info("유저 아이디 : {}", vo.getUserid());
        
-        ur.updateDomain(vo.getDomain(), vo.getUserid());
-        user.setDomain(vo.getDomain());
-        session.setAttribute("userSession", user);
+        try {
+            ur.updateDomain(vo.getDomain(), vo.getUserid());
+            user.setDomain(vo.getDomain());
+            session.setAttribute("userSession", user);
+            return "S";
 
-        return "redirect:/";
-        // return "redirect:/user/detail";
+        } catch (Exception e) {
+            logger.error("eeee ");
+            return "F";
+        }
+   
+        
 
 	}
 
