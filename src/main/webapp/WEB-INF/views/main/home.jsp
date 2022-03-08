@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <link rel="icon" type="image/png" href="../argon/assets/img/favicon.png">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Hamonize Cloud Service</title>
   <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
@@ -70,8 +72,15 @@
                 <a href="#pricing" class="mr-0 font-bold duration-100 md:mr-3 lg:mr-8 transition-color hover:text-indigo-600">PRICING</a>
                 <a href="#qna" class="font-bold duration-100 transition-color hover:text-indigo-600">Q&A</a>
                 <div class="flex flex-col block w-full font-medium border-t border-gray-200 md:hidden">
-                    <a href="/login" class="w-full py-2 font-bold text-center text-pink-500">Login</a>
-                    <a href="/signup"  class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">Sign up</a>
+                    <c:if test="${userSession.userid != null }">
+                        <a href="/user/detail" class="w-full py-2 font-bold text-center text-pink-500">${userSession.username} 님</a>
+                        <a href="/login/logout"  class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">Logout</a>
+
+                    </c:if>
+                     <c:if test="${userSession.userid == null }">
+                        <a href="/login" class="w-full py-2 font-bold text-center text-pink-500">Login</a>
+                        <a href="/signup"  class="relative inline-block w-full px-5 py-3 text-sm leading-none text-center text-white bg-indigo-700 fold-bold">Sign up</a>
+                    </c:if>
                 </div>
             </nav>
 
