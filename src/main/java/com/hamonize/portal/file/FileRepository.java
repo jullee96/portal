@@ -25,6 +25,14 @@ public interface FileRepository extends JpaRepository<FileVO, String>{
     )
     void update(@Param("filename") String filename, @Param("filerealname") String filerealname, @Param("filepath") String filepath, @Param("filesize") Long filesize,  @Param("userid") String userid);
 
+    @Modifying
+    @Query(
+        value = "UPDATE tbl_files SET filepath = :#{#vo.filepath} WHERE userid = :#{#vo.userid} " , nativeQuery = true
+    )
+    void updateSnsImg(@Param("vo") FileVO vo);
+
+
+
     @Query(
         value = "SELECT * FROM tbl_files WHERE userid = :userid and keytype = :keytype " , nativeQuery = true
     )

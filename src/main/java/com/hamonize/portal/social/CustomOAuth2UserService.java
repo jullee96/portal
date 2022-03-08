@@ -89,19 +89,33 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Boolean isExist = false;
         isExist = ur.existsByEmail(attributes.getEmail().toString());
         User user = new User();
-  
+        FileVO fvo = new FileVO();
+           
 
         if(isExist){ //이미 등록된 이메일 update
             user = ur.findByEmail(attributes.getEmail()).get();
+            
+            if(!user.getPicture().equals(attributes.getPicture())){
+                user.setPicture(attributes.getPicture());
+                fvo.setFilepath(attributes.getPicture());
+                fvo.setUserid(user.getUserid());
+                fr.updateSnsImg(fvo);
+            } 
 
+            if(!user.getUsername().equals(attributes.getName())){
+                user.setUsername(attributes.getName());
+            } 
+            
             logger.info("user id : {}", user.getUserid());
+            logger.info("user name : {}", attributes.getName());
+            logger.info("user picture : {}", attributes.getPicture());
 
-            if(!user.getUserid().equals(user.getUserid())){ // update kakao
+
+            if(!user.getUserid().equals(user.getUserid())){ 
                 logger.info("이미 있는 이메일을 사용중인 계정 ");
                 throw new LockedException(attributes.getEmail().toString()); 
             }
         }else{ // new >  save sns user
-            FileVO fvo = new FileVO();
             logger.info("\n\n properties : {}",attributes.getAttributes().get("properties"));
             
             user.setUserid(attributes.getEmail());
