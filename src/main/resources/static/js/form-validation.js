@@ -218,6 +218,70 @@
     });
 
 
+    $("#frm2").validate({
+      rules: {
+        domain: {
+          required: true
+          // ,remote : {
+          //   type: 'post',
+          //   url : '/subscribe/domainDupCheck',
+          //   data: {
+          //     domain: function() {
+          //       return $( "#domain" ).val();
+          //     }
+          //   }
+          // }
+        }
+      },
+      messages: {
+        domain: {
+          required: "도메인은 필수 값입니다"
+          // ,remote: "중복된 도메인입니다. 다른 도메인을 입력해주세요"
+          }
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger');
+        $(element).addClass('form-control-danger');
+      }
+    
+    });
+
+
+
+    $("#frm1").validate({
+      rules: {
+        name: {
+          required: true
+        },
+        cardnum: {
+          required: true
+          }
+        
+      },
+      messages: {
+        name: {
+          required: "이름읍 필수값입니다",
+        },
+        cardnum: {
+          required: "카드 번호를 입력해주세요"
+        }
+      },
+      errorPlacement: function(label, element) {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      },
+      highlight: function(element, errorClass) {
+        $(element).parent().addClass('has-danger');
+        $(element).addClass('form-control-danger');
+      }
+    
+    });
+
+
 
 
   // 사업자번호 유효성 체크

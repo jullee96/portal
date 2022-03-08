@@ -16,7 +16,7 @@ public class SubscribeService {
 	private SubscribeRepostory sr;
 
     public Subscribe save(Subscribe vo){
-        
+        logger.info("SubscribeService");
         vo.setInsertdt(LocalDateTime.now());
         return sr.save(vo);
     }

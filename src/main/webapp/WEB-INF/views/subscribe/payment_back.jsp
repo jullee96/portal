@@ -21,8 +21,8 @@
     <h1>결제 정보</h1>
   </div>
 
-  <form id="frm" method="post" action="/subscribe/savePayment"> 
-<input type="hidden" id="itemno" name="itemno">
+<form id="frm" method="post" action="/subscribe/savePayment"> 
+    <input type="hidden" id="itemno" name="itemno">
     <div class="container preload">
         <div class="creditcard">
             <div class="front">
@@ -143,7 +143,7 @@
             <button type="submit" id="btnSave" >결제하기</button>
         </div>
     </div>
-  </form>
+</form>
    <!-- end of form -->
 
 </body>

@@ -35,7 +35,7 @@ public class SubscribeController {
     UserRepository ur;
 
     @RequestMapping("/payment")
-    public String paymentView(HttpSession session, Subscribe vo) {
+    public String paymentView(HttpSession session, Subscribe vo, Model model) {
         // 결제 정보는 있나 도메인정보가 없다면 도메인 생성페이지로
         // 결제 정보랑 도메인 정보 둘다 있다면 메인의 뉴저 메뉴 활성화 > 마이페이지로
 
@@ -48,10 +48,13 @@ public class SubscribeController {
         int payAt = ss.findSubscribeInfo(user.getUserid());
         
         logger.info("payAt >> {}", payAt);
+        model.addAttribute("payAt", payAt);
+
         if(payAt > 0){
             logger.info("payAt >>>>>>>>> ", payAt);
+            model.addAttribute("payAt", payAt);
+            return "/subscribe/subscribe";
 
-            return "redirect:/subscribe/domain"; 
         } else if( vo.getItemno() == null || "".equals(vo.getItemno()) ){
             return "redirect:/"; 
             
@@ -61,7 +64,7 @@ public class SubscribeController {
 
         session.setAttribute("itemno", vo.getItemno());
 
-        return "/subscribe/payment";
+        return "/subscribe/subscribe";
 	}
 
     /**
@@ -73,17 +76,19 @@ public class SubscribeController {
      * @return
      */
     @PostMapping("/savePayment")
+    @ResponseBody
     public String paymentSave(HttpSession session, Subscribe vo) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         String userid = user.getUserid();
-        
+        logger.info("getName :: {}", vo.getName());
+        logger.info("getCardnum :: {}", vo.getCardnum());
+
         try {
             vo.setUserid(userid);
             ss.save(vo);
-            session.setAttribute("domain", vo.getDomain());
-            return "redirect:/subscribe/domain";       
+            return "S";       
         } catch (Exception e) {
-            return "redirect:/subscribe/payment";       
+            return "E";       
         }
      
 	}

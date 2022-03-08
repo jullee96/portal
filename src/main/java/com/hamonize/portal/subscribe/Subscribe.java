@@ -7,28 +7,17 @@ import lombok.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.Size;
 import org.hibernate.annotations.Comment;
 
 @Getter
 @Setter
 @Entity
-@SequenceGenerator(
-            name="TBL_SUBSCRIBE_INFO_SEQ_GEN",
-            sequenceName="SUBSCRIBE_INFO_SEQ",
-            initialValue=1, //시작값
-            allocationSize=1                                
-            )
 @Table(name="tbl_subscribe_info")
 public class Subscribe {
     @Id
-    @Size(max=50)
-    @GeneratedValue(
-            strategy=GenerationType.SEQUENCE, 
-            generator="TBL_SUBSCRIBE_INFO_SEQ_GEN"     
-            )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("시퀀스 번호")
-    private int seq;
+    private Long seq;
 
     @Comment("도메인 정보")
     private String domain;

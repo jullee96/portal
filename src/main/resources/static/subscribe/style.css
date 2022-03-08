@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   padding: 0;
   background-color: #fff;
@@ -17,12 +17,12 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   font-family: 'Raleway';
-}
-
+} */
+/* 
 .payment-title {
   width: 100%;
   text-align: center;
-}
+} */
 
 .form-container .field-container:first-of-type {
   grid-area: name;
@@ -59,13 +59,13 @@ body {
   padding: 20px;
   color: #707070;
 }
-
+/* 
 label {
   padding-bottom: 5px;
   font-size: 13px;
-}
+} */
 
-input {
+.form-control2 {
   margin-top: 3px;
   padding: 15px;
   font-size: 16px;
@@ -75,10 +75,10 @@ input {
 }
 
 .ccicon {
-  height: 38px;
+  height: 26px;
   position: absolute;
-  right: 6px;
-  top: calc(50% - 17px);
+  right: 11%;
+  top: calc(78% - 92px);
   width: 60px;
 }
 
@@ -110,12 +110,13 @@ input {
       flex-wrap: wrap;
 }
 
-.container {
+.container2 {
   width: 100%;
   max-width: 400px;
   max-height: 251px;
   height: 54vw;
   padding: 20px;
+  margin-left: 27%;
   
 }
 

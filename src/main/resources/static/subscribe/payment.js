@@ -1,5 +1,4 @@
 window.onload = function () {
-
     const name = document.getElementById('name');
     const cardnumber = document.getElementById('cardnum');
     const expirationdate = document.getElementById('expdate');
@@ -197,6 +196,8 @@ window.onload = function () {
         cardnumber_mask.unmaskedValue = testCards[randomNumber];
     }
     generatecard.addEventListener('click', function () {
+        console.log("generatecard clicked >>>> ");
+
         randomCard();
     });
     
