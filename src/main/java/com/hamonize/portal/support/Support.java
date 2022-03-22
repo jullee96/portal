@@ -60,14 +60,20 @@ public class Support {
     private String status;
 
 
-    @Column(name = "ins_date")
-    private LocalDateTime insdate;
+    @Column(name = "rgstr_date")
+    private LocalDateTime rgstrdate;
     
     @Column(name = "updt_date")
     private LocalDateTime updtdate;
 
     @Transient
     private String viewDate;
+
+    @Transient
+    private String startDate;
+
+    @Transient
+    private String endDate;
 
 
 

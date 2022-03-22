@@ -2,24 +2,21 @@ package com.hamonize.portal.support;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
 import com.hamonize.portal.user.SecurityUser;
-import com.hamonize.portal.user.User;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,7 +58,7 @@ public class SupportController {
         for (Support support : list) {
             support.setStatus(support.getStatus().trim());
             support.setType(support.getType().trim());
-            support.setViewDate(support.getInsdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
             slist.add(support);
             
         } 
@@ -130,7 +127,7 @@ public class SupportController {
         } else{
             logger.info("save >>> ");
             vo.setStatus("P");
-            vo.setInsdate(LocalDateTime.now());
+            vo.setRgstrdate(LocalDateTime.now());
             ret = sr.save(vo);
             retval = ret.getSeq();
         }

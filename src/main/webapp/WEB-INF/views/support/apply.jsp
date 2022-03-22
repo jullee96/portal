@@ -145,7 +145,6 @@ const editor = new Editor({
     
 });
 
- console.log(editor.getHTML());
     
 
 function uploadImage(blob){
