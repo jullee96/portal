@@ -81,12 +81,12 @@ function gotoUrl(url){
         </li>
         <li class="nav-item">
           <%-- <a class="nav-link " href="javascript:;" onClick="gotoUrl('/user/resign')"> --%>
-          <a class="nav-link " href="javascript:;" >
+          <%-- <a class="nav-link " href="javascript:;" >
 
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
             </div>
             <span class="nav-link-text ms-1 text-sm">회원 탈퇴</span>
-          </a>
+          </a> --%>
         </li>
 
         <li class="nav-item mt-3">

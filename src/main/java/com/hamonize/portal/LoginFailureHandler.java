@@ -7,8 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AccountExpiredException;
-import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -17,9 +18,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 public class LoginFailureHandler implements AuthenticationFailureHandler {
@@ -48,7 +46,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (exception instanceof UsernameNotFoundException) {
             return "존재하지 않는 계정입니다";
         } else if (exception instanceof AccountExpiredException) {
-            return "계정만료";
+            return "탈퇴한 회원입니다";
         } else if (exception instanceof CredentialsExpiredException) {
             return "비밀번호만료";
         } else if (exception instanceof DisabledException) {

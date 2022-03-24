@@ -43,7 +43,7 @@ public class SecurityUser extends User {
         this.salt = user.getSalt();
         this.domain = user.getDomain();
         this.email = user.getEmail();
-
+        this.status = user.getStatus();
     }
 
     private static Set<GrantedAuthority> makeGrantedAuthority() {

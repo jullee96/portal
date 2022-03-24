@@ -25,4 +25,10 @@ public interface SignupRepository extends JpaRepository<User, String>{
     )
     int updateAuthkey(@Param("email") String email, @Param("authkey") String authkey, @Param("role") String role);
     
+    @Modifying
+    @Query(
+        value = "UPDATE tbl_admin_user SET status = :#{#vo.status}, updt_date = :#{#vo.updtdate} WHERE user_id = :#{#vo.userid} ", nativeQuery = true
+    )
+    int updateStatus(@Param("vo") User vo);
+    
 }

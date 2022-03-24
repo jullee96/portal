@@ -73,7 +73,7 @@
   <input type="hidden" id="pageTitle" value="회원정보 관리">
   <input type="hidden" id="pageSubTitle" value="회원정보 수정">
 
-  <div class="position-absolute w-100 min-height-300 top-0" style="background-color: #5e72e4;">
+  <div class="position-absolute w-100 min-height-300 top-0" >
     <span class="mask bg-primary opacity-6"></span>
   </div>
   <%@ include file="../template/aside.jsp" %>
@@ -147,103 +147,179 @@
               </p>
             </div>
           </div>
- 
+        <%-- <div class="col-md-6 my-auto">
+            <div class="ms-6 h-100">
+              <p class="mb-1">
+                구독중
+              </p>
+              <p class="mb-0 font-weight-bold text-sm">
+                Free
+              </p>
+            </div>
+          </div> --%>
+        
+          <!--- tab menu --->
+          <div class="z-index-1 col-lg-4 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="nav-wrapper position-relative end-0">
+              <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center active" data-bs-toggle="tab" href="#div-user" role="tab" data-load="true" aria-selected="true">
+                    <i class="ni ni-circle-08"></i>
+                    <span class="ms-2">회원정보</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center" data-bs-toggle="tab" href="#div-domain" role="tab" data-load="false" aria-selected="false">
+                    <i class="ni ni-world-2"></i>
+                    <span  class="ms-2">구독 정보</span>
+                  </a>
+                </li>
+                
+            </div>
+          </div>
+          <!--- end tab menu --->
+
         </div>
 
       </div>
     </div>
 
     <form id="user-form" action="/user/update" method="POST">
-      <div class="container-fluid py-4">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header pb-0">
-                <div class="d-flex align-items-center">
-                  <p class="mb-0">회원정보 수정 </p>
-                  <button type="submit" class="btn btn-primary btn-sm ms-auto">수정하기</button>
-                </div>
-              </div>
-              <div class="card-body">
-                <p class="text-uppercase text-sm">회원 정보</p>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">아이디</label>
-                      <input class="form-control" type="text" value="${userSession.userid}" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">이름</label>
-                      <input class="form-control" id="username" name="username" type="text" value="${userSession.username}">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">Email</label>
-                      <input class="form-control" id="email" name="email" type="email" value="${userSession.email}" >
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">이전 비밀번호 확인</label>
-                      <input class="form-control" id="before_passwd" name="before_passwd" type="password" value="">
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">비밀번호 변경</label>
-                      <input class="form-control" id="passwd" name="passwd" type="password" value="">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">비밀번호 변경 확인</label>
-                      <input class="form-control" id="re_passwd" name="re_passwd" type="password" value="">
-                    </div>
-                  </div>
-                </div>
-                
-                <hr class="horizontal dark">
-                <p class="text-uppercase text-sm">회사 정보</p>
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label"> 회사명</label>
-                      <input class="form-control" type="text" id="companyName" name="companyName" value="${companyInfo.companyName}">
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label"> 대표명 </label>
-                      <input class="form-control" type="text" id="rprsName" name="rprsName" value="${companyInfo.rprsName}">
-                    </div>
-                  </div>
-                  
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="example-text-input" class="form-control-label">사업자 번호 </label>
-                    <input class="form-control" type="text" id="businessNumber" name="businessNumber" value="${companyInfo.businessNumber}" maxlength=12>
-                    </div>
-                  </div>
-
-                  
- 
-                </div>
-                
-              </div>
-
-
-            </div>
-          </div>
-          
-        </div>
-        <!-- footer -->
-        <%@ include file="../template/footer.jsp" %>
-      </div>
+      <div class="tab-content">
         
+        <div id ="div-user" class="tab-pane in active container-fluid py-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header pb-0">
+                  <div class="d-flex align-items-center">
+                    <p class="mb-0">회원정보 수정 </p>
+                    <button type="button" class="btn btn-secondary btn-sm ms-auto" onclick="fnDeleteUser('${userSession.userid}', '${userSession.email}' )">탈퇴하기</button>
+                    <button type="submit" class="btn btn-primary btn-sm ms-4">수정하기</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="text-uppercase text-sm">회원 정보</p>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">아이디</label>
+                        <input class="form-control" type="text" value="${userSession.userid}" disabled>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">이름</label>
+                        <input class="form-control" id="username" name="username" type="text" value="${userSession.username}">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">Email</label>
+                        <input class="form-control" id="email" name="email" type="email" value="${userSession.email}" >
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">이전 비밀번호 확인</label>
+                        <input class="form-control" id="before_passwd" name="before_passwd" type="password" value="">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">비밀번호 변경</label>
+                        <input class="form-control" id="passwd" name="passwd" type="password" value="">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">비밀번호 변경 확인</label>
+                        <input class="form-control" id="re_passwd" name="re_passwd" type="password" value="">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <hr class="horizontal dark">
+                  <p class="text-uppercase text-sm">회사 정보</p>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label"> 회사명</label>
+                        <input class="form-control" type="text" id="companyName" name="companyName" value="${companyInfo.companyName}">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label"> 대표명 </label>
+                        <input class="form-control" type="text" id="rprsName" name="rprsName" value="${companyInfo.rprsName}">
+                      </div>
+                    </div>
+                    
+                    <div class="col-md">
+                      <div class="form-group">
+                        <label for="example-text-input" class="form-control-label">사업자 번호 </label>
+                          <input class="form-control" type="text" id="businessNumber" name="businessNumber" value="${companyInfo.businessNumber}" maxlength=12>
+                      </div>
+                    </div>
+
+                    
+  
+                  </div>
+                  
+                </div>
+
+
+              </div>
+            </div>
+            
+          </div>
+          <!-- footer -->
+          <%@ include file="../template/footer.jsp" %>
+        
+        </div>
+
+        <div id ="div-domain" class="tab-pane container-fluid py-4">
+          <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="mt-2 card-header pb-0">
+                    <p>구독 정보 보기</p>
+                  </div>  
+                  <div class="card-body pb-0">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+
+                          <p class="text-uppercase text-sm">구독중인 상품</p>
+                          <p class="ms-2 font-weight-bold"> ${subscribeInfo.product.pdname}</p>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+
+                          <p class="text-uppercase text-sm">결제 수단</p>
+                          <p class="ms-2 font-weight-bold"> ${subscribeInfo.cardnum}</p>
+
+                        </div>
+                      </div>
+
+                     </div> 
+                  
+                    <%-- <div class="row">
+                      <p class="text-uppercase text-sm">결제 수단</p>
+                        ${subscribeInfo.cardnum}
+                    </div> --%>
+                  </div>
+
+                </div>
+            </div>  
+          </div>
+        </div>
+
+        
+      </div>
     </form>
 </div>
   
@@ -268,8 +344,18 @@ $(document).on("keyup", "#businessNumber", function() {
 
 
 $(document).ready(function () {
+  $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    console.log("show");
+  });
+
+
+  $('a[data-toggle="tab"]').on('hide.bs.tab', function (e) {
+    console.log("hide");
+  });
+
+
+
   $("#user-form").validate({
-    // ignore: "",
     submitHandler: function(form) {
         form.submit();
     }  
@@ -341,6 +427,33 @@ function uploadFile(keytype){
     }
   });
 
+}
+
+function fnDeleteUser(userid, email){
+  if(confirm("하모나이즈 서비스를 탈퇴하시겠습니까?" + userid)){
+    $.ajax({
+      type:"POST",
+      url: "/user/resign",
+      data:{
+        userid : userid,
+        email : email
+      },
+      success: function(retval){
+        if(retval == userid){
+          alert("이메일로 탈퇴 확인 메일을 보내드렸습니다. 확인을 완료해야 탈퇴가 완료됩니다.");
+          location.reload();
+        }else{
+          alert("전송 실패" + retval);
+          location.reload();
+        }
+      },
+      err: function(err){
+        console.log("err:", err)
+        }
+      });
+  } else{
+
+  }
 }
 
 </script>

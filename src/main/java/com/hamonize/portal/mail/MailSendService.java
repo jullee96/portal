@@ -137,4 +137,38 @@ public class MailSendService {
         return userid;
     } 
  
+
+    public String sendResignConfirmMail(String email, String userid) throws UnsupportedEncodingException {
+        
+        logger.info("email : {}",email.trim());
+        logger.info("userid : {}",userid.trim());
+        
+        logger.info("mailSender id : {}",mailSender.getUsername());
+        logger.info("mailSender pw : {}",mailSender.getPassword());
+
+        
+        try {
+            MailUtils sendMail = new MailUtils(mailSender);
+            sendMail.setSubject("회원 탈퇴 확인 메세지");
+            sendMail.setText(new StringBuffer().append("<h1>[회원탈퇴]</h1>")
+                        .append("<p>회원 탈퇴를 진행하시겠습니까?<br>더 이상 하모나이즈 서비스를 이용할 수 없습니다.</p>")
+                        .append("<p>아래 링크를 클릭하시면 회원 탈퇴가 완료됩니다.</p>")
+                        .append("<a target='_blank' href='http://localhost:8080/signup/resignConfirm?userid=")
+                        .append(userid.trim()+"'")
+                        .append(">탈퇴하기</a>")
+                        .toString());
+            
+            sendMail.setFrom(mailSender.getUsername(), "하모나이즈 관리자");
+            sendMail.setTo(email);
+            sendMail.send();
+            
+        } catch (MessagingException e) {
+            logger.error("이메일 발송 오류 {}", e);
+
+        }
+
+
+        return userid;
+    } 
+ 
 }

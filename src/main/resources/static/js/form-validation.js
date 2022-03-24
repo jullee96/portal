@@ -308,9 +308,15 @@
 
 
     $.validator.addMethod("checkComNo", function(value, element) {
-      console.log("checkCorporateRegiNumber >> "+checkCorporateRegiNumber(value));
-
-      return checkCorporateRegiNumber(value);
+      const val = value;
+      
+      if(val == ""){
+        return true;
+      } else{
+        console.log("checkCorporateRegiNumber >> "+checkCorporateRegiNumber(value));
+        return checkCorporateRegiNumber(value);
+      }
+      
     }, "* 유요하지 않은 번호입니다");
 
 
@@ -337,11 +343,9 @@
           } 
         },
         passwd: {
-          // required: true,
           minlength: 4
         },
         re_passwd: {
-          // required: true,
           minlength: 4,
           equalTo: "#passwd"
         },

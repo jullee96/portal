@@ -2,6 +2,9 @@ package com.hamonize.portal.subscribe;
 
 
 import javax.persistence.*;
+
+import com.hamonize.portal.product.Product;
+
 import lombok.*;
 
 import java.sql.Date;
@@ -28,9 +31,9 @@ public class Subscribe {
     @Comment("pg사 정보")
     private String pg;
 
-    @Column(name = "item_no")
-    @Comment("구매한 아이템 번호")
-    private String itemno;
+    @Column(name = "pd_id")
+    @Comment("구매한 상품 번호")
+    private Long pdid;
 
     @Comment("결제 수단 종류 > CR: 신용(체크)카드, BA: 계좌이체")
     private String paytype;
@@ -58,5 +61,9 @@ public class Subscribe {
     @Column(name = "update_dt")
     @Comment("결제정보 업데이트 일시")
     private Date updatedt;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pdid")
+    private Product product;
 
 }

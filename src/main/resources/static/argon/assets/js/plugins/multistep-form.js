@@ -131,15 +131,15 @@ DOMstrings.stepsBar.addEventListener('click', e => {
 
 //PREV/NEXT BTNS CLICK
 DOMstrings.stepsForm.addEventListener('click', e => {
-  console.log("stepsForm >>>> ");
+  // console.log("stepsForm >>>> ");
 
 
   const eventTarget = e.target;
-  console.log("eventTarget : "+eventTarget.classList );
+  // console.log("eventTarget : "+eventTarget.classList );
 
   //check if we clicked on `PREV` or NEXT` buttons
   var contain = eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`);
-  console.log("contain? : "+contain);
+  // console.log("contain? : "+contain);
   
   if (!contain) {
     

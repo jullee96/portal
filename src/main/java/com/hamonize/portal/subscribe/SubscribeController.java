@@ -1,8 +1,15 @@
 package com.hamonize.portal.subscribe;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import com.hamonize.portal.user.SecurityUser;
+import com.hamonize.portal.user.User;
+import com.hamonize.portal.user.UserRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,14 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpSession;
-import com.hamonize.portal.user.SecurityUser;
-import com.hamonize.portal.user.User;
-import com.hamonize.portal.user.UserRepository;
 
 
 @Controller
@@ -36,35 +35,28 @@ public class SubscribeController {
 
     @RequestMapping("/payment")
     public String paymentView(HttpSession session, Subscribe vo, Model model) {
-        // 결제 정보는 있나 도메인정보가 없다면 도메인 생성페이지로
-        // 결제 정보랑 도메인 정보 둘다 있다면 메인의 뉴저 메뉴 활성화 > 마이페이지로
-
-        logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-
-        logger.info("getUserid >> {}",user.getUserid());
-        logger.info("getDomain >> {}",user.getDomain());
+        int payAt = ss.findSubscribeInfo(user.getUserid()); // 결제 여부
         
-        int payAt = ss.findSubscribeInfo(user.getUserid());
+        logger.info("pdid : {}", vo.getPdid());
+        logger.info("payAt : {}", payAt);
         
-        logger.info("payAt >> {}", payAt);
         model.addAttribute("payAt", payAt);
 
         if(payAt > 0){
-            logger.info("payAt >>>>>>>>> ", payAt);
             model.addAttribute("payAt", payAt);
             model.addAttribute("domainAt", user.getDomain());
             
             return "/subscribe/subscribe";
 
-        } else if( vo.getItemno() == null || "".equals(vo.getItemno()) ){
+        } else if( vo.getPdid() == null || "".equals(vo.getPdid()) ){
             return "redirect:/"; 
             
         }else if( user.getDomain() != null ){ // 도메인이 이미 있으면 마이페이지로
             return "redirect:/user/detail"; 
 
         } else{
-            session.setAttribute("itemno", vo.getItemno());
+            session.setAttribute("itemno", vo.getPdid());
 
             return "/subscribe/subscribe";
         }
@@ -85,9 +77,7 @@ public class SubscribeController {
     public String paymentSave(HttpSession session, Subscribe vo) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         String userid = user.getUserid();
-        logger.info("getName :: {}", vo.getName());
-        logger.info("getCardnum :: {}", vo.getCardnum());
-
+        
         try {
             vo.setUserid(userid);
             ss.save(vo);
@@ -105,25 +95,17 @@ public class SubscribeController {
         String itemno = (String) session.getAttribute("itemno");
     
         User uvo = ur.findByUserid(userid).get();
-
-        logger.info("\n\n\n <<< doamin 생성 페이지 >> ");
-        logger.info("\n\n\nuserid >> {}",userid);
-        logger.info("domain >> {}", uvo.getDomain());
-        logger.info("itemno >> {}",itemno);
-        
         vo.setUserid(userid);
        
         // 결제 정보 && 생성된 도메인이 있는지 확인 
         int isExistSub = ss.findSubscribeInfo(vo.getUserid());
-        logger.info("isExistSub >> {}\n\n\n\n",isExistSub);
-
+  
         if(isExistSub > 0){ // 결제 함
             if( "".equals(uvo.getDomain()) || uvo.getDomain() == null){ //도메인 생성 안한 경우 
                 return "/subscribe/domain";
             }else{ // 이미 도메인 생성한 경우
                 return "redirect:/";
             }
-
         }else{ //결제 안함
             return "redirect:/subscribe/payment?itemno="+itemno; 
         }
@@ -142,12 +124,7 @@ public class SubscribeController {
     @ResponseBody
     public String domianSave(HttpSession session, Subscribe vo) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        
         vo.setUserid(user.getUserid());
-       
-        logger.info("<<< 도메인 정보 >>> ");
-        logger.info("도메인 이름 : {}", vo.getDomain());
-        logger.info("유저 아이디 : {}", vo.getUserid());
        
         try {
             ur.updateDomain(vo.getDomain(), vo.getUserid());
@@ -178,6 +155,7 @@ public class SubscribeController {
     public String getbillingInfo(HttpSession session, Subscribe vo, Model model) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         List<Subscribe> list = sr.findAllByUserid(user.getUserid());        
+   
         for (Subscribe subscribe : list) {
             logger.info("subscrib : {}", subscribe.getCardnum());
         }        

@@ -42,7 +42,7 @@ img[alt=alt_img] {
   <input type="hidden" id="pageTitle" value="기술지원 관리">
   <input type="hidden" id="pageSubTitle" value="기술지원 신청">
 
-  <div class="position-absolute w-100 min-height-300 top-0" style="background-color: #5e72e4;">
+ <div class="position-absolute w-100 min-height-300 top-0" >
     <span class="mask bg-primary opacity-6"></span>
   </div>
   <%@ include file="../template/aside.jsp" %>
@@ -84,18 +84,18 @@ img[alt=alt_img] {
                         </select>
                     </div>
 
-                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                        <label class="text-md-start">담당자</label>
+                    <div class="col-12 col-sm-6 mt-sm-4">
+                        <label class="text-md-start">작성자</label>
                         <input class="form-control" type="text" id="name" name="name" value="${userSession.username}" disabled>
                     </div>
 
-                    <div class="col-12 col-sm-6 mt-3 mt-sm-0">
+                    <div class="col-12 col-sm-6 mt-sm-4">
                         <label class="text-md-start">이메일</label>
                         <input class="form-control" type="email" id="email" name="email" value="${userSession.email}" disabled>
 
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 mt-sm-4">
                         <label class="text-md-start">제목</label>
                         <input class="form-control" type="text" id="title" name="title" value="${edit.title}" required>
                     </div>

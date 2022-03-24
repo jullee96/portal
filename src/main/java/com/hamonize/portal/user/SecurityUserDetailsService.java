@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +35,8 @@ public class SecurityUserDetailsService implements UserDetailsService{
             return null;
         } else if(user.get().getRole().equals("ROLE_GUEST")){
            throw new DisabledException("이메일 미인증");
+        } else if(user.get().getStatus().equals("IA")){
+            throw new AccountExpiredException("회원 탈퇴한 계정");
         }
         
         return new SecurityUser(user.get());

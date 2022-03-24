@@ -16,7 +16,7 @@
   <input type="hidden" id="pageTitle" value="결제 관리">
   <input type="hidden" id="pageSubTitle" value="결제 내역">
 
-  <div class="position-absolute w-100 min-height-300 top-0" style="background-color: #5e72e4;">
+  <div class="position-absolute w-100 min-height-300 top-0" >
     <span class="mask bg-primary opacity-6"></span>
   </div>
   <%@ include file="../template/aside.jsp" %>

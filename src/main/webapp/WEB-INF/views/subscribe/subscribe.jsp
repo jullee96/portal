@@ -168,21 +168,21 @@
                               </div>
                               <div class="row mt-4">
                                   <div class="text-start field-container">
-                                      <label for="name">Name</label>
-                                      <input class="form-control" id="name" name="name" maxlength="20" type="text">
+                                      <label for="name">이름</label>
+                                      <input class="form-control" id="name" name="name" maxlength="20" type="text" style="text-transform: uppercase;">
                                   </div>
                                   <div class="text-start">
-                                      <label for="cardnum">Card Number</label>
+                                      <label for="cardnum">카드번호</label>
                                       <span id="generatecard">generate random</span>
                                       <input class="form-control" id="cardnum" name="cardnum" type="text" inputmode="numeric">
                                       <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
                                   </div>
                                   <div class="text-start">
-                                      <label for="expdate">Expiration (mm/yy)</label>
+                                      <label for="expdate">유효기간 (mm/yy)</label>
                                       <input class="form-control" id="expdate" name="expdate" type="text" inputmode="numeric">
                                   </div>
                                   <div class="text-start field-container">
-                                      <label for="cvc">Security Code</label>
+                                      <label for="cvc">cvc</label>
                                       <input class="form-control" id="cvc" name="cvc" type="text" inputmode="numeric">
                                   </div>
                               </div>
@@ -196,6 +196,7 @@
                     </form>
 
                   </div>
+
                   <form id="frm2" method="POST" action="javascript:funcSubmit('domain');">
                     <!--single form panel-->
                     <div class="card multisteps-form__panel p-3 border-radius-xl bg-white" data-animation="FadeIn">
@@ -273,15 +274,13 @@
 
 
 <script type="text/javascript">
+var url = document.location.href;
+var pdid = url.substring(url.indexOf('?') + 1).split('=')[1];
+ 
 $(document).ready(function(){
-  var url = document.location.href;
-  var itemno = url.substring(url.indexOf('?') + 1).split('=')[1];
-  var payAt = $("#payAt").val();    
-  var domainAt = $("#domainAt").val();    
   
-  console.log("itemno : " + itemno); 
-  console.log("payAt : " + payAt); 
-  console.log("payAt : " + domainAt); 
+  const payAt = $("#payAt").val();    
+  const domainAt = $("#domainAt").val();    
 
   $('input[name=itemno]').attr('value',itemno);
 
@@ -290,19 +289,21 @@ $(document).ready(function(){
     setActivePanel(1);
     $('#btnPre').attr('disabled','disabled');
     $('#btnProgress').attr('disabled','disabled');
+  } else if( payAt == 0){
+    setActiveStep(0);
+    setActivePanel(0);
+    $('.multisteps-form__progress-btn').attr('disabled','disabled');
+  
   }
-  if(domainAt != null){
-    setActiveStep(2);
-    setActivePanel(2);
-  }
+  // if(domainAt != null){
+  //   setActiveStep(2);
+  //   setActivePanel(2);
+  // }
 
 });
 
 
 function funcSubmit(step){
-  console.log("step : "+step);
-  const itemno = $("#itemno").val();
-
   const name = $("#name").val();
   const expdate = $("#expdate").val();
   const cardnum = $("#cardnum").val();
@@ -315,7 +316,7 @@ function funcSubmit(step){
       url : "/subscribe/savePayment",
       type:"POST",
       data : {
-              itemno : itemno,
+              pdid : pdid,
               name : name,
               cardnum : cardnum,
               expdate : expdate,
@@ -323,7 +324,6 @@ function funcSubmit(step){
           },
       success : function(ret) {
           if(ret ="S" ){
-            
             setActiveStep(1);
             setActivePanel(1);
           } else{

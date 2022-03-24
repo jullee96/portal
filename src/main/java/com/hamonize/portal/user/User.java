@@ -11,12 +11,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.hamonize.portal.paging.PagingVo;
-import com.hamonize.portal.social.OAuthAttributes.OAuthAttributesBuilder;
 
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -63,10 +61,10 @@ public class User extends PagingVo {
 	private String status;
 	
 	@Column(name = "rgstr_date")
-	private LocalDateTime rgstrDate;
+	private LocalDateTime rgstrdate;
 
 	@Column(name = "updt_date")
-	private LocalDateTime updtDate;
+	private LocalDateTime updtdate;
 	
     @Transient
 	@Column(name="login_check",columnDefinition = "integer default 0")

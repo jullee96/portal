@@ -195,20 +195,20 @@ input.invalid {
 
               <div class="form-container">
                 <div class="field-container">
-                    <label for="name">Name</label>
-                    <input id="name" name="name" maxlength="20" type="text">
+                    <label for="name">이름</label>
+                    <input id="name" name="name" maxlength="20" type="text" tyle="text-transform: uppercase;">
                 </div>
                 <div class="field-container">
-                    <label for="cardnum">Card Number</label><span id="generatecard">generate random</span>
+                    <label for="cardnum">카드번호</label><span id="generatecard">generate random</span>
                     <input id="cardnum" name="cardnum" type="text" inputmode="numeric">
                     <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
                 </div>
                 <div class="field-container">
-                    <label for="expdate">Expiration (mm/yy)</label>
+                    <label for="expdate">유효기간 (mm/yy)</label>
                     <input id="expdate" name="expdate" type="text" inputmode="numeric">
                 </div>
                 <div class="field-container">
-                    <label for="cvc">Security Code</label>
+                    <label for="cvc">cvc 번호</label>
                     <input id="cvc" name="cvc" type="text" inputmode="numeric">
                 </div>
                 <div class="field-container">

@@ -1,8 +1,9 @@
 package com.hamonize.portal.user;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,10 @@ import com.hamonize.portal.company.CompanyRepository;
 import com.hamonize.portal.company.CompanyService;
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
+import com.hamonize.portal.mail.MailSendService;
+import com.hamonize.portal.product.ProductRepository;
+import com.hamonize.portal.subscribe.Subscribe;
+import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.util.SHA256Util;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -44,12 +49,29 @@ public class UserController {
     @Autowired
     CompanyRepository cr;
 
+    @Autowired
+    MailSendService mss;
+
+    @Autowired
+    SubscribeRepostory sr;
+
+    @Autowired
+    ProductRepository pr;
+
+
     @RequestMapping("/detail")
     public String signup(HttpSession session, User vo, Model model) {
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-       logger.info("user id >>> {}",user.getUserid());
+       SecurityUser user = (SecurityUser) session.getAttribute("userSession");
        Company newComVo = cr.findByUserid(user.getUserid());
+       List<Subscribe> svo = sr.findAllByUserid(user.getUserid());
+
        model.addAttribute("companyInfo", newComVo);
+       
+       if(!svo.isEmpty()){
+        svo.get(0).setProduct( pr.findByPdid(svo.get(0).getPdid()));
+        model.addAttribute("subscribeInfo", svo.get(0));
+ 
+       }
 
        FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
         try {
@@ -71,28 +93,18 @@ public class UserController {
         vo.setDomain(user.getDomain());
         cvo.setUserid(user.getUserid());
         
-        // 수정실패시 출력 메세지
-        response.setContentType("text/html; charset=UTF-8");
-        // String message = getExceptionMessage(exception);
-            
-        PrintWriter out = response.getWriter();
-
-    
         if(!"".equals(vo.getBefore_passwd()) && vo.getBefore_passwd() != null){
             us.update(vo);
             cs.update(cvo);
 
-
             // update session user
             User newVo = ur.findByUserid(vo.getUserid()).get();
-            
             SecurityUser updateUser = new SecurityUser(newVo);
+        
             session.removeAttribute("userSession");
             session.setAttribute("userSession", updateUser);
 
         }else{ 
-            // out.println("<script>alert(''); location.href='/login';</script>");
-            // out.flush();
             logger.info("변경사항 없음");
         }
 
@@ -102,19 +114,14 @@ public class UserController {
 
     @RequestMapping("/images")
     public void imgView(HttpSession session, HttpServletResponse response, Model model)  throws IOException {
-        logger.info("<<<<<<<<<<<< imgView images >>>>>>>>>");
-        
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         FileVO file = fr.findByUseridAndKeytype(user.getUserid(), "img");
          
         try {
-           
-            logger.info("file path : {}", file.getFilepath());
             StringBuilder sb =new StringBuilder();
             
             if(file.getFilepath().contains("://")){
                 sb = new StringBuilder(file.getFilepath());
-                logger.info("......;;; : {}", sb.toString());
             
             } else{
                 sb = new StringBuilder("file:"+ file.getFilepath());
@@ -146,9 +153,25 @@ public class UserController {
         }else{
             return false;
         }
- 
+ 	}
+
+
+    @RequestMapping("/resign")
+    @ResponseBody
+    public String sendResignMessage(User vo) {
+        String ret="f";
+        try {
+            ret = mss.sendResignConfirmMail(vo.getEmail(),vo.getUserid());
+            return ret;
+        } catch (UnsupportedEncodingException e) {
+            ret = "f";
         
-	}
+            return ret;
+        }
+    
+    }
+    
+    
 
-
+    
 }

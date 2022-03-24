@@ -2,6 +2,7 @@ package com.hamonize.portal.support;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -69,24 +70,198 @@ public class SupportController {
         return "/support/list";
 	}
 
+
+
+    @RequestMapping("/search")
+    public String supportListSearch(String keyword, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable ,  HttpSession session, Support vo, Model model) {
+        logger.info("\n\n\n <<< list >> page : {}", page);
+        logger.info("keyword : {}", keyword);
+        logger.info("getStartDate : {}", vo.getStartDate());
+        logger.info("getEndDate : {}", vo.getEndDate());
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+
+        // 키워든 제목, 접수번호만
+
+
+        try {
+            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
+    
+            if(vo.getStartDate() != null && vo.getEndDate() != null ){ // keyword + page + 날짜 계산하는 경우
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            
+                LocalDateTime startDate = LocalDate.parse(vo.getStartDate(), formatter).atStartOfDay();
+                LocalDateTime endDate = LocalDate.parse(vo.getEndDate(), formatter).atStartOfDay();
+                endDate = endDate.plusHours(23).plusMinutes(59).plusSeconds(60);
+                
+                logger.info("endDate  >> {}", endDate);
+                
+                Page<Support> resultPage = sr.findAllByUseridAndTitleContainingIgnoreCaseAndRgstrdateBetween(pageable,user.getUserid(),keyword, startDate, endDate);
+                List<Support> list = resultPage.getContent();
+                List<Support> slist = new ArrayList<>();
+                
+                for (Support support : list) {
+                    support.setStatus(support.getStatus().trim());
+                    support.setType(support.getType().trim());
+                    support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                    slist.add(support);
+                } 
+                Long totalCnt = sr.countByUseridAndTitleContainingIgnoreCaseAndRgstrdateBetween(user.getUserid() ,keyword, startDate, endDate);
+ 
+                model.addAttribute("totalCnt", totalCnt);
+                model.addAttribute("tmpCnt", slist.size());
+
+                // paging
+                model.addAttribute("list", slist);
+                model.addAttribute("nowPage", page);
+                model.addAttribute("totalPage", resultPage.getTotalPages());
+            
+                model.addAttribute("startDate", vo.getStartDate());
+                model.addAttribute("endDate", vo.getEndDate());
+
+            }else{
+                if( keyword.matches("[0-9]+") ){ //숫자만 있는 경우
+                    Long tmpLong = Long.parseLong(keyword);
+                    logger.info("tmpLong : {}", tmpLong);
+                    logger.info("tmpLong type : {}", tmpLong.getClass());
+    
+                    Page<Support> resultPage = sr.findBySeq(pageable, tmpLong);
+                    List<Support> list = resultPage.getContent();
+                    List<Support> slist = new ArrayList<>();
+                    
+                    for (Support support : list) {
+                        support.setStatus(support.getStatus().trim());
+                        support.setType(support.getType().trim());
+                        support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                        slist.add(support);
+                    } 
+                    Long totalCnt = sr.countBySeq(tmpLong);
+                    model.addAttribute("totalCnt", totalCnt);
+                    model.addAttribute("tmpCnt", slist.size());
+                    // paging
+                    model.addAttribute("list", slist);
+                    model.addAttribute("nowPage", page);
+                    model.addAttribute("totalPage", resultPage.getTotalPages());
+                   
+                    model.addAttribute("keyword",keyword);
+
+                } else{ //문자만 있는 경우
+                    Page<Support> resultPage = sr.findByUseridAndTitleContainingIgnoreCase(pageable, user.getUserid(), keyword);
+                    List<Support> list = resultPage.getContent();
+                    List<Support> slist = new ArrayList<>();
+                    
+                    for (Support support : list) {
+                        support.setStatus(support.getStatus().trim());
+                        support.setType(support.getType().trim());
+                        support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                        slist.add(support);
+                    }  
+                    
+                    Long totalCnt = sr.countByUseridAndTitleContainingIgnoreCase(user.getUserid(), keyword);
+                    model.addAttribute("totalCnt", totalCnt);
+                    model.addAttribute("tmpCnt", slist.size());
+                   
+            
+                    // paging
+                    model.addAttribute("list", slist);
+                    model.addAttribute("nowPage", page);
+                    model.addAttribute("totalPage", resultPage.getTotalPages());
+                    
+                    model.addAttribute("keyword",keyword);
+                }
+
+            }
+            
+
+        } catch (Exception e) {
+            logger.error("[ERROR] string to long...{}", e);
+
+        }
+        return "/support/list";
+
+        
+     }
+
+    @RequestMapping("/searchDate")
+    public String supportListSearchDate(@RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable, Support vo, Model model, HttpSession session) {
+        logger.info("\n\n\n <<< list >> page : {}", page);
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+
+        try {
+            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            
+            if(vo.getStartDate() != null){
+                LocalDateTime startDate = LocalDate.parse(vo.getStartDate(), formatter).atStartOfDay();
+                LocalDateTime endDate = LocalDate.parse(vo.getEndDate(), formatter).atStartOfDay();
+                endDate = endDate.plusHours(23).plusMinutes(59).plusSeconds(60);
+                
+                logger.info("endDate  >> {}", endDate);
+                
+                Page<Support> resultPage = sr.findAllByUseridAndRgstrdateBetween(pageable, user.getUserid() ,startDate, endDate);
+                List<Support> list = resultPage.getContent();
+                List<Support> slist = new ArrayList<>();
+                
+                for (Support support : list) {
+                    support.setStatus(support.getStatus().trim());
+                    support.setType(support.getType().trim());
+                    support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                    slist.add(support);
+                } 
+                Long totalCnt = sr.countByUseridAndRgstrdateBetween(user.getUserid(), startDate, endDate);
+ 
+                model.addAttribute("totalCnt", totalCnt);
+                model.addAttribute("tmpCnt", slist.size());
+
+                // paging
+                model.addAttribute("list", slist);
+                model.addAttribute("nowPage", page);
+                model.addAttribute("totalPage", resultPage.getTotalPages());
+            
+                model.addAttribute("startDate", vo.getStartDate());
+                model.addAttribute("endDate", vo.getEndDate());
+        
+            } else{
+                LocalDateTime endDate = LocalDate.parse(vo.getEndDate(), formatter).atStartOfDay();
+                endDate = endDate.plusHours(23).plusMinutes(59).plusSeconds(60);
+                
+                Page<Support> resultPage = sr.findAllByUseridAndRgstrdateLessThanEqual(pageable, user.getUserid(),endDate);
+                List<Support> list = resultPage.getContent();
+                List<Support> slist = new ArrayList<>();
+
+                for (Support support : list) {
+                    support.setStatus(support.getStatus().trim());
+                    support.setType(support.getType().trim());
+                    support.setViewDate(support.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                    slist.add(support);
+                }
+                    
+                // paging
+                model.addAttribute("list", slist);
+                model.addAttribute("nowPage", page);
+                model.addAttribute("totalPage", resultPage.getTotalPages());
+                model.addAttribute("endDate", vo.getEndDate());
+        
+            }
+            
+
+        } catch (Exception e) {
+            logger.error("[ERROR] string to long...{}", e);
+        }
+        
+        return "/support/list";
+	}
+
+
     @GetMapping("/apply")
     public String supportCreate(Support vo, HttpSession session, Model model) {
-        
-        logger.info("\n\n\n <<< 1:1문의 작성 >> ");
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
       
         return "/support/apply";
 	}
 
     @GetMapping("/edit")
     public String supportEdit(Support vo, HttpSession session, Model model) {
-        logger.info("seq : ",vo.getSeq());
-
-        logger.info("\n\n\n <<< 1:1문의 상세 수정 >> ");
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        logger.info("seq >> {}", vo.getSeq());
         Support edit = sr.findBySeq(vo.getSeq());
-            
         model.addAttribute("edit", edit);
     
         return "/support/apply";
@@ -94,10 +269,6 @@ public class SupportController {
 
     @GetMapping("/view")
     public String supportView(Support vo, HttpSession session, Model model) {
-        logger.info("seq : ",vo.getSeq());
-
-        logger.info("\n\n\n <<< 1:1문의 상세 보기>> ");
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
             logger.info("seq >> {}", vo.getSeq());
             Support edit = sr.findBySeq(vo.getSeq());
                 
@@ -109,23 +280,18 @@ public class SupportController {
     @RequestMapping("/save")
     @ResponseBody
     public Long save(HttpSession session, Support vo ) {
-        logger.info("\n\n\n <<< support 저장 >> ");
         Support ret = new Support();
         Long retval = (long) 0;
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         
         vo.setUserid(user.getUserid());
-        logger.info("getSeq >> {}",vo.getSeq());
         
         if(vo.getSeq() != null ){
             vo.setUpdtdate(LocalDateTime.now());
             int aa = sr.update(vo);
             retval = (long) aa;
-
-            logger.info("update >>>{} ", retval);
-            
+       
         } else{
-            logger.info("save >>> ");
             vo.setStatus("P");
             vo.setRgstrdate(LocalDateTime.now());
             ret = sr.save(vo);
@@ -138,10 +304,6 @@ public class SupportController {
 
     @RequestMapping("/delete")
     public String delete(HttpSession session, Support vo) throws Exception{
-        logger.info("seq : ",vo.getSeq());
-
-        logger.info("\n\n\n <<< doamin 결제 페이지 >> ");
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         sr.delete(vo);
 
         return "redirect:/support/list";
@@ -149,18 +311,11 @@ public class SupportController {
 
     @RequestMapping("/getImageUrl")
     public void imgView(@RequestParam("seq") Integer seq, HttpSession session, HttpServletResponse response, Model model)  throws IOException {
-        
-       SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-       logger.info("file path : {}", seq);
-
-       FileVO file = fr.findByUseridAndSeq(user.getUserid(), seq );
-        
-        logger.info("file path : {}", file.getFilepath());
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        FileVO file = fr.findByUseridAndSeq(user.getUserid(), seq );
         
         StringBuilder sb = new StringBuilder("file:"+ file.getFilepath());
         URL fileUrl = new URL(sb.toString());
-        logger.info("fileUrl >> {}",fileUrl);
-
         IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
 	}
 

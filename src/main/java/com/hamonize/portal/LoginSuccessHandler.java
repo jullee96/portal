@@ -1,9 +1,6 @@
 package com.hamonize.portal;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Enumeration;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,32 +9,20 @@ import javax.servlet.http.HttpSession;
 
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
-import com.hamonize.portal.login.LoginController;
-import com.hamonize.portal.subscribe.Subscribe;
 import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.user.SecurityUser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.PortResolverImpl;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Configuration
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{

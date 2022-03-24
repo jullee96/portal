@@ -35,7 +35,7 @@
             ${userSession.username} 님 &nbsp;&nbsp; <i class="fa fa-bell cursor-pointer">   </i>
           </a>
 
-          <ul class="dropdown-menu dropdown-menu-end px-2 py-3 ms-n4" aria-labelledby="dropdownMenuButton">
+          <ul class="dropdown-menu dropdown-menu-end px-2 py-3 ms-n4 z-index-0" aria-labelledby="dropdownMenuButton" >
             <li class="mb-2">
               <a class="dropdown-item border-radius-md" href="/user/detail">
                 <div class="d-flex py-1">
