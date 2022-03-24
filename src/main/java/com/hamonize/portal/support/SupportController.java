@@ -41,6 +41,9 @@ public class SupportController {
     @Autowired
     SupportRepository sr;
 
+    @Autowired
+    CommentsRespository cr;
+
     @RequestMapping("/list")
     public String supportList(@RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable ,  HttpSession session, Support vo, Model model) {
         logger.info("\n\n\n <<< list >> page : {}", page);
@@ -269,11 +272,23 @@ public class SupportController {
 
     @GetMapping("/view")
     public String supportView(Support vo, HttpSession session, Model model) {
-            logger.info("seq >> {}", vo.getSeq());
-            Support edit = sr.findBySeq(vo.getSeq());
-                
-            model.addAttribute("edit", edit);
-    
+        List <Comments> list = cr.findAllBySupportseq(vo.getSeq());
+
+        for (Comments cm : list) {
+            cm.setViewDate(cm.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+        }
+
+        logger.info("seq >> {}", vo.getSeq());
+        Support edit = sr.findBySeq(vo.getSeq());
+
+        edit.setViewDate(edit.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+        logger.info("list length : {}", list.size());
+        model.addAttribute("edit", edit);
+        model.addAttribute("clist", list);
+        model.addAttribute("clistSize", list.size());
+
+
+
         return "/support/view";
 	}
 

@@ -75,7 +75,6 @@
         <div class="card-body p-3">
             <div class="table-responsive">
             <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns" >
-            <%-- <form method="GET" class="frmSearch" id="frmSearch" > --%>
                 <div class="dataTable-top mb-n4">
                     <!-- 날짜 조회 -->
                     <div class="row">
@@ -91,13 +90,20 @@
                             <span class="text-sm">${tmpCnt}</span> <span class="text-sm" style="font-weight: 700;">개</span> / 
                             <span class="text-sm" style="font-weight: 700;">총</span>
                             <span class="text-sm">${totalCnt}</span> <span class="text-sm" style="font-weight: 700;">개</span>
+                        
+                            
                         </div>
                         
                     </div>
                     <div class="dataTable-search ">
-                        <a class="reset-btn " href="/support/list"><span class="text-xs me-2">검색 초기화</span> <i class="fas fa-undo"></i></a>
-                        <input class="dataTable-input2" placeholder="검색" name="keyword" id="keyword" value="${keyword}" type="text" maxlength="30">
-                        <a class="search-btn" href="javascript:fnSearch();"><i class="fas fa-search"></i></a>
+                        <div>
+                            <a class="reset-btn " href="/support/list"><span class="text-xs me-2">검색 초기화</span> <i class="fas fa-undo"></i></a>
+                            <input class="dataTable-input2" placeholder="검색" name="keyword" id="keyword" value="${keyword}" type="text" maxlength="30">
+                            <a class="search-btn" href="javascript:fnSearch();"><i class="fas fa-search"></i></a>
+                        </div>
+                        <div class="mt-3" style="margin-left:50%;"> 
+                            <a href="/support/apply" class="me-4 mt-3 btn btn-primary btn-sm ms-auto"> 신청하기</a>
+                        </div>
                     </div>
                 
 

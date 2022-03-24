@@ -56,15 +56,30 @@ img[alt=alt_img] {
 <form id="support-form" name="support-form" >
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
-            <h5 class="font-weight-bolder">1:1 문의하기</h5>    
+              <h5 class="font-weight-bolder">문의 상세 
+              <input type="hidden" id="clistSize" value="${clistSize}">
+                    <c:if test="${clistSize != 0}">
+                        <button type="button" class="mt-2 ms-2 btn btn-outline-secondary btn-status btn-xs"> 답변완료</button>  
+                    </c:if>
+                    <c:if test="${clistSize == 0}">
+                        <button type="button" class="mt-2 btn btn-outline-success btn-status btn-xs"> 처리중</button>  
+                    </c:if>
+                </h5>    
                 <div class="d-flex align-items-center">
-                  <a href="/support/edit?seq=${edit.seq}" class="btn btn-primary btn-sm ms-auto ">수정하기</a>
-                </div>
+                  <input type="hidden" id="clistSize" value="${clistSize}">
 
+                  <c:if test="${clist == null}">
+                    <a href="/support/edit?seq=${edit.seq}" class="btn btn-primary btn-sm ms-auto ">수정하기</a>
+                  </c:if>
+                  <c:if test="${clist != null}">
+                    <a href="/support/apply" class="btn btn-primary btn-sm ms-auto ">새 질문하기</a>
+                  </c:if>
+                </div>
+                  <hr>
 
                 <div class="row">
                     <div class="col-12">
-                        <label class="sub-title" >문의 종류</label>
+                        <label class="h6 sub-title" >문의 종류</label>
 
                         <input type="hidden" id="select_type" value="${edit.type}" >
                         <select class="form-control" name="type" id="type" disabled focused>
@@ -76,32 +91,47 @@ img[alt=alt_img] {
                     </div>
 
                     <div class="col-12 col-sm-6 mt-sm-4">
-                        <label class="text-md-start">담당자</label>
+                        <label class="h6 text-md-start">작성자</label>
                         <input class="form-control" type="text" id="name" name="name" value="${userSession.username}" disabled >
                     </div>
 
                     <div class="col-12 col-sm-6  mt-sm-4">
-                        <label class="text-md-start">이메일</label>
+                        <label class="h6 text-md-start">이메일</label>
                         <input class="form-control" type="email" id="email" name="email" value="${userSession.email}" disabled>
 
                     </div>
 
                     <div class="col-12 mt-sm-4">
-                        <label class="text-md-start">제목</label>
+                        <label class="h6 text-md-start">제목</label>
                         <input class="form-control" type="text" id="title" name="title" value="${edit.title}" disabled>
                     </div>
 
                     <div class="col-sm-12">
-                    <label class="mt-4">내용</label>
+                    <label class="h6 mt-4">내용</label>
                     <input id="content" type="hidden" value="${edit.contents}">
                     <div class="contents" id ="viewer"> </div>
-                    
+                    <hr>
+
                 </div>
 
         </div>
-
     </div>
-  
+
+      <!-- 답변 -->
+      <c:forEach items="${clist}" var="list" varStatus="status" >
+          <c:if test="${list.seq != null}" >
+          <div class="card mt-2 mb-4 shadow-lg mx-4 card-profile-bottom" style="background-color:#63b3ed1c;">
+              <div class="card-body p-3" >  
+                  <h6 class="font-weight-bolder">ㄴ ${list.userid}</h6>
+                  <div class="ms-2 contents" id ="viewer_cmt_${status.count}"></div>
+                  ${list.viewDate}
+                  <input id="cmt_${status.count}" type="hidden" value='${list.comment}'>
+              </div>
+          </div>
+
+          </c:if>
+      </c:forEach>
+
   </div>
 </form>
   
@@ -118,6 +148,22 @@ const viewer = new toastui.Editor.factory({
     viewer: true,
     initialValue: content  
 });
+
+const n = $("#clistSize").val();
+var arr = new Array(n);
+
+for(let i=1 ; i <= n ; i++){
+    var cmt = $("#cmt_"+i).val();
+    
+    arr[i] = toastui.Editor.factory({
+        el: document.querySelector('#viewer_cmt_'+i), 
+        viewer: true, 
+        height: '100px',
+        initialValue : cmt 
+    });
+        
+
+}
 
 </script>
 <script>
