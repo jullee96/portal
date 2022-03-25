@@ -39,7 +39,6 @@ public interface SupportRepository extends JpaRepository<Support, String>{
 
     Long countBySeq(Long tmpLong);
 
-
     Page<Support> findAllByUseridAndTitleContainingIgnoreCaseAndRgstrdateBetween(org.springframework.data.domain.Pageable pageable, String keyword,
             String userid, LocalDateTime startDate, LocalDateTime endDate);
 
@@ -49,5 +48,7 @@ public interface SupportRepository extends JpaRepository<Support, String>{
                 LocalDateTime startDate, LocalDateTime endDate);
 
     Long countByUseridAndTitleContainingIgnoreCase(String userid, String keyword);
+
+    Long countByUserid(String userid);
 
 }

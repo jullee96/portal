@@ -139,7 +139,6 @@ DOMstrings.stepsForm.addEventListener('click', e => {
 
   //check if we clicked on `PREV` or NEXT` buttons
   var contain = eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`);
-  // console.log("contain? : "+contain);
   
   if (!contain) {
     

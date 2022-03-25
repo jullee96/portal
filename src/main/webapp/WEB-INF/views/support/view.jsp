@@ -68,10 +68,10 @@ img[alt=alt_img] {
                 <div class="d-flex align-items-center">
                   <input type="hidden" id="clistSize" value="${clistSize}">
 
-                  <c:if test="${clist == null}">
+                  <c:if test="${clistSize == 0}">
                     <a href="/support/edit?seq=${edit.seq}" class="btn btn-primary btn-sm ms-auto ">수정하기</a>
                   </c:if>
-                  <c:if test="${clist != null}">
+                  <c:if test="${clistSize != 0}">
                     <a href="/support/apply" class="btn btn-primary btn-sm ms-auto ">새 질문하기</a>
                   </c:if>
                 </div>

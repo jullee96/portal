@@ -46,10 +46,8 @@ public class SupportController {
 
     @RequestMapping("/list")
     public String supportList(@RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable ,  HttpSession session, Support vo, Model model) {
-        logger.info("\n\n\n <<< list >> page : {}", page);
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
-        
         // paging
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
         Page<Support> resultPage = sr.findAllByUserid(pageable, user.getUserid());
@@ -66,6 +64,10 @@ public class SupportController {
             slist.add(support);
             
         } 
+        Long totalCnt = sr.countByUserid(user.getUserid());
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("tmpCnt", slist.size());
+                    
         model.addAttribute("list", slist);
         model.addAttribute("nowPage", page);
         model.addAttribute("totalPage", resultPage.getTotalPages());
@@ -160,6 +162,9 @@ public class SupportController {
                     }  
                     
                     Long totalCnt = sr.countByUseridAndTitleContainingIgnoreCase(user.getUserid(), keyword);
+                    logger.info("totalCnt: {}",totalCnt);
+                    logger.info("tmpCnt: {}", slist.size());
+
                     model.addAttribute("totalCnt", totalCnt);
                     model.addAttribute("tmpCnt", slist.size());
                    

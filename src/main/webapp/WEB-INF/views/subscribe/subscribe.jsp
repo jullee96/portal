@@ -14,6 +14,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 
   <link href="/subscribe/style.css" rel="stylesheet">
+  <script src="../argon/assets/js/plugins/multistep-form.js"></script>
 
 </head>
 <%@ include file="../template/top2.jsp" %>

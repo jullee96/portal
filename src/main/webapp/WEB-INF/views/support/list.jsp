@@ -78,7 +78,7 @@
                 <div class="dataTable-top mb-n4">
                     <!-- 날짜 조회 -->
                     <div class="row">
-                        <label class="text-md-start">신청일 기간 검색</label>
+                        <label class="text-md-start">신청일 기간 검색${tmpCnt}</label>
                         <div class="col-sm-4">
                             <input id="startDate" style="width:70%; display: inline;" class="text-xs form-control form-control-sm datepicker flatpickr-input" placeholder="시작일" value="${startDate}" type="text" onfocus="focused(this)" onfocusout="defocused(this)" readonly="readonly">&nbsp;&nbsp;&nbsp;-
                         </div>
@@ -86,7 +86,7 @@
                             <input id="endDate" style="width:70%; display: inline;" class="text-xs form-control form-control-sm datepicker flatpickr-input" placeholder="종료일" value="${endDate}" type="text" onfocus="focused(this)" onfocusout="defocused(this)" readonly="readonly">
                         </div>
                         <div class="mt-4 col-sm-12">
-                            <span class="text-sm" style="font-weight: 700;">현재</span>
+                            <span class="text-sm" style="font-weight: 700;">현재 </span>
                             <span class="text-sm">${tmpCnt}</span> <span class="text-sm" style="font-weight: 700;">개</span> / 
                             <span class="text-sm" style="font-weight: 700;">총</span>
                             <span class="text-sm">${totalCnt}</span> <span class="text-sm" style="font-weight: 700;">개</span>
@@ -189,7 +189,7 @@
                                 </td>
                                 <td class="align-middle">
                                     <a href="/support/view?seq=${list.seq}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                    수정
+                                    상세
                                     </a>
                                         | 
                                     <a href="#" onClick="fnDelete(${list.seq})" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
