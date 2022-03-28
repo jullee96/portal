@@ -1,6 +1,8 @@
 package com.hamonize.portal;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
+import com.hamonize.portal.login.LoginHistory;
+import com.hamonize.portal.login.LoginHistoryRepository;
 import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.user.SecurityUser;
 import com.hamonize.portal.user.User;
@@ -41,6 +45,9 @@ public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler{
     @Autowired
     UserRepository ur;
   
+    @Autowired
+    LoginHistoryRepository lhr;
+    
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -76,9 +83,17 @@ public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler{
             logger.error("profileimg 없음 ");
         }
         
-        
+        LoginHistory lhrvo = new LoginHistory();
         
         if(oAuth2User.getAttributes().get("email")  != null){
+            if(user.getDomain()!= null){
+                lhrvo.setDomain(user.getDomain());
+            }
+            lhrvo.setUserip(request.getRemoteAddr());
+            lhrvo.setUserid(user.getUserid());
+            lhrvo.setLogindate(LocalDateTime.now());
+            lhr.save(lhrvo);
+            
             response.sendRedirect("/"); 
         } else{
             response.sendRedirect("/login");

@@ -1,6 +1,7 @@
 package com.hamonize.portal.login;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +43,9 @@ public class LoginController {
     @Autowired
     UserService us;
 
+    @Autowired
+    LoginHistoryRepository lhr;
+
     @RequestMapping("")
     public String login(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         SavedRequest save = (SavedRequest) request.getSession().getAttribute("SPRING_SECURITY_SAVED_REQUEST");
@@ -61,10 +65,10 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logoutProc(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-    	request.getSession().invalidate();
-		request.getSession(true);
-        session.removeAttribute("userSession");
-        session.removeAttribute("profileImg");
+        // request.getSession().invalidate();
+		// request.getSession(true);
+        // session.removeAttribute("userSession");
+        // session.removeAttribute("profileImg");
 
 		return "redirect:/";
 	}

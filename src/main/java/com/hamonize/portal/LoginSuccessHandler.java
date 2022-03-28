@@ -1,7 +1,10 @@
 package com.hamonize.portal;
 
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.time.LocalDateTime;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
+import com.hamonize.portal.login.LoginHistory;
+import com.hamonize.portal.login.LoginHistoryRepository;
 import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.user.SecurityUser;
 
@@ -37,7 +42,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 
     @Autowired
     FileRepository fr;
-  
+
+    @Autowired
+    LoginHistoryRepository lhr;
+
+ 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -63,10 +72,20 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         
         logger.info("session id: {}", httpSession.getId());
         logger.info("getUserid : {}", user.getUserid());
+        logger.info("user.getDomain() : {}", user.getDomain());
+        logger.info("\nuser ip11 : {}\n", request.getRemoteAddr());
         
-        
+        LoginHistory lhrvo = new LoginHistory();
         
         if(user.getUserid() != null){
+            if(user.getDomain()!= null){
+                lhrvo.setDomain(user.getDomain());
+            }
+            lhrvo.setUserip(request.getRemoteAddr());
+            lhrvo.setUserid(user.getUserid());
+            lhrvo.setLogindate(LocalDateTime.now());
+            LoginHistory lv = lhr.save(lhrvo);
+            httpSession.setAttribute("loginhistory", lv);
             response.sendRedirect("/"); 
   
         } else{

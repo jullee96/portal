@@ -41,7 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private CustomAuthenticationProvider authProvider;
 
-    
+    @Autowired
+    private CustomLogoutSuccessHandler logoutSuccessHandler;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
 
@@ -75,8 +77,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .failureHandler(authFailureHandler);
         
         http.logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout")).logoutSuccessUrl("/")
-            .invalidateHttpSession(true)
+            .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
+            .logoutSuccessHandler(logoutSuccessHandler)
+            // .logoutSuccessUrl("/")
+            .invalidateHttpSession(false)
         
             .and()
                 .oauth2Login()
