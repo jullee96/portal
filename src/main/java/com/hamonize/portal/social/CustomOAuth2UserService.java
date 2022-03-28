@@ -16,6 +16,7 @@ import com.hamonize.portal.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -50,19 +51,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
-
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-
-        logger.info("registrationId >>>>> {}", registrationId);
-
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
-
-        logger.info(" find email... {}", attributes.getEmail());
-        logger.info(" find name... {}", attributes.getName());
-        logger.info(" find picture... {}", attributes.getPicture());
-        
         User user = saveOrUpdate(registrationId, attributes);
 
         if("kakao".equals(registrationId)){
@@ -95,6 +86,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         if(isExist){ //이미 등록된 이메일 update
             user = ur.findByEmail(attributes.getEmail()).get();
             
+            logger.info("sns user getStatus ... {}", user.getStatus());
+
             if(!user.getPicture().equals(attributes.getPicture())){
                 user.setPicture(attributes.getPicture());
                 fvo.setFilepath(attributes.getPicture());
@@ -106,15 +99,18 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 user.setUsername(attributes.getName());
             } 
             
-            logger.info("user id : {}", user.getUserid());
-            logger.info("user name : {}", attributes.getName());
-            logger.info("user picture : {}", attributes.getPicture());
-
-
+        
             if(!user.getUserid().equals(user.getUserid())){ 
                 logger.info("이미 있는 이메일을 사용중인 계정 ");
                 throw new LockedException(attributes.getEmail().toString()); 
             }
+           
+            if(user.getStatus().equals("IA")){ 
+                logger.info("비활성화된 계정입니다");
+                throw new AccountExpiredException(attributes.getEmail().toString()); 
+            }
+
+
         }else{ // new >  save sns user
             logger.info("\n\n properties : {}",attributes.getAttributes().get("properties"));
             

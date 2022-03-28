@@ -46,7 +46,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (exception instanceof UsernameNotFoundException) {
             return "존재하지 않는 계정입니다";
         } else if (exception instanceof AccountExpiredException) {
-            return "탈퇴한 회원입니다";
+            return "비활성화된 회원입니다";
         } else if (exception instanceof CredentialsExpiredException) {
             return "비밀번호만료";
         } else if (exception instanceof DisabledException) {
