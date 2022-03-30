@@ -76,14 +76,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .successHandler(authSuccessHandler)
             .failureHandler(authFailureHandler);
         
-        http.logout()
-            .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
-            .logoutSuccessHandler(logoutSuccessHandler)
-            // .logoutSuccessUrl("/")
-            .invalidateHttpSession(false)
+        // http.logout()
+        //     .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
+        //     .logoutSuccessHandler(logoutSuccessHandler)
+        //     .invalidateHttpSession(false)
         
-            .and()
-                .oauth2Login()
+        http.oauth2Login()
                 .loginPage("/login")
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
@@ -91,6 +89,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .and()
                 .successHandler(oauth2LoginSuccessHandler)
                 .failureHandler(authFailureHandler);    
+        
+        http.logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
+            .logoutSuccessHandler(logoutSuccessHandler)
+            .invalidateHttpSession(false);
+        
         }
 
     @Override

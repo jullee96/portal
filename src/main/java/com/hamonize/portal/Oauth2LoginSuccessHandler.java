@@ -1,7 +1,6 @@
 package com.hamonize.portal;
 
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
@@ -13,13 +12,11 @@ import com.hamonize.portal.file.FileRepository;
 import com.hamonize.portal.file.FileVO;
 import com.hamonize.portal.login.LoginHistory;
 import com.hamonize.portal.login.LoginHistoryRepository;
-import com.hamonize.portal.subscribe.SubscribeRepostory;
 import com.hamonize.portal.user.SecurityUser;
 import com.hamonize.portal.user.User;
 import com.hamonize.portal.user.UserRepository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -88,11 +85,14 @@ public class Oauth2LoginSuccessHandler implements AuthenticationSuccessHandler{
         if(oAuth2User.getAttributes().get("email")  != null){
             if(user.getDomain()!= null){
                 lhrvo.setDomain(user.getDomain());
+            } else{
+                lhrvo.setDomain("");
             }
             lhrvo.setUserip(request.getRemoteAddr());
             lhrvo.setUserid(user.getUserid());
             lhrvo.setLogindate(LocalDateTime.now());
-            lhr.save(lhrvo);
+            LoginHistory lv = lhr.save(lhrvo);
+            httpSession.setAttribute("loginhistory", lv);
             
             response.sendRedirect("/"); 
         } else{

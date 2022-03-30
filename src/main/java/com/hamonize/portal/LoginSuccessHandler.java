@@ -78,13 +78,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
         LoginHistory lhrvo = new LoginHistory();
         
         if(user.getUserid() != null){
+            
             if(user.getDomain()!= null){
                 lhrvo.setDomain(user.getDomain());
+            }else{
+                lhrvo.setDomain("");
             }
+            
             lhrvo.setUserip(request.getRemoteAddr());
             lhrvo.setUserid(user.getUserid());
             lhrvo.setLogindate(LocalDateTime.now());
             LoginHistory lv = lhr.save(lhrvo);
+            
             httpSession.setAttribute("loginhistory", lv);
             response.sendRedirect("/"); 
   

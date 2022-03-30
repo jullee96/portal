@@ -13,11 +13,10 @@
   <script type="text/javascript" src="/subscribe/payment.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
 
-  <link href="/subscribe/style.css" rel="stylesheet">
-  <script src="../argon/assets/js/plugins/multistep-form.js"></script>
-
 </head>
 <%@ include file="../template/top2.jsp" %>
+<link href="/subscribe/style.css" rel="stylesheet">
+<%-- <script src="../argon/assets/js/plugins/multistep-form.js"></script> --%>
 
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -272,7 +271,7 @@
 
     </div>
   </main>
-
+<script src="../argon/assets/js/plugins/multistep-form.js"></script>
 
 <script type="text/javascript">
 var url = document.location.href;
