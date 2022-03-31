@@ -17,5 +17,7 @@ public interface SitemapRepository extends JpaRepository<Sitemap, String>{
     )
     void update(@Param("vo") Sitemap vo);
 
+    Sitemap findBySmseq(Long pseq);
+
     
 }

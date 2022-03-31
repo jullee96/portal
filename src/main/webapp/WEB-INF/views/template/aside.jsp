@@ -21,8 +21,8 @@ $(document).ready(function () {
                 console.log("sitemap > "+obj[i].smseq +" : "+obj[i].sitemapname);
                 html += '<ul class="navbar-nav"> <li class="nav-item mt-3"><h6 id="sitemap" class="ps-4 ms-2 text-uppercase text-ms font-weight-bolder opacity-6">'+obj[i].sitemapname+'</h6></li>';
               } else{
-                console.log("menu > "+obj[i].seq+ " : "+obj[i].boardname);
-                html += '<li class="nav-item"><a class="nav-link" href="'+obj[i].boardid+'"> <span id="menu" class="nav-link-text ms-4 text-sm">'+obj[i].boardname+'</span></a> </li> ';
+                console.log("menu > "+obj[i].bcseq+ " : "+obj[i].bcname);
+                html += '<li class="nav-item"><a class="nav-link" href="'+obj[i].bcid+'"> <span id="menu" class="nav-link-text ms-4 text-sm">'+obj[i].bcname+'</span></a> </li> ';
               }  
               
               html += '</li>';

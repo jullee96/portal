@@ -23,16 +23,18 @@ import lombok.*;
 public class Board {
     
     @Id
-	@Column
+	@Column(name = "b_seq")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("게시글 시퀀스 번호")
-    private Long seq;
+    private Long bseq;
 
+     @Column(name = "b_title")
     @Comment("게시글 제목")
-	private String title;
+	private String btitle;
 
+    @Column(name = "b_content", columnDefinition="TEXT")
     @Comment("게시판 내용")
-    private String contents;
+    private String bcontent;
 
     @Comment("게시글 작성자 아이디")
     @Column(name = "user_id")
@@ -51,11 +53,15 @@ public class Board {
     private Integer viewcnt = 0;
 
     @Transient
-    private String viewDate;
-
-    @Comment("게시판 구분 아이디")
-	@OneToOne
-    @JoinColumn(name = "board_id")
-    BoardConfig boardConfig;
+    private String viewdate;
+    
+    @Comment("boardconfig seq > menu seq")
+    @Column(name = "bc_seq" )
+    private Long bcseq;
+    
+    // @Comment("게시판 구분 아이디")
+	// @OneToOne
+    // @JoinColumn(name = "board_id")
+    // BoardConfig boardConfig;
 
 }

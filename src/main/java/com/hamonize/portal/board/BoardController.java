@@ -10,9 +10,9 @@ import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -26,12 +26,15 @@ public class BoardController {
     @Autowired
     BoardConfigRepository bcr;
 
+    @Autowired
+    BoardRepository br;
+
     @RequestMapping("/list")
     @ResponseBody
     public String getBoardList(HttpSession session,BoardConfig vo) throws IOException {
 
         List <Sitemap> slist = smr.findAll((Sort.by(Sort.Direction.ASC, "smseq")));
-        List <BoardConfig> blist = bcr.findAllByBoardused((Sort.by(Sort.Direction.ASC, "seq")),1);
+        List <BoardConfig> blist = bcr.findAllByBcused((Sort.by(Sort.Direction.ASC, "bcseq")),1);
         List<Object> list = new ArrayList <>();
         
         for( Sitemap el : slist){
@@ -45,11 +48,11 @@ public class BoardController {
             for( BoardConfig bel : blist ){
                 Map<String, Object> menu = new HashMap <String, Object>();
                 if(el.getSmseq() == bel.getPseq()){
-                    menu.put("seq", bel.getSeq());
-                    menu.put("boardid", bel.getBoardid());
-                    menu.put("boardname" ,bel.getBoardname());
-                    menu.put("boardrole" ,bel.getBoardrole());
-                    menu.put("boardtype" ,bel.getBoardtype());
+                    menu.put("bcseq", bel.getBcseq());
+                    menu.put("bcid", bel.getBcid());
+                    menu.put("bcname" ,bel.getBcname());
+                    menu.put("bcrole" ,bel.getBcrole());
+                    menu.put("bctype" ,bel.getBctype());
                     list.add(menu);
                 }
             }
@@ -62,26 +65,33 @@ public class BoardController {
         return jsonString;
     }
 
-    @RequestMapping("/{boardid}")
-    public String get(@PathVariable ("boardid")String boardid, HttpSession session,BoardConfig vo) throws IOException {
+    @RequestMapping("/{bcid}")
+    public String get(@PathVariable ("bcid")String bcid, HttpSession session, BoardConfig vo, Model model) throws IOException {
+        logger.info("bcid??? >> {}",bcid);
+        vo = bcr.findByBcid("/board/"+bcid);    
+        logger.info("getBcseq : {}", vo.getBcseq());        
+        logger.info("board type : {}", vo.getBctype());
+        Sitemap smvo = smr.findBySmseq(vo.getPseq());
+        List <Board> blist = br.findAllByBcseq((Sort.by(Sort.Direction.ASC, "bseq")),vo.getBcseq());   
 
-        logger.info("boardid??? >> {}",boardid);
-        vo = bcr.findByBoardid("/board/"+boardid);    
-        logger.info("board type : {}", vo.getBoardtype());
-                
-        if(vo.getBoardtype().equals("wiki") ){
-            return "/board/plain_wiki";
-        } else if(vo.getBoardtype().equals("board") ){
-            return "/board/plain_board_list";
+        if(vo.getBctype().equals("wiki") ){
+            model.addAttribute("sitemap",smvo);
+            
+            model.addAttribute("boardCfg",vo);
+            model.addAttribute("board", blist.get(0));
+
+            return "/board/plain_list";
+        } else if(vo.getBctype().equals("board") ){
+            return "/board/plain_list_board";
         } else{
-            return "/board/plain_board_view";
+            return "/board/plain_list";
         }
 
         
     }
 
 
-    @RequestMapping("/{boardid}/view")
+    @RequestMapping("/{bcid}/view")
     @ResponseBody
     public String getview(HttpSession session,BoardConfig vo) throws IOException {
 
@@ -91,7 +101,7 @@ public class BoardController {
 
 
 
-    @RequestMapping("/{boardid}/list")
+    @RequestMapping("/{bcid}/list")
     @ResponseBody
     public String getlist(HttpSession session,BoardConfig vo) throws IOException {
 
