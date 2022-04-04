@@ -1,6 +1,7 @@
 package com.hamonize.portal.board;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -73,30 +74,72 @@ public class BoardController {
         logger.info("board type : {}", vo.getBctype());
         Sitemap smvo = smr.findBySmseq(vo.getPseq());
         List <Board> blist = br.findAllByBcseq((Sort.by(Sort.Direction.ASC, "bseq")),vo.getBcseq());   
+        List <Board> list = new ArrayList<>();
 
-        if(vo.getBctype().equals("wiki") ){
+        model.addAttribute("sitemap",smvo);
+        model.addAttribute("boardCfg",vo);
+       
+        try {
+            if(vo.getBctype().equals("wiki") ){
+                blist.get(0).setBcontent(blist.get(0).getBcontent().replaceAll("\"", "\'"));
+                model.addAttribute("board", blist.get(0));
+    
+                return "/board/plain_wiki";
+
+            } else if(vo.getBctype().equals("board") ){
+                for(Board el : blist){
+                    el.setViewdate(el.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+                    list.add(el);
+                }
+                model.addAttribute("boards", list);
+    
+                return "/board/plain_board_list";
+            } else{
+                return "/board/plain_wiki";
+            }
+        
+        } catch (IndexOutOfBoundsException e) {
+            logger.error("page가 없는경우 ");
             model.addAttribute("sitemap",smvo);
-            
             model.addAttribute("boardCfg",vo);
-            model.addAttribute("board", blist.get(0));
+            model.addAttribute("board", null);
 
-            return "/board/plain_list";
-        } else if(vo.getBctype().equals("board") ){
-            return "/board/plain_list_board";
-        } else{
-            return "/board/plain_list";
+            return "/board/plain_wiki";
+
         }
-
+        
         
     }
 
 
-    @RequestMapping("/{bcid}/view")
-    @ResponseBody
-    public String getview(HttpSession session,BoardConfig vo) throws IOException {
+    // @RequestMapping("/view")
+    // public String getview(Board vo, Model model) {
 
 
-        return "";
+    //     return "/board/plain_board_view";
+    // }
+
+
+
+
+    @RequestMapping("/{bcid}/view/{bseq}")
+    public String getview(@PathVariable ("bcid") String bcid, @PathVariable ("bseq") String bseq, Board vo, Model model) {
+        logger.info("getview.....");
+        logger.info("bcid > {}", bcid);
+
+        BoardConfig cvo = bcr.findByBcid("/board/"+bcid);
+        logger.info("pseq > {}", cvo.getPseq());
+        Sitemap smvo = smr.findBySmseq(cvo.getPseq());
+        logger.info("bseq > {}", vo.getBseq());
+        vo = br.getByBseq(vo.getBseq());
+        vo.setBcontent(vo.getBcontent().replaceAll("\"", "\'"));
+        
+        logger.info("content ?? {}",vo.getBcontent());
+        model.addAttribute("sitemap",smvo);
+        model.addAttribute("boardCfg",cvo);
+        model.addAttribute("board", vo);
+
+        return "/board/plain_board_view";
     }
 
 
@@ -104,8 +147,6 @@ public class BoardController {
     @RequestMapping("/{bcid}/list")
     @ResponseBody
     public String getlist(HttpSession session,BoardConfig vo) throws IOException {
-
-
         return "";
     }
 

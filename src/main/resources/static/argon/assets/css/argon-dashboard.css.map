@@ -1,6 +1,6 @@
 {
 	"version": 3,
-	"file": "dashboard-pro.css",
+	"file": "dashboard-free.css",
 	"sources": [
 		"../scss/dashboard-pro.scss",
 		"../scss/bootstrap/_functions.scss",
@@ -18,7 +18,7 @@
 		"../scss//variables/_utilities-extend.scss",
 		"../scss//variables/_misc.scss",{
 	"version": 3,
-	"file": "dashboard-pro.css",
+	"file": "dashboard-free.css",
 	"sources": [
 		"../scss/dashboard-pro.scss",
 		"../scss/bootstrap/_functions.scss",

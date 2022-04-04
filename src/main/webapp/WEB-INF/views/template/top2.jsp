@@ -7,13 +7,13 @@
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
   <!-- Nucleo Icons -->
-  <link href="../argon/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../argon/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="${pageContext.request.contextPath}/argon/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="${pageContext.request.contextPath}/argon/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../argon/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="${pageContext.request.contextPath}/argon/assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
-  <link id="pagestyle" href="../argon/assets/css/argon-dashboard.css?v=2.0.0" rel="stylesheet" />
+  <link id="pagestyle" href="${pageContext.request.contextPath}/argon/assets/css/argon-dashboard.css?v=2.0.0" rel="stylesheet" />
 
     <!-- form validation check -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
