@@ -5,9 +5,13 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 
+@Configuration
+@PropertySource(value = "file:${user.home}/env/portal.properties", ignoreResourceNotFound = true)
 public class MailSender extends JavaMailSenderImpl implements IMailSender {
 
     @Value("${spring.mail.host}")

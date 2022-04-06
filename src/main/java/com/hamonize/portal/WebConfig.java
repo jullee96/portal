@@ -21,25 +21,24 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${attach.path}")
 	private String path;
 
-    private final PortalUrlInterceptor portalUrlInterceptor;
+    // private final PortalUrlInterceptor portalUrlInterceptor;
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        logger.info("WebConfig path >>> ? file:{}",path);
-	    registry.addResourceHandler("/img/**")
+        registry.addResourceHandler("/img/**")
         .addResourceLocations("file:"+path+"/");
-        // .addResourceLocations("file:/home/lee/uploads/img/");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(portalUrlInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns();
-    }
+    // @Override
+    // public void addInterceptors(InterceptorRegistry registry) {
+    //     registry.addInterceptor(portalUrlInterceptor)
+    //             .addPathPatterns("/**")
+    //             .excludePathPatterns();
+    // }
 
     @Bean
     public IMailSender mailsender(){
         return new MailSender();
     }
+
 }

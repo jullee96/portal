@@ -77,10 +77,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .successHandler(authSuccessHandler)
             .failureHandler(authFailureHandler);
         
-        // http.logout()
-        //     .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
-        //     .logoutSuccessHandler(logoutSuccessHandler)
-        //     .invalidateHttpSession(false)
         
         http.oauth2Login()
                 .loginPage("/login")

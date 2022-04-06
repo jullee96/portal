@@ -1,15 +1,10 @@
 package com.hamonize.portal.social;
 
 import java.util.Map;
-
 import com.hamonize.portal.user.ROLE;
 import com.hamonize.portal.user.SnsUser;
-
 import org.slf4j.*;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter

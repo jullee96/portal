@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 // @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800) /* 세션 만료 시간 : 30분 */
 @RequiredArgsConstructor
+@PropertySource(value = "file:${user.home}/env/portal.properties", ignoreResourceNotFound = true)
 public class RedisConfig extends AbstractHttpSessionApplicationInitializer{
     @Value("${spring.redis.host}")
     private String host;
@@ -35,7 +37,6 @@ public class RedisConfig extends AbstractHttpSessionApplicationInitializer{
     public RedisConnectionFactory lettuceConnectionFactory() {
         RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration(host, port);
         standaloneConfiguration.setPassword(password.isEmpty() ? RedisPassword.none() : RedisPassword.of(password));
-    
         return new LettuceConnectionFactory(standaloneConfiguration);
     }
     
