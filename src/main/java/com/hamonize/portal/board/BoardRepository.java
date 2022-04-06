@@ -27,4 +27,10 @@ public interface BoardRepository extends JpaRepository<Board,String>{
 
     List<Board> findAllByBcseq(Sort sort, String bctype);
     
+    @Modifying
+    @Query(
+        value = "UPDATE tbl_boards SET view_cnt = :#{#vo.viewcnt} WHERE b_seq = :#{#vo.bseq} " , nativeQuery = true
+    )
+    void updateViewcnt(Board vo);
+    
 }

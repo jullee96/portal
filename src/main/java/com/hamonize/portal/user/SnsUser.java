@@ -3,13 +3,15 @@ package com.hamonize.portal.user;
 import lombok.Builder;
 
 public class SnsUser extends User {
-	private String name;
+	private Long seq;
+    private String name;
     private String email;
     private String picture;
     private String role;
 
     @Builder
-    public SnsUser(String name, String email, String picture, String role){
+    public SnsUser(Long seq, String name, String email, String picture, String role){
+        this.seq = seq;
         this.name = name;
         this.email = email;
         this.picture = picture;

@@ -26,7 +26,6 @@ public class MainController {
     @RequestMapping("/main")
     public String main(HttpSession session) {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-        logger.info("\n\n userid >> {}\n\n", user.getUserid());
         return "/main/main";
     }
 }

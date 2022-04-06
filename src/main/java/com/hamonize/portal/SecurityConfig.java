@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/img/**")
             .antMatchers("/images/**")
             .antMatchers("/vendors/**")
+            .antMatchers("/board/**/**/**")
             .antMatchers("/signup/**")
             .antMatchers("/argon/**");
 
@@ -65,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 		http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/**", "/signup/**", "/login/**","/","/setsession/**","/oauth2/**","/product/**","/board/**").permitAll()
+            .antMatchers("/api/**", "/signup/**", "/login/**","/","/setsession/**","/oauth2/**","/product/**").permitAll()
             .anyRequest().authenticated();
         
         http.formLogin()

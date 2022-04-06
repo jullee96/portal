@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,13 +28,15 @@ import lombok.Setter;
 public class User extends PagingVo {
 	// 센터 관리자
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long seq;
+
 	@Size(max=50)
 	@Comment("도메인 명")
 	private String domain;
 
-    @Id
-	@Size(max=50)
-	@Column(name = "user_id")
+    @Column(name = "user_id")
 	@Comment("유저 아이디")
 	private String userid;
 

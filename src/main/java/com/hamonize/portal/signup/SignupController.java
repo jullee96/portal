@@ -60,7 +60,7 @@ public class SignupController {
         try {
             // genterate authKey && sent to auhorize email
             vo.setAuthkey(mss.getKey(6));
-            
+            vo.setStatus("A");
             logger.info("vo.getAuthkey() > {}", vo.getAuthkey());
             mss.sendAuthMail(vo.getEmail(),vo.getAuthkey());
             ss.save(vo);

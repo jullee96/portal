@@ -48,16 +48,36 @@
     <!-- Navbar -->
     <%@ include file="../template/navbar.jsp" %>
     <!-- End Navbar -->
-     <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
-          <h5 class="font-weight-bolder">${board.btitle}</h5>    
+     <div class="card shadow-lg mx-4 card-profile-bottom  mb-2">
+        <div class="card-body p-3 ">
+          <h5 class="font-weight-bolder mt-2">${board.btitle}</h5>   
+          <span class="ms-2 text-sm ">${board.viewdate} </span> 
+          <div style="float: right;" class="mb-2">
+            <span class="text-sm text-bold">${board.userid} </span> 
+            <span class="ms-2 text-sm me-4">조회수 : ${board.viewcnt} </span> 
+          </div>
+          <hr style="clear:both;">
           <div class="row">
-            <div id="dd" class="dd col-12">
-            
+            <div class="col-12">
               <div id=viewer></div>
-            
             </div> 
           </div>
+          <hr>
+          <div class="mt-2 row">
+            <div class="col-10">
+              <div class="ms-2">
+                <a href="/board/${boardCfg.bcname}" class="btn btn-secondary btn-sm ">목록으로</a>
+              
+              </div>
+              
+                
+            </div>
+            <div class="col-2">
+              <a href="javascript:fnShare();" alt="공유하기"><i class="fa fa-share-alt-square fa-lg" aria-hidden="true"></i><span class="ms-2 text-secondary text-xs">공유하기</span></a>
+              <%-- <a class="ms-4" href="javascript:fnShare('kakao');" alt="카카오톡으로 공유하기"><i class="fa fa-share-alt-square fa-lg" aria-hidden="true"></i></a> --%>
+            </div>   
+          </div>
+          
         </div>
       </div>
       
@@ -75,5 +95,18 @@ const viewer = new toastui.Editor.factory({
     viewer: true,
     initialValue: content  
 });
+
+
+function fnShare(){
+  var url = document.createElement('textarea');
+  url.value = window.location.href;
+  document.body.appendChild(url);
+  
+  url.select();
+  document.execCommand('copy');
+  document.body.removeChild(url);
+  alert("url 복사완료");
+}
+
 </script>
 </html>

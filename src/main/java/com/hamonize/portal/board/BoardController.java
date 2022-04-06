@@ -1,10 +1,17 @@
 package com.hamonize.portal.board;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.hamonize.portal.user.SecurityUser;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.*;
@@ -41,7 +48,6 @@ public class BoardController {
         for( Sitemap el : slist){
             Map<String, Object> sitemap = new HashMap <String, Object>();
 
-            logger.info(el.getSitemapname());
             sitemap.put("smseq", el.getSmseq());
             sitemap.put("sitemapname", el.getSitemapname());
             list.add(sitemap);
@@ -68,10 +74,7 @@ public class BoardController {
 
     @RequestMapping("/{bcid}")
     public String get(@PathVariable ("bcid")String bcid, HttpSession session, BoardConfig vo, Model model) throws IOException {
-        logger.info("bcid??? >> {}",bcid);
         vo = bcr.findByBcid("/board/"+bcid);    
-        logger.info("getBcseq : {}", vo.getBcseq());        
-        logger.info("board type : {}", vo.getBctype());
         Sitemap smvo = smr.findBySmseq(vo.getPseq());
         List <Board> blist = br.findAllByBcseq((Sort.by(Sort.Direction.ASC, "bseq")),vo.getBcseq());   
         List <Board> list = new ArrayList<>();
@@ -111,30 +114,57 @@ public class BoardController {
         
     }
 
-
-    // @RequestMapping("/view")
-    // public String getview(Board vo, Model model) {
-
-
-    //     return "/board/plain_board_view";
-    // }
-
-
-
-
     @RequestMapping("/{bcid}/view/{bseq}")
-    public String getview(@PathVariable ("bcid") String bcid, @PathVariable ("bseq") String bseq, Board vo, Model model) {
-        logger.info("getview.....");
-        logger.info("bcid > {}", bcid);
-
+    public String getview(@PathVariable ("bcid") String bcid, HttpServletRequest request, HttpServletResponse response, HttpSession session, Board vo, Model model) throws IOException {
         BoardConfig cvo = bcr.findByBcid("/board/"+bcid);
-        logger.info("pseq > {}", cvo.getPseq());
         Sitemap smvo = smr.findBySmseq(cvo.getPseq());
-        logger.info("bseq > {}", vo.getBseq());
+            
         vo = br.getByBseq(vo.getBseq());
         vo.setBcontent(vo.getBcontent().replaceAll("\"", "\'"));
+        vo.setViewdate(vo.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+     
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        Cookie[] cookies = request.getCookies();
+        List<String> cnames = new ArrayList<>();
+
+        try {
+            logger.info("user id > {}", user.getUserid());
+            logger.info("user seq > {}", user.getSeq());
         
-        logger.info("content ?? {}",vo.getBcontent());
+            for(Cookie cookie : cookies){
+                cnames.add(cookie.getName());
+
+                if( cookie.getName().equals(user.getSeq().toString()) == true){
+                    logger.info("cookie 22 : {}", cookie.getName());
+                    
+                    if(cookie.getValue().contains(vo.getBseq().toString())){
+                        logger.info("이미 해당 페이지를 봄");
+                    } else{
+                        logger.info("새로운 페이지를 봄");
+                        cookie.setValue(cookie.getValue()+'/'+vo.getBseq().toString());
+                        response.addCookie(cookie);
+                        vo.setViewcnt(vo.getViewcnt()+1); 
+                        br.updateViewcnt(vo);
+                    }
+                }
+                
+           
+            }   
+            
+            logger.info("cookies > {}", cnames.contains(user.getSeq().toString()));
+            if(!cnames.contains(user.getSeq().toString())){
+                Cookie newCookie = createAccNttIdCookie(user.getSeq().toString(), vo.getBseq().toString());
+                response.addCookie(newCookie);
+                vo.setViewcnt(vo.getViewcnt()+1); 
+                br.updateViewcnt(vo);
+            }  
+        } catch (NullPointerException e) {
+            logger.info("로그인 만료 ");
+            response.sendRedirect("/login");
+        }
+       
+
+        
         model.addAttribute("sitemap",smvo);
         model.addAttribute("boardCfg",cvo);
         model.addAttribute("board", vo);
@@ -144,10 +174,17 @@ public class BoardController {
 
 
 
-    @RequestMapping("/{bcid}/list")
-    @ResponseBody
-    public String getlist(HttpSession session,BoardConfig vo) throws IOException {
-        return "";
+    private Cookie createAccNttIdCookie(String userid ,String cookieValue) {
+        Cookie cookie = new Cookie(userid, cookieValue);
+        cookie.setComment("조회수 중복 증가 방지 쿠키");    
+        cookie.setMaxAge(getRemainSecondForTommorow());          
+        cookie.setHttpOnly(true);                
+        return cookie;
     }
-
+    
+    private int getRemainSecondForTommorow() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime tommorow = LocalDateTime.now().plusDays(1L).truncatedTo(ChronoUnit.DAYS);
+        return (int) now.until(tommorow, ChronoUnit.SECONDS);
+    }
 }
