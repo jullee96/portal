@@ -44,7 +44,7 @@ public class BoardController {
         List <Sitemap> slist = smr.findAll((Sort.by(Sort.Direction.ASC, "smseq")));
         List <BoardConfig> blist = bcr.findAllByBcused((Sort.by(Sort.Direction.ASC, "bcseq")),1);
         List<Object> list = new ArrayList <>();
-        
+            
         for( Sitemap el : slist){
             Map<String, Object> sitemap = new HashMap <String, Object>();
 
@@ -59,6 +59,7 @@ public class BoardController {
                     menu.put("bcid", bel.getBcid());
                     menu.put("bcname" ,bel.getBcname());
                     menu.put("bcrole" ,bel.getBcrole());
+                    menu.put("bcdomains", bel.getBcdomains());
                     menu.put("bctype" ,bel.getBctype());
                     list.add(menu);
                 }

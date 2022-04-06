@@ -27,6 +27,7 @@ public class SecurityUser extends User {
     private String username;
     private String salt;
     private String email;
+    private String role;
 
     // 결제정보
     private String domain;
@@ -47,6 +48,7 @@ public class SecurityUser extends User {
         this.domain = user.getDomain();
         this.email = user.getEmail();
         this.status = user.getStatus();
+        this.role = user.getRole();
     }
 
     private static Set<GrantedAuthority> makeGrantedAuthority() {

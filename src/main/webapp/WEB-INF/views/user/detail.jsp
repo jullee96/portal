@@ -222,7 +222,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label for="example-text-input" class="form-control-label">이전 비밀번호 확인</label>
-                        <input class="form-control" id="before_passwd" name="before_passwd" type="password" value="">
+                        <input class="form-control" id="" name="beforepasswd" type="password" value="">
                       </div>
                     </div>
 

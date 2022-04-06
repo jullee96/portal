@@ -93,7 +93,7 @@ public class UserController {
         vo.setDomain(user.getDomain());
         cvo.setUserid(user.getUserid());
         
-        if(!"".equals(vo.getBefore_passwd()) && vo.getBefore_passwd() != null){
+        if(!"".equals(vo.getBeforepasswd()) && vo.getBeforepasswd() != null){
             us.update(vo);
             cs.update(cvo);
 
@@ -140,15 +140,15 @@ public class UserController {
 
     @RequestMapping("/passwdChk")
     @ResponseBody
-    public Boolean passwdChk(@RequestParam("before_passwd") String before_passwd , HttpSession session, Model model)  throws IOException {
+    public Boolean passwdChk(@RequestParam("beforepasswd") String beforepasswd , HttpSession session, Model model)  throws IOException {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
        
-        logger.info("get before_passwd {}",before_passwd);
+        logger.info("get beforepasswd {}",beforepasswd);
         
         logger.info("session {}", user.getPasswd());
-        logger.info("encode >>> {}", SHA256Util.getEncrypt(before_passwd, user.getSalt()));
+        logger.info("encode >>> {}", SHA256Util.getEncrypt(beforepasswd, user.getSalt()));
 
-        if(user.getPasswd().equals(SHA256Util.getEncrypt(before_passwd, user.getSalt()))){
+        if(user.getPasswd().equals(SHA256Util.getEncrypt(beforepasswd, user.getSalt()))){
             return true;
         }else{
             return false;

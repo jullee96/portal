@@ -47,7 +47,7 @@ public class User extends PagingVo {
 	private String passwd;
 
 	@Transient
-	private String before_passwd;
+	private String beforepasswd;
 	
 	@Column(name = "user_name")
     @Size(max=50)

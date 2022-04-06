@@ -65,7 +65,7 @@
 </body>
 <script>
 const content = $("#content").val();
-console.log("content : "+content)
+// console.log("content : "+content)
 
 const viewer = new toastui.Editor.factory({ 
     el: document.querySelector('#viewer'), 

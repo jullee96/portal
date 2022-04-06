@@ -42,6 +42,10 @@ public class BoardConfig {
     @Comment("게시판 이름")
 	private String bcname;
 
+    @Column(name = "bc_domains")
+    @Comment("게시판 보기 허용 도메인")
+	private String bcdomains;
+
     @Column(name = "rgstr_date")
     @Comment("게시판 생성일")
     private LocalDateTime rgstrdate;

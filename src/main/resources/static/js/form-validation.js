@@ -330,14 +330,14 @@
           required: true,
           minlength: 2
         },
-        before_passwd: {
+        beforepasswd: {
           required: true,
           remote : {
             type: 'post',
             url : '/user/passwdChk',
             data: {
-              before_passwd: function() {
-                return $( "#before_passwd" ).val();
+              beforepasswd: function() {
+                return $( "#beforepasswd" ).val();
               }
             }
           } 
@@ -362,7 +362,7 @@
           required: "이름을 입력해주세요",
           minlength: "이름은 최소 2글자로 입력해주세요"
         },
-        before_passwd:{
+        beforepasswd:{
           required: "비밀번호 입력해주세요",
           remote:"비밀번호가 올바르지 않습니다"
         },
