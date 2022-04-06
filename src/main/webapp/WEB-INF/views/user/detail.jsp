@@ -96,7 +96,7 @@
                 <img src="/user/images" class="border-radius-md detailProfileImg" > 
               </c:if>
               <c:if test="${profileImg == null}">
-                <img src="/img/user.svg" class="border-radius-md detailProfileImg">  
+                <img src="/argon/assets/img/img_profile.png" class="border-radius-md detailProfileImg">  
               </c:if>
               <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
                 <i class="fa fa-pen top-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" aria-hidden="true" data-bs-original-title="이미지 변경" aria-label="Edit Image"></i><span class="sr-only">Edit Image</span>

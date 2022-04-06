@@ -62,18 +62,18 @@
                 
                 <div class="col-3 ms-auto px-1">
                   <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/oauth2/authorization/kakao">
-                    <img style="width:32px;height:32px;margin-left:-4px;" src="/img/kakao.png">
+                    <img style="width:32px;height:32px;margin-left:-4px;" src="/argon/assets/img/kakao.png">
                   </a>
                 </div>
                 <div class="col-3 px-1">
                   <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/oauth2/authorization/naver">
-                    <img style="width:34px;height:34px;margin-left:-5px;" src="/img/naver.png">
+                    <img style="width:34px;height:34px;margin-left:-5px;" src="/argon/assets/img/naver.png">
                   </a>
                 </div>
                 <div class="col-3 me-auto px-1">
                 
                   <a style="width:65.19px;height:54px;" class="btn btn-outline-light w-80" href="/oauth2/authorization/google">
-                    <img style="width:30px;height:30px;margin-left:-4px;" src="/img/google.png">  
+                    <img style="width:30px;height:30px;margin-left:-4px;" src="/argon/assets/img/google.png">  
                   </a>
                 </div>
                 

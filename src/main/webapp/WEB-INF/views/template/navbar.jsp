@@ -44,7 +44,7 @@
                     <img src="/user/images" class="avatar avatar-sm me-3">
                   </c:if>
                   <c:if test="${profileImg == null}">
-                    <img src="/img/user.svg" class="avatar avatar-sm me-3">  
+                    <img src="/argon/assets/img/img_profile.png" class="avatar avatar-sm me-3">  
                   </c:if>
                   </div>
                   <div class="d-flex flex-column justify-content-center">
