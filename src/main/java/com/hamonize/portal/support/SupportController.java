@@ -49,7 +49,7 @@ public class SupportController {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
         // paging
-        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"rgstrdate"));
         Page<Support> resultPage = sr.findAllByUserid(pageable, user.getUserid());
         logger.info("resultPage getTotalPages >>>> {}", resultPage.getTotalPages());
         logger.info("resultPage nextPageable >>>> {}", resultPage.nextPageable());
@@ -79,21 +79,17 @@ public class SupportController {
 
     @RequestMapping("/search")
     public String supportListSearch(String keyword, @RequestParam(required = false, defaultValue = "0", value = "page") int page, Pageable pageable ,  HttpSession session, Support vo, Model model) {
+        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
+        
         logger.info("\n\n\n <<< list >> page : {}", page);
         logger.info("keyword : {}", keyword);
-        logger.info("getStartDate : {}", vo.getStartDate());
-        logger.info("getEndDate : {}", vo.getEndDate());
-        SecurityUser user = (SecurityUser) session.getAttribute("userSession");
-
-        // 키워든 제목, 접수번호만
-
-
+        logger.info("userid : {}", user.getUserid());
+        
         try {
-            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
-    
-            if(vo.getStartDate() != null && vo.getEndDate() != null ){ // keyword + page + 날짜 계산하는 경우
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"rgstrdate"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             
+            if(vo.getStartDate() != null && vo.getEndDate() != null ){ // keyword + page + 날짜 계산하는 경우
                 LocalDateTime startDate = LocalDate.parse(vo.getStartDate(), formatter).atStartOfDay();
                 LocalDateTime endDate = LocalDate.parse(vo.getEndDate(), formatter).atStartOfDay();
                 endDate = endDate.plusHours(23).plusMinutes(59).plusSeconds(60);
@@ -195,7 +191,7 @@ public class SupportController {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
 
         try {
-            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"seq"));
+            pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC,"rgstrdate"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             
             if(vo.getStartDate() != null){
@@ -287,6 +283,7 @@ public class SupportController {
         Support edit = sr.findBySeq(vo.getSeq());
 
         edit.setViewDate(edit.getRgstrdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+        edit.setContents(edit.getContents().replace("\"", "\'"));
         logger.info("list length : {}", list.size());
         model.addAttribute("edit", edit);
         model.addAttribute("clist", list);
@@ -312,7 +309,7 @@ public class SupportController {
             retval = (long) aa;
        
         } else{
-            vo.setStatus("P");
+            vo.setStatus("W"); // 답변대기
             vo.setRgstrdate(LocalDateTime.now());
             ret = sr.save(vo);
             retval = ret.getSeq();

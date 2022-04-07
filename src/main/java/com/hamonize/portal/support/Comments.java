@@ -46,4 +46,5 @@ public class Comments {
 
     @Transient
     private String viewDate;
+  
 }

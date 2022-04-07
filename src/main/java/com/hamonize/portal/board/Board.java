@@ -58,10 +58,5 @@ public class Board {
     @Comment("boardconfig seq > menu seq")
     @Column(name = "bc_seq" )
     private Long bcseq;
-    
-    // @Comment("게시판 구분 아이디")
-	// @OneToOne
-    // @JoinColumn(name = "board_id")
-    // BoardConfig boardConfig;
 
 }

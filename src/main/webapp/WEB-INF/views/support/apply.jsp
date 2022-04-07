@@ -61,6 +61,8 @@ img[alt=alt_img] {
                   <a href="/support/list" class="btn btn-secondary btn-sm ms-auto" > 목록으로</a>
                 <input type="hidden" id="seq" value="${edit.seq}">
                 <input type="hidden" id="status" value="${edit.status}">
+                <input type="hidden" id="imgseqs" value="${edit.imgseqs}">
+                
                   <button onClick="saveSubmit()" class="btn btn-primary btn-sm  " style="margin-left:1%">
                     <c:if test="${edit.seq == null}">
                         신청하기
@@ -146,6 +148,7 @@ const editor = new Editor({
 });
 
     
+var imgseqs = $("#imgseqs").val();
 
 function uploadImage(blob){
     let url;
@@ -170,19 +173,22 @@ function uploadImage(blob){
     
     $.ajax({
         type:"POST",
-        url: "/file/upload",
+        url: "/file/uploadEditorImg",
         processData: false,
         contentType: false,
         data: formData,
         async:false,
         success: function(retval){
             if(retval != "F"){
-                console.log("업로드 성공" +retval);
+                console.log("업로드 성공" +retval.seq);
+                console.log("업로드 성공" +retval.filepath);
                
             } else{
                 console.log("업로드 실패");
             }
-            url = retval;
+
+            url = retval.filepath;
+            imgseqs += retval.seq+',';
         }
     });
 
@@ -201,8 +207,6 @@ $(document).ready(function () {
 
 
 function saveSubmit(){
-
-
     $("#support-form").validate({
       submitHandler: function(form) {
             const seq = $("#seq").val();
@@ -212,6 +216,10 @@ function saveSubmit(){
             const userid = $("#userid").val();
             const email = $("#email").val();
             const type = $("#type").val();
+            if(imgseqs.length !=0 ){
+                imgseqs = imgseqs.substr(0, imgseqs.length - 1);
+            }
+            
             if(seq == null){ // save
                 $.ajax( {
                     url : "/support/save",
@@ -222,13 +230,14 @@ function saveSubmit(){
                             contents : contents,
                             userid : userid,
                             email : email,
-                            type : type
+                            type : type,
+                            imgseqs : imgseqs
                         },
                     success : function(seq) {
                         if(seq > 0){
-                            alert( "success" );
+                            alert( "저장 성공" );
                         } else{
-                            alert( "fail" );
+                            alert( "저장 실패" );
                         }
 
                         location.href="/support/list";
@@ -247,13 +256,14 @@ function saveSubmit(){
                         contents : contents,
                         userid : userid,
                         email : email,
-                        type : type
+                        type : type,
+                        imgseqs : imgseqs
                     },
                 success : function(seq) {
                     if(seq > 0){
-                        alert( "success" );
+                        alert( "저장 성공" );
                     } else{
-                        alert( "fail" );
+                        alert( "저장 실패" );
                     }
 
                     location.href="/support/list";

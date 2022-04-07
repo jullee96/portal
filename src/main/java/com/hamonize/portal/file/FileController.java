@@ -90,17 +90,17 @@ public class FileController {
         
         return result;
     }
-
-
-    @PostMapping("/uploadSupportImg")
+    @PostMapping("/uploadEditorImg")
     @ResponseBody
-    public URL uploadFile(HttpServletResponse response, HttpSession session, @RequestParam("keyfile") MultipartFile mFile, FileVO vo) throws IOException {
+    public FileVO uploadEditorImg(HttpSession session, @RequestParam("keyfile") MultipartFile mFile, FileVO vo) throws IOException {
         SecurityUser user = (SecurityUser) session.getAttribute("userSession");
         
         vo.setUserid(user.getUserid());
         logger.info("keytype : {}", vo.getKeytype());
+        logger.info("userid : {}", vo.getUserid());
 
-        String result = "";
+
+        FileVO result = new FileVO();
         Path uploadDir = Paths.get(path);
       
         if(!Files.isDirectory(uploadDir)) {
@@ -116,37 +116,21 @@ public class FileController {
         byte[] fileBytes = mFile.getBytes();
         Path filePath = uploadDir.resolve(logicalFileName);
         
-        logger.info("originalFileName {}",originalFileName);
-        logger.info("logicalFileName {}", logicalFileName);
-
         vo.setFilename(logicalFileName);
         vo.setFilerealname(originalFileName);
         vo.setFilesize(mFile.getSize());
         vo.setFilepath(filePath.toString());
 
         if(Files.write(filePath, fileBytes) != null){
-            fs.upload(vo);
-            result = vo.getFilepath();
-                
-            StringBuilder sb = new StringBuilder("file:"+ vo.getFilepath());
-            logger.info("sb >> {}",sb);
-
-            URL fileUrl = new URL(sb.toString());
-            logger.info("fileUrl >> {}",fileUrl.toString());
-            logger.info("fileUrl??  >> {}",fileUrl);
-
-            // IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
-
-        return fileUrl;    
-
+            result = fr.save(vo);
         }else{
-            return null;
+            result = null;
         }
+        return result;
 
-        // return result;
     }
 
-
+  
   
     @PostMapping("/download")
     @ResponseBody

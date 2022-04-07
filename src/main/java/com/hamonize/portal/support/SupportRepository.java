@@ -18,7 +18,7 @@ public interface SupportRepository extends JpaRepository<Support, String>{
 
     @Modifying
     @Query(
-        value = "UPDATE tbl_support SET type = :#{#vo.type} , title = :#{#vo.title} , updt_date = :#{#vo.updtdate}, contents = :#{#vo.contents} WHERE seq = :#{#vo.seq} " , nativeQuery = true
+        value = "UPDATE tbl_support SET type = :#{#vo.type} , title = :#{#vo.title} , updt_date = :#{#vo.updtdate}, contents = :#{#vo.contents}, img_seqs = :#{#vo.imgseqs}  WHERE seq = :#{#vo.seq} " , nativeQuery = true
     )
     int update(@Param("vo") Support vo);
 

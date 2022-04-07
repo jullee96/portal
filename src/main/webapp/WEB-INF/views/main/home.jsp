@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="icon" type="image/png" href="../argon/assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="/argon/assets/img/favicon.png">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Hamonize Cloud Service</title>

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-  <link rel="icon" type="image/png" href="../argon/assets/img/favicon.png">
+  <link rel="icon" type="image/png" href="/argon/assets/img/favicon.png">
   
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -61,7 +61,7 @@
         <c:if test="${userSession.userid != null}" >
           <c:if test="${userSession.domain != null}" >
             <li class="nav-item">
-              <a href="http://localhost:8081/mntrng/pcControlList" target="_blank" class="btn btn-sm mb-0 me-1 btn-primary">시작하기</a>
+              <a href="http://192.168.0.210:8083/mntrng/pcControlList" target="_blank" class="btn btn-sm mb-0 me-1 btn-primary">시작하기</a>
             </li>
           </c:if>
           <c:if test="${userSession.domain == null}" >

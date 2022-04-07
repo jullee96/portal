@@ -59,20 +59,22 @@ img[alt=alt_img] {
               <h5 class="font-weight-bolder">문의 상세 
               <input type="hidden" id="clistSize" value="${clistSize}">
                     <c:if test="${clistSize != 0}">
-                        <button type="button" class="mt-2 ms-2 btn btn-outline-secondary btn-status btn-xs"> 답변완료</button>  
+                        <button type="button" class="mt-2 ms-2 btn btn-outline-dark btn-status btn-xs"> 답변완료</button>  
                     </c:if>
                     <c:if test="${clistSize == 0}">
-                        <button type="button" class="mt-2 btn btn-outline-success btn-status btn-xs"> 처리중</button>  
+                        <button type="button" class="mt-2 btn btn-outline-secondary btn-status btn-xs"> 답변대기</button>  
                     </c:if>
+                    
                 </h5>    
                 <div class="d-flex align-items-center">
                   <input type="hidden" id="clistSize" value="${clistSize}">
+                  <a href="/support/list" class="btn btn-secondary btn-sm ms-auto me-2">목록으로</a>
 
                   <c:if test="${clistSize == 0}">
-                    <a href="/support/edit?seq=${edit.seq}" class="btn btn-primary btn-sm ms-auto ">수정하기</a>
+                    <a href="/support/edit?seq=${edit.seq}" class="btn btn-primary btn-sm ">수정하기</a>
                   </c:if>
                   <c:if test="${clistSize != 0}">
-                    <a href="/support/apply" class="btn btn-primary btn-sm ms-auto ">새 질문하기</a>
+                    <a href="/support/apply" class="btn btn-primary btn-sm ">새 질문하기</a>
                   </c:if>
                 </div>
                   <hr>
@@ -140,7 +142,7 @@ img[alt=alt_img] {
 <%@ include file="../template/core.jsp" %>
 <script class="code-js">
 const content = $("#content").val();
-// console.log("content : "+content)
+console.log("content : "+content)
 
 const viewer = new toastui.Editor.factory({ 
     el: document.querySelector('#viewer'), 

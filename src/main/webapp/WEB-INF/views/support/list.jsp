@@ -22,6 +22,10 @@
 <script src="../argon/assets/js/plugins/flatpickr.min.js"></script>
 
 <style>
+.dataTable-input2 {
+  padding: 6px 20px;
+}
+
 .th-header-font{
     font-size: 16px;
     color: #344767;
@@ -96,7 +100,7 @@
                         
                     </div>
                     <div class="dataTable-search ">
-                        <div>
+                        <div class="w-100 h-100">
                             <a class="reset-btn " href="/support/list"><span class="text-xs me-2">검색 초기화</span> <i class="fas fa-undo"></i></a>
                             <input class="dataTable-input2" placeholder="검색" name="keyword" id="keyword" value="${keyword}" type="text" maxlength="30">
                             <a class="search-btn" href="javascript:fnSearch();"><i class="fas fa-search"></i></a>
@@ -170,12 +174,16 @@
                                 </td>
                                  --%>
                                 <td class="align-middle text-center">
+                                    <c:if test='${list.status eq "W"}' >
+                                        <span class="badge badge-secondary badge-md">답변대기</span>
+                                    </c:if>
+
                                     <c:if test='${list.status eq "P"}' >
-                                        <span class="badge badge-success badge-md">처리중</span>
+                                        <span class="badge badge-success badge-md">&nbsp;&nbsp;처리중&nbsp;&nbsp; </span>
                                     </c:if>
 
                                     <c:if test='${list.status eq "D"}' >
-                                       <span class="badge badge-secondary badge-md">답변완료</span>
+                                       <span class="badge badge-black badge-md">답변완료</span>
                                     </c:if>
 
                                 </td>
