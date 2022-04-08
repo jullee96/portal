@@ -63,7 +63,7 @@
                   <td>
                     <div class="d-flex align-items-center">
                       <%-- <a href="/board/view" class="me-2 text-xs ps-3">${list.btitle}</a> --%>
-                      <a href="/board/${boardCfg.bcname}/view/${list.bseq}" class="me-2 text-xs ps-3">${list.btitle}</a>
+                      <a href="/board/${boardCfg.bcid}/view/${list.bseq}" class="me-2 text-xs ps-3">${list.btitle}</a>
                     </div>
                   </td>
                   <td>
