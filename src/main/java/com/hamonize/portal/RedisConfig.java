@@ -2,6 +2,7 @@ package com.hamonize.portal;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 // @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 1800) /* 세션 만료 시간 : 30분 */
-@RequiredArgsConstructor
+// @RequiredArgsConstructor
 @PropertySource(value = "file:${user.home}/env/portal.properties", ignoreResourceNotFound = true)
 public class RedisConfig extends AbstractHttpSessionApplicationInitializer{
     @Value("${spring.redis.host}")
@@ -31,7 +32,8 @@ public class RedisConfig extends AbstractHttpSessionApplicationInitializer{
     @Value("${spring.redis.password}")
     private String password;
 
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Bean 
     public RedisConnectionFactory lettuceConnectionFactory() {
